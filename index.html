@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Your Name — Chemistry & Engineering</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bg:           #060D1F;
+      --bg-card:      #0B1629;
+      --bg-card-alt:  #0E1B30;
+      --border:       #192840;
+      --border-hi:    #243558;
+      --text:         #D6E4FF;
+      --text-muted:   #5E7BAA;
+      --text-dim:     #2F4668;
+      --teal:         #2DD4BF;
+      --teal-glow:    rgba(45, 212, 191, 0.15);
+      --teal-border:  rgba(45, 212, 191, 0.22);
+      --purple:       #818CF8;
+      --purple-border:rgba(129, 140, 248, 0.22);
+      --nav-h:        64px;
+      --page-w:       1200px;
+      --pad-x:        clamp(1.25rem, 5vw, 4rem);
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── BACKGROUND GRAIN ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad-x);
+      background: rgba(6, 13, 31, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.025em;
+    }
+    .nav-logo em { color: var(--teal); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active  { color: var(--teal); }
+    .nav-links .idx      { color: var(--purple); font-size: 0.65rem; }
+
+    /* ─── PAGE WRAPPER ─── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: var(--page-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      align-items: center;
+      gap: 4rem;
+      padding-top: calc(var(--nav-h) + 5rem);
+      padding-bottom: 5rem;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--teal);
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.75rem, 6vw, 4.75rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-field {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+    .hero-field span { color: var(--teal); }
+
+    .hero-bio {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.7rem 1.75rem;
+      display: inline-block;
+      transition: transform 0.15s, background 0.2s, color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-solid {
+      background: var(--teal);
+      color: var(--bg);
+      border: 1px solid var(--teal);
+    }
+    .btn-solid:hover { background: #5EEAD4; border-color: #5EEAD4; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-hi);
+    }
+    .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+
+    /* ─── ATOM VISUAL ─── */
+    .atom-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .atom-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -30px;
+      background:
+        repeating-linear-gradient(rgba(45,212,191,0.025) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(90deg, rgba(45,212,191,0.025) 0 1px, transparent 1px 40px);
+      border-radius: 50%;
+    }
+
+    .atom {
+      position: relative;
+      width: 320px; height: 320px;
+    }
+
+    .nucleus {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 20px var(--teal), 0 0 50px rgba(45,212,191,0.35);
+    }
+
+    .orbit {
+      position: absolute;
+      top: 50%; left: 50%;
+      border-radius: 50%;
+      border: 1px solid;
+    }
+
+    /* orbit-1 */
+    .o1 {
+      width: 120px; height: 120px;
+      margin: -60px 0 0 -60px;
+      border-color: rgba(45,212,191,0.32);
+      animation: rot 4s linear infinite;
+    }
+    /* orbit-2 — tilted 55° */
+    .o2 {
+      width: 200px; height: 200px;
+      margin: -100px 0 0 -100px;
+      border-color: rgba(129,140,248,0.22);
+      transform: rotate(55deg);
+      animation: rot2 7s linear infinite;
+    }
+    /* orbit-3 — tilted -30° */
+    .o3 {
+      width: 295px; height: 295px;
+      margin: -147.5px 0 0 -147.5px;
+      border-color: rgba(45,212,191,0.13);
+      transform: rotate(-30deg);
+      animation: rot3 11s linear infinite;
+    }
+
+    .e {
+      position: absolute;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      top: -3.5px;
+      left: 50%; margin-left: -3.5px;
+    }
+    .o1 .e { background: var(--teal);   box-shadow: 0 0 7px var(--teal); }
+    .o2 .e { background: var(--purple); box-shadow: 0 0 7px var(--purple); }
+    .o3 .e { background: var(--teal);   box-shadow: 0 0 7px var(--teal); opacity: 0.65; }
+
+    @keyframes rot  { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+    @keyframes rot2 { from { transform: rotate(55deg); }  to { transform: rotate(415deg); } }
+    @keyframes rot3 { from { transform: rotate(-30deg); } to { transform: rotate(330deg); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orbit { animation: none; }
+    }
+
+    /* ─── SECTION CHROME ─── */
+    section.sec {
+      padding: 6.5rem 0;
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Periodic-table element box */
+    .el-box {
+      flex-shrink: 0;
+      width: 54px;
+      border: 1px solid var(--border-hi);
+      padding: 5px 4px 4px;
+      text-align: center;
+      line-height: 1;
+    }
+    .el-box .an  { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--text-dim); display: block; }
+    .el-box .sym { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--teal); display: block; }
+    .el-box .nm  { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--text-dim); display: block; }
+
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .sec-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-hi), transparent);
+    }
+
+    .sec-wl {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* ─── AWARDS ─── */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .award-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+    .award-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .award-card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
+    .award-card:hover::after { opacity: 1; }
+
+    .award-year {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+    }
+
+    .award-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+
+    .award-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .award-org {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--teal);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.85rem;
+    }
+
+    .award-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── EXPERIENCE ─── */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 176px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-meta-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--purple);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+      padding-top: 0.2rem;
+    }
+    .exp-meta-org {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .exp-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+    }
+
+    .exp-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 620px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.65rem;
+      letter-spacing: 0.05em;
+      border: 1px solid;
+    }
+    .tag-teal   { color: var(--teal);   border-color: var(--teal-border); }
+    .tag-purple { color: var(--purple); border-color: var(--purple-border); }
+
+    /* ─── EXTRACURRICULAR ─── */
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .extra-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .extra-card:hover { border-color: rgba(129,140,248,0.35); }
+
+    .extra-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .extra-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .extra-org {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      color: var(--purple);
+      letter-spacing: 0.04em;
+    }
+
+    .extra-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      padding-top: 0.1rem;
+    }
+
+    .extra-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── DIVIDERS ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 var(--pad-x);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.25rem var(--pad-x);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      max-width: 100%;
+    }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+    }
+    .footer-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--teal); }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .scroll-hint span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+    .scroll-arrow {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--teal), transparent);
+      animation: drop 1.6s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+      50%       { opacity: 1;   transform: scaleY(1);   transform-origin: top; }
+    }
+
+    /* ─── HERO RELATIVE FOR SCROLL ─── */
+    .hero-wrap {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      .atom-wrap { display: none; }
+      .exp-item  { grid-template-columns: 1fr; gap: 0.4rem; }
+      .scroll-hint { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links .idx { display: none; }
+      .nav-links { gap: 1.25rem; }
+      footer { flex-direction: column; text-align: center; }
+      .sec-wl { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════ NAV ════════════════════════════ -->
+  <nav>
+    <span class="nav-logo">Your<em>.</em>Name</span>
+    <ul class="nav-links">
+      <li><a href="#home">   <span class="idx">00 /</span> Home</a></li>
+      <li><a href="#awards"> <span class="idx">01 /</span> Awards</a></li>
+      <li><a href="#exp">    <span class="idx">02 /</span> Experience</a></li>
+      <li><a href="#extra">  <span class="idx">03 /</span> Activities</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ════════════════════════════ HERO ════════════════════════════ -->
+  <div class="hero-wrap">
+    <div class="page">
+      <div class="hero" id="home">
+
+        <!-- Left column -->
+        <div>
+          <p class="hero-label">Chemistry &amp; Engineering</p>
+          <h1 class="hero-name">Your Name</h1>
+          <p class="hero-field">
+            Aspiring <span>Chemist</span> &amp; <span>Engineer</span>
+          </p>
+          <p class="hero-bio">
+            Passionate about the intersection of molecular chemistry and
+            engineering design. I explore how matter behaves at the atomic level
+            and apply those principles to real-world problems.
+            Currently seeking undergraduate programs in [your country/region].
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-solid"  href="#awards">Explore My Work</a>
+            <a class="btn btn-ghost"  href="mailto:your@email.com">Get in Touch</a>
+          </div>
+        </div>
+
+        <!-- Right column — atom -->
+        <div class="atom-wrap">
+          <div class="atom">
+            <div class="nucleus"></div>
+            <div class="orbit o1"><div class="e"></div></div>
+            <div class="orbit o2"><div class="e"></div></div>
+            <div class="orbit o3"><div class="e"></div></div>
+          </div>
+        </div>
+
+      </div><!-- .hero -->
+    </div><!-- .page -->
+
+    <!-- Scroll cue -->
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div><!-- .hero-wrap -->
+
+
+  <!-- ════════════════════════════ AWARDS ════════════════════════════ -->
+  <div class="page">
+    <section class="sec" id="awards">
+
+      <div class="sec-head">
+        <div class="el-box">
+          <span class="an">79</span>
+          <span class="sym">Au</span>
+          <span class="nm">Gold</span>
+        </div>
+        <h2 class="sec-title">Awards</h2>
+        <div class="sec-rule"></div>
+        <span class="sec-wl">λ 589.3 nm</span>
+      </div>
+
+      <div class="awards-grid">
+
+        <!-- Award 1 -->
+        <div class="award-card">
+          <span class="award-year">2024</span>
+          <div class="award-icon">🥇</div>
+          <div class="award-name">Award Name</div>
+          <div class="award-org">Competition / Organization</div>
+          <div class="award-desc">
+            Brief description of the award and what you achieved to earn it.
+            Include scope (national, regional) if relevant.
+          </div>
+        </div>
+
+        <!-- Award 2 -->
+        <div class="award-card">
+          <span class="award-year">2024</span>
+          <div class="award-icon">🏆</div>
+          <div class="award-name">Award Name</div>
+          <div class="award-org">Competition / Organization</div>
+          <div class="award-desc">
+            Brief description of the award and what you achieved to earn it.
+            Include scope (national, regional) if relevant.
+          </div>
+        </div>
+
+        <!-- Award 3 -->
+        <div class="award-card">
+          <span class="award-year">2023</span>
+          <div class="award-icon">🎖️</div>
+          <div class="award-name">Award Name</div>
+          <div class="award-org">Competition / Organization</div>
+          <div class="award-desc">
+            Brief description of the award and what you achieved to earn it.
+            Include scope (national, regional) if relevant.
+          </div>
+        </div>
+
+        <!-- Award 4 — add or remove cards as needed -->
+        <div class="award-card">
+          <span class="award-year">2023</span>
+          <div class="award-icon">📜</div>
+          <div class="award-name">Award Name</div>
+          <div class="award-org">Competition / Organization</div>
+          <div class="award-desc">
+            Brief description of the award and what you achieved to earn it.
+            Include scope (national, regional) if relevant.
+          </div>
+        </div>
+
+      </div><!-- .awards-grid -->
+    </section>
+  </div>
+
+
+  <!-- ════════════════════════════ EXPERIENCE ════════════════════════════ -->
+  <hr class="divider" />
+
+  <div class="page">
+    <section class="sec" id="exp">
+
+      <div class="sec-head">
+        <div class="el-box">
+          <span class="an">26</span>
+          <span class="sym">Fe</span>
+          <span class="nm">Iron</span>
+        </div>
+        <h2 class="sec-title">Pre-professional Experience</h2>
+        <div class="sec-rule"></div>
+        <span class="sec-wl">λ 656.3 nm</span>
+      </div>
+
+      <div class="exp-list">
+
+        <!-- Experience 1 -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-meta-period">Jun – Aug 2024</div>
+            <div class="exp-meta-org">Organization Name</div>
+          </div>
+          <div>
+            <div class="exp-title">Role / Position Title</div>
+            <div class="exp-desc">
+              Describe what you did in this role. What impact did you have? Use
+              specific details and quantify results where possible — numbers and
+              outcomes help universities understand your contribution.
+            </div>
+            <div class="tags">
+              <span class="tag tag-teal">Chemistry</span>
+              <span class="tag tag-teal">Lab Research</span>
+              <span class="tag tag-purple">Data Analysis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-meta-period">Sep – Dec 2023</div>
+            <div class="exp-meta-org">Organization Name</div>
+          </div>
+          <div>
+            <div class="exp-title">Role / Position Title</div>
+            <div class="exp-desc">
+              Describe what you did in this role. Mention specific techniques,
+              equipment, or methodologies. Highlight any collaboration with
+              professors, researchers, or industry professionals.
+            </div>
+            <div class="tags">
+              <span class="tag tag-teal">Engineering</span>
+              <span class="tag tag-purple">Python</span>
+              <span class="tag tag-purple">CAD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience 3 -->
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-meta-period">Jan – May 2023</div>
+            <div class="exp-meta-org">Organization Name</div>
+          </div>
+          <div>
+            <div class="exp-title">Role / Position Title</div>
+            <div class="exp-desc">
+              Describe another experience — internship, research, shadowing,
+              or an independent project. Even self-directed work shows initiative
+              and intellectual curiosity, which universities value highly.
+            </div>
+            <div class="tags">
+              <span class="tag tag-teal">Materials Science</span>
+              <span class="tag tag-teal">Spectroscopy</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .exp-list -->
+    </section>
+  </div>
+
+
+  <!-- ════════════════════════════ EXTRACURRICULAR ════════════════════════════ -->
+  <hr class="divider" />
+
+  <div class="page">
+    <section class="sec" id="extra">
+
+      <div class="sec-head">
+        <div class="el-box">
+          <span class="an">14</span>
+          <span class="sym">Si</span>
+          <span class="nm">Silicon</span>
+        </div>
+        <h2 class="sec-title">Extracurricular</h2>
+        <div class="sec-rule"></div>
+        <span class="sec-wl">λ 486.1 nm</span>
+      </div>
+
+      <div class="extra-grid">
+
+        <!-- Extra 1 -->
+        <div class="extra-card">
+          <div class="extra-top">
+            <div>
+              <div class="extra-role">Club / Activity Name</div>
+              <div class="extra-org">School / Organization</div>
+            </div>
+            <div class="extra-period">2022 – Present</div>
+          </div>
+          <div class="extra-desc">
+            Describe your role and what you contributed. Leadership positions,
+            projects you led, or events you organized are worth highlighting.
+          </div>
+        </div>
+
+        <!-- Extra 2 -->
+        <div class="extra-card">
+          <div class="extra-top">
+            <div>
+              <div class="extra-role">Club / Activity Name</div>
+              <div class="extra-org">School / Organization</div>
+            </div>
+            <div class="extra-period">2023 – Present</div>
+          </div>
+          <div class="extra-desc">
+            Describe your role and what you contributed. Mention any competitions
+            entered, community impact, or skills you developed through participation.
+          </div>
+        </div>
+
+        <!-- Extra 3 -->
+        <div class="extra-card">
+          <div class="extra-top">
+            <div>
+              <div class="extra-role">Club / Activity Name</div>
+              <div class="extra-org">School / Organization</div>
+            </div>
+            <div class="extra-period">2023 – 2024</div>
+          </div>
+          <div class="extra-desc">
+            Describe your role and what you contributed. Even volunteer work,
+            tutoring, or passion projects outside school count here.
+          </div>
+        </div>
+
+        <!-- Extra 4 -->
+        <div class="extra-card">
+          <div class="extra-top">
+            <div>
+              <div class="extra-role">Club / Activity Name</div>
+              <div class="extra-org">School / Organization</div>
+            </div>
+            <div class="extra-period">2022 – 2023</div>
+          </div>
+          <div class="extra-desc">
+            Describe your role and what you contributed. Try to connect each
+            activity back to curiosity, discipline, or teamwork.
+          </div>
+        </div>
+
+      </div><!-- .extra-grid -->
+    </section>
+  </div>
+
+
+  <!-- ════════════════════════════ FOOTER ════════════════════════════ -->
+  <footer>
+    <span class="footer-copy">© 2025 Your Name — Chemistry &amp; Engineering Portfolio</span>
+    <div class="footer-links">
+      <a href="mailto:your@email.com">Email</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/yourusername"     target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+
+  <!-- ════════════════════════════ JS ════════════════════════════ -->
+  <script>
+    /* Active nav link highlight on scroll */
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id], div#home');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+        });
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('[id]').forEach(el => {
+      if (['home','awards','exp','extra'].includes(el.id)) io.observe(el);
+    });
+  </script>
+
+</body>
+</html>
