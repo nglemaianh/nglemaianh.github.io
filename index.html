@@ -1,246 +1,380 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Mai Anh — Portfolio</title>
+  <title>Nguyenn Le Mai Anh — Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
+    /* ── Design tokens (v1 deep-space palette) ── */
     :root {
-      --bg:        #0E1E30;
-      --bg-alt:    #122336;
-      --card:      #172D46;
-      --card-ho:   #1D3552;
-      --border:    #1F3550;
-      --border-hi: #2C4A6A;
-      --text:      #DDE9FF;
-      --muted:     #6D8FAF;
-      --dim:       #344F6A;
-      --blue:      #5BA5F5;
-      --blue-lt:   #90C2FF;
-      --teal:      #3DD6B0;
-      --nav-h:     64px;
-      --r:         10px;
-      --font:      'Plus Jakarta Sans', sans-serif;
-      --mono:      'JetBrains Mono', monospace;
+      --bg:        #060D1F;
+      --bg-card:   #0B1629;
+      --bg-card2:  #0F1C35;
+      --border:    #1A2744;
+      --border-hi: #253860;
+      --text:      #D6E4FF;
+      --muted:     #5E7BAA;
+      --dim:       #2F4668;
+      --teal:      #2DD4BF;
+      --teal-glow: rgba(45,212,191,0.18);
+      --purple:    #818CF8;
+      --nav-h:     74px;
+      --f-head:    'Syne', sans-serif;
+      --f-body:    'Plus Jakarta Sans', sans-serif;
+      --f-mono:    'JetBrains Mono', monospace;
     }
 
+    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html   { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
-    body   { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; }
+    html   { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 8px); }
+    body   { font-family: var(--f-body); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.7; }
     a      { text-decoration: none; color: inherit; }
     ul     { list-style: none; }
     img    { display: block; max-width: 100%; }
-    button { font-family: var(--font); cursor: pointer; }
+    button { font-family: var(--f-body); cursor: pointer; border: none; }
 
-    /* ─── view transitions ─── */
-    #main-view,
-    #detail-view { transition: opacity 0.28s ease; }
+    /* ── View fades ── */
+    #main-view, #detail-view { transition: opacity 0.28s ease; }
     .hidden { display: none !important; }
 
 
-    /* ══════════════════════════════
-       NAV
-    ══════════════════════════════ */
+    /* ══════════════════════════════════════
+       NAV — prominent
+    ══════════════════════════════════════ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 clamp(1.5rem, 5vw, 4rem);
-      background: rgba(14, 30, 48, 0.88);
-      backdrop-filter: blur(14px);
+      background: rgba(6, 13, 31, 0.92);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      cursor: pointer;
+    /* subtle gradient line under nav */
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--teal), var(--purple), transparent);
+      opacity: 0.35;
     }
-    .nav-logo em { color: var(--teal); font-style: normal; }
 
-    .nav-links { display: flex; gap: 0.2rem; }
+    .nav-logo {
+      font-family: var(--f-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .nav-logo .dot { color: var(--teal); }
+    .nav-logo .last { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+    }
     .nav-links a {
-      font-size: 0.875rem;
+      font-family: var(--f-body);
+      font-size: 0.975rem;
       font-weight: 500;
       color: var(--muted);
-      padding: 0.4rem 0.9rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 6px;
       transition: color 0.15s, background 0.15s;
+      position: relative;
     }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--text); background: rgba(255,255,255,0.07); }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    .nav-links a.active {
+      color: var(--teal);
+      background: rgba(45,212,191,0.08);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
 
     #progress-bar {
       position: fixed;
-      top: var(--nav-h);
-      left: 0;
-      height: 2px;
-      width: 0%;
-      background: linear-gradient(to right, var(--teal), var(--blue));
-      z-index: 99;
+      top: var(--nav-h); left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(to right, var(--teal), var(--purple));
+      z-index: 199;
       transition: width 0.08s linear;
     }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        HERO
-    ══════════════════════════════ */
+    ══════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 400px;
+      grid-template-columns: 1fr 380px;
       align-items: center;
       gap: 4rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: calc(var(--nav-h) + 4.5rem) clamp(1.5rem, 5vw, 4rem) 4.5rem;
+      padding: calc(var(--nav-h) + 5rem) clamp(1.5rem, 5vw, 4rem) 5rem;
     }
-    .hero-pill {
-      display: inline-flex;
+
+    .hero-eyebrow {
+      font-family: var(--f-mono);
+      font-size: 0.7rem;
+      color: var(--teal);
+      letter-spacing: 0.14em;
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--blue-lt);
-      background: rgba(91,165,245,0.1);
-      border: 1px solid rgba(91,165,245,0.22);
-      padding: 0.32rem 0.9rem;
-      border-radius: 100px;
+      gap: 0.75rem;
       margin-bottom: 1.5rem;
     }
-    .hero-pill::before {
+    .hero-eyebrow::before {
       content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--blue);
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--teal);
     }
+
+    /* Name — two-line split */
     .hero-name {
-      font-size: clamp(2.75rem, 5.5vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-      margin-bottom: 0.75rem;
+      font-family: var(--f-head);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
     }
+    .name-top {
+      display: block;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.1em;
+    }
+    .name-bot {
+      display: block;
+      font-size: clamp(3rem, 6.5vw, 5rem);
+      font-weight: 800;
+      color: var(--text);
+    }
+    .name-bot .hl { color: var(--teal); }
+
     .hero-sub {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--muted);
       margin-bottom: 1.75rem;
     }
-    .hero-sub strong { color: var(--teal); font-weight: 600; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
     .hero-bio {
-      font-size: 0.975rem;
+      font-size: 0.95rem;
+      font-weight: 300;
       color: var(--muted);
       line-height: 1.82;
-      max-width: 500px;
+      max-width: 480px;
       margin-bottom: 2.5rem;
     }
+
     .cta-row { display: flex; gap: 0.875rem; flex-wrap: wrap; }
+
     .btn {
-      font-family: var(--font);
+      font-family: var(--f-body);
       font-size: 0.9rem;
       font-weight: 600;
       padding: 0.72rem 1.75rem;
-      border-radius: 8px;
-      border: none;
+      border-radius: 4px;
       display: inline-block;
       transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
     }
     .btn:hover { transform: translateY(-2px); }
-    .btn-solid { background: var(--blue); color: #08172A; }
-    .btn-solid:hover { background: #82BFFF; box-shadow: 0 6px 24px rgba(91,165,245,0.3); }
-    .btn-ghost { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border-hi); }
-    .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+    .btn-solid { background: var(--teal); color: #060D1F; }
+    .btn-solid:hover { background: #5EEBD8; box-shadow: 0 6px 24px rgba(45,212,191,0.3); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border-hi); }
+    .btn-ghost:hover { color: var(--purple); border-color: var(--purple); }
 
-    /* atom */
-    .hero-visual { display: flex; align-items: center; justify-content: center; }
-    .atom { position: relative; width: 310px; height: 310px; }
-    .nucleus {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 18px var(--teal), 0 0 50px rgba(61,214,176,0.28);
+    /* ── Photo + Atom hybrid ── */
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
+    .atom-portrait {
+      position: relative;
+      width: 360px; height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* glow behind photo */
+    .nucleus-glow {
+      position: absolute;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 0 40px var(--teal-glow), 0 0 90px rgba(45,212,191,0.12);
+      pointer-events: none;
+    }
+
+    /* photo circle */
+    .nucleus-photo {
+      position: absolute;
+      width: 148px; height: 148px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(45,212,191,0.6);
+      box-shadow: 0 0 20px rgba(45,212,191,0.35);
+      z-index: 2;
+      background: var(--bg-card2);
+    }
+    .nucleus-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* placeholder when no photo */
+    .photo-ph {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--teal);
+    }
+    .photo-ph svg {
+      width: 44px; height: 44px;
+      opacity: 0.6;
+    }
+    .photo-ph span {
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* orbits */
     .orbit {
-      position: absolute; top: 50%; left: 50%;
-      border-radius: 50%; border: 1px solid;
+      position: absolute;
+      top: 50%; left: 50%;
+      border-radius: 50%;
+      border: 1px solid;
     }
     .o1 {
-      width: 110px; height: 110px; margin: -55px 0 0 -55px;
-      border-color: rgba(61,214,176,0.35);
-      animation: sp1 4s linear infinite;
+      width: 118px; height: 118px; margin: -59px 0 0 -59px;
+      border-color: rgba(45,212,191,0.0);   /* hidden — photo covers it */
     }
     .o2 {
-      width: 195px; height: 195px; margin: -97.5px 0 0 -97.5px;
-      border-color: rgba(91,165,245,0.22);
+      width: 214px; height: 214px; margin: -107px 0 0 -107px;
+      border-color: rgba(45,212,191,0.28);
       transform: rotate(55deg);
-      animation: sp2 7.5s linear infinite;
+      animation: sp2 7s linear infinite;
     }
     .o3 {
-      width: 295px; height: 295px; margin: -147.5px 0 0 -147.5px;
-      border-color: rgba(61,214,176,0.12);
-      transform: rotate(-30deg);
-      animation: sp3 12s linear infinite;
+      width: 340px; height: 340px; margin: -170px 0 0 -170px;
+      border-color: rgba(129,140,248,0.18);
+      transform: rotate(-25deg);
+      animation: sp3 13s linear infinite;
+    }
+    .o4 {
+      /* extra thin outer ring */
+      width: 358px; height: 358px; margin: -179px 0 0 -179px;
+      border-color: rgba(45,212,191,0.06);
     }
     .e {
       position: absolute;
-      width: 7px; height: 7px; border-radius: 50%;
-      top: -3.5px; left: 50%; margin-left: -3.5px;
+      border-radius: 50%;
+      top: -4px; left: 50%; margin-left: -4px;
+      width: 8px; height: 8px;
     }
-    .o1 .e { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
-    .o2 .e { background: var(--blue); box-shadow: 0 0 8px var(--blue); }
-    .o3 .e { background: var(--teal); box-shadow: 0 0 8px var(--teal); opacity: 0.6; }
-    @keyframes sp1 { to { transform: rotate(360deg); } }
+    .o2 .e { background: var(--teal);   box-shadow: 0 0 8px var(--teal); }
+    .o3 .e { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+
     @keyframes sp2 { from { transform: rotate(55deg);  } to { transform: rotate(415deg); } }
-    @keyframes sp3 { from { transform: rotate(-30deg); } to { transform: rotate(330deg); } }
+    @keyframes sp3 { from { transform: rotate(-25deg); } to { transform: rotate(335deg); } }
     @media (prefers-reduced-motion: reduce) { .orbit { animation: none; } }
 
 
-    /* ══════════════════════════════
-       SECTION SHELL
-    ══════════════════════════════ */
+    /* ══════════════════════════════════════
+       SECTION SHELL  (v1 aesthetic)
+    ══════════════════════════════════════ */
     .sec-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 5.5rem clamp(1.5rem, 5vw, 4rem);
+      padding: 6rem clamp(1.5rem, 5vw, 4rem);
     }
+
     .sec-head {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
-      margin-bottom: 2.75rem;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
     }
-    .sec-badge {
-      font-size: 0.68rem;
-      font-weight: 600;
-      font-family: var(--mono);
+
+    /* Periodic-table element box */
+    .el-box {
+      flex-shrink: 0;
+      border: 1px solid var(--border-hi);
+      padding: 5px 6px 4px;
+      text-align: center;
+      line-height: 1;
+      min-width: 52px;
+    }
+    .el-box .an  { font-family: var(--f-mono); font-size: 0.52rem; color: var(--dim); display: block; margin-bottom: 1px; }
+    .el-box .sym { font-family: var(--f-head); font-size: 1.3rem;  font-weight: 700;  color: var(--teal); display: block; }
+    .el-box .nm  { font-family: var(--f-mono); font-size: 0.48rem; color: var(--dim); display: block; margin-top: 1px; }
+
+    .sec-title {
+      font-family: var(--f-head);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .sec-rule { flex: 1; height: 1px; background: linear-gradient(to right, var(--border-hi), transparent); }
+
+    .sec-wl {
+      font-family: var(--f-mono);
+      font-size: 0.6rem;
+      color: var(--dim);
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+
+    /* sub-section header within awards */
+    .subsec-head {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem 0 1.5rem;
+    }
+    .subsec-head:first-child { margin-top: 0; }
+    .subsec-label {
+      font-family: var(--f-mono);
+      font-size: 0.65rem;
       letter-spacing: 0.1em;
-      color: var(--teal);
-      background: rgba(61,214,176,0.09);
-      border: 1px solid rgba(61,214,176,0.2);
-      padding: 0.25rem 0.7rem;
-      border-radius: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
       white-space: nowrap;
     }
-    .sec-title {
-      font-size: clamp(1.5rem, 2.8vw, 2rem);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-    }
-    .sec-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--border-hi), transparent);
-    }
+    .subsec-rule { flex: 1; height: 1px; background: var(--border); }
+
     hr.divider {
       border: none;
       border-top: 1px solid var(--border);
@@ -249,399 +383,324 @@
     }
 
 
-    /* ══════════════════════════════
-       CARDS  (Awards + Extra)
-    ══════════════════════════════ */
+    /* ══════════════════════════════════════
+       CARDS
+    ══════════════════════════════════════ */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+      gap: 1.25rem;
     }
+
     .card {
-      background: var(--card);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--r);
       overflow: hidden;
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      position: relative;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--border-hi);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.38);
+    /* v1 signature: top gradient line appears on hover */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
     }
-    .card:hover .card-cta { color: var(--blue); }
+    .card:hover { transform: translateY(-3px); border-color: var(--border-hi); box-shadow: 0 14px 44px rgba(0,0,0,0.45); }
+    .card:hover::before { opacity: 1; }
+    .card:hover .card-cta { color: var(--teal); }
 
     .card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
     .card-placeholder {
       width: 100%; aspect-ratio: 16/9;
       display: flex; align-items: center; justify-content: center;
-      font-size: 2.6rem;
+      font-size: 2.5rem;
     }
-    .pl-awards { background: linear-gradient(135deg, #143366 0%, #0C4456 100%); }
-    .pl-extra  { background: linear-gradient(135deg, #0C4440 0%, #143366 100%); }
+    .pl-intl   { background: linear-gradient(135deg, #112E62 0%, #0B3D55 100%); }
+    .pl-school { background: linear-gradient(135deg, #0E3A55 0%, #112E62 100%); }
+    .pl-exp    { background: linear-gradient(135deg, #26125C 0%, #112E62 100%); }
+    .pl-extra  { background: linear-gradient(135deg, #0C3D3A 0%, #112E62 100%); }
 
-    .card-body {
-      padding: 1.3rem 1.4rem 1.4rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-    }
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .card-org  { font-size: 0.7rem; font-family: var(--mono); color: var(--teal); }
-    .card-year { font-size: 0.68rem; font-family: var(--mono); color: var(--dim); }
+    .card-body { padding: 1.25rem 1.35rem 1.4rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .card-top  { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    .card-org  { font-family: var(--f-mono); font-size: 0.66rem; color: var(--teal); letter-spacing: 0.03em; }
+    .card-year { font-family: var(--f-mono); font-size: 0.64rem; color: var(--dim); white-space: nowrap; }
+
     .card-title {
-      font-size: 1rem;
+      font-family: var(--f-head);
+      font-size: 0.98rem;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.3;
       letter-spacing: -0.015em;
+      color: var(--text);
     }
-    .card-summary { font-size: 0.85rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .card-level {
+      font-family: var(--f-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal);
+      line-height: 1.3;
+    }
+    .card-summary { font-size: 0.83rem; color: var(--muted); line-height: 1.62; flex: 1; margin-top: 0.15rem; }
+
     .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      margin-top: 0.85rem; padding-top: 0.85rem;
       border-top: 1px solid var(--border);
     }
     .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .card-tag  {
-      font-size: 0.64rem; font-family: var(--mono);
-      padding: 0.15rem 0.55rem;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.06);
-      color: var(--muted);
-    }
-    .card-cta {
-      font-size: 0.78rem; font-weight: 600;
-      color: var(--dim); white-space: nowrap;
-      transition: color 0.2s;
-    }
+    .card-tag  { font-family: var(--f-mono); font-size: 0.62rem; padding: 0.15rem 0.5rem; background: rgba(255,255,255,0.05); color: var(--muted); }
+    .card-cta  { font-size: 0.75rem; font-weight: 600; color: var(--dim); white-space: nowrap; transition: color 0.2s; }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        EXPERIENCE LIST
-    ══════════════════════════════ */
+    ══════════════════════════════════════ */
     .exp-list { display: flex; flex-direction: column; }
+
     .exp-item {
       display: grid;
-      grid-template-columns: 170px 1fr;
+      grid-template-columns: 168px 1fr;
       gap: 2rem;
       padding: 1.5rem;
       margin: 0 -1.5rem;
-      border-radius: var(--r);
       cursor: pointer;
       transition: background 0.2s;
     }
     .exp-item + .exp-item { border-top: 1px solid var(--border); }
-    .exp-item:hover { background: var(--card); }
-    .exp-item:hover .exp-cta { color: var(--blue); }
+    .exp-item:hover { background: var(--bg-card); }
+    .exp-item:hover .exp-cta { color: var(--teal); }
 
-    .exp-period { font-size: 0.7rem; font-family: var(--mono); color: var(--blue); margin-bottom: 0.3rem; padding-top: 0.15rem; }
-    .exp-org    { font-size: 0.82rem; color: var(--muted); }
-    .exp-title  { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .exp-summary { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.75rem; }
+    .exp-period { font-family: var(--f-mono); font-size: 0.68rem; color: var(--purple); margin-bottom: 0.3rem; padding-top: 0.12rem; }
+    .exp-org    { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+    .exp-title  { font-family: var(--f-head); font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--text); }
+    .exp-summary { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.75rem; font-weight: 300; }
     .exp-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
     .exp-tags   { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .exp-tag    {
-      font-size: 0.65rem; font-family: var(--mono);
-      padding: 0.18rem 0.55rem;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.05);
-      color: var(--muted);
-      border: 1px solid var(--border-hi);
-    }
-    .exp-cta { font-size: 0.78rem; font-weight: 600; color: var(--dim); white-space: nowrap; transition: color 0.2s; }
+    .exp-tag    { font-family: var(--f-mono); font-size: 0.62rem; padding: 0.18rem 0.5rem; background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border-hi); }
+    .exp-cta    { font-size: 0.75rem; font-weight: 600; color: var(--dim); white-space: nowrap; transition: color 0.2s; }
 
 
-    /* ══════════════════════════════
-       GALLERY GRID  (in detail view)
-    ══════════════════════════════ */
-    .gallery-section {
-      margin-top: 2.5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-    .gallery-head {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.1rem;
-    }
-    .gallery-head h3 { font-size: 1rem; font-weight: 700; }
-    .gallery-count {
-      font-size: 0.68rem;
-      font-family: var(--mono);
-      color: var(--dim);
-    }
+    /* ══════════════════════════════════════
+       GALLERY  (in detail view)
+    ══════════════════════════════════════ */
+    .gallery-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.6rem;
-    }
-    /* 4-column variant — add class "cols-4" via JS if you prefer */
+    .gallery-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .gallery-head h3 { font-family: var(--f-head); font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .gallery-count { font-family: var(--f-mono); font-size: 0.65rem; color: var(--dim); }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
     .gallery-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
 
     .gal-item {
       position: relative;
-      aspect-ratio: 4 / 3;
-      border-radius: 6px;
+      aspect-ratio: 4/3;
       overflow: hidden;
       cursor: pointer;
-      background: var(--card);
+      background: var(--bg-card2);
     }
-    .gal-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
     .gal-ph {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.9rem;
-      transition: transform 0.3s ease;
+      font-size: 1.8rem;
+      transition: transform 0.3s;
     }
     .gal-overlay {
       position: absolute; inset: 0;
-      background: rgba(5, 18, 36, 0.52);
+      background: rgba(6,13,31,0.52);
       display: flex; align-items: center; justify-content: center;
-      opacity: 0;
-      transition: opacity 0.2s ease;
+      opacity: 0; transition: opacity 0.2s;
     }
-    .gal-overlay svg { width: 26px; height: 26px; stroke: white; }
-    .gal-item:hover .gal-overlay  { opacity: 1; }
-    .gal-item:hover img            { transform: scale(1.07); }
-    .gal-item:hover .gal-ph        { transform: scale(1.07); }
+    .gal-overlay svg { width: 24px; height: 24px; stroke: white; }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-item:hover img { transform: scale(1.06); }
+    .gal-item:hover .gal-ph { transform: scale(1.06); }
 
-    .gal-caption {
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 0.35rem;
-      line-height: 1.4;
-    }
+    .gal-caption { font-size: 0.68rem; color: var(--muted); text-align: center; margin-top: 0.35rem; line-height: 1.4; }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        LIGHTBOX
-    ══════════════════════════════ */
+    ══════════════════════════════════════ */
     #lightbox {
-      position: fixed; inset: 0;
-      z-index: 500;
-      background: rgba(5, 12, 24, 0.96);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(3, 8, 20, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
       padding: 1.5rem;
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 0.22s ease;
     }
     #lightbox.lb-open { opacity: 1; pointer-events: all; }
 
     .lb-inner {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      max-width: min(88vw, 880px);
-      width: 100%;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      max-width: min(90vw, 900px); width: 100%;
     }
     .lb-top {
-      position: absolute;
-      top: -2.75rem;
-      left: 0; right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: absolute; top: -2.75rem; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .lb-counter {
-      font-size: 0.7rem;
-      font-family: var(--mono);
-      color: rgba(255,255,255,0.42);
-    }
+    .lb-counter { font-family: var(--f-mono); font-size: 0.68rem; color: rgba(255,255,255,0.38); }
     .lb-close {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: white;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.05rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: white; width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
       transition: background 0.2s;
-      line-height: 1;
-      padding: 0;
     }
-    .lb-close:hover { background: rgba(255,255,255,0.22); }
+    .lb-close:hover { background: rgba(255,255,255,0.2); }
 
-    /* prev / next arrows */
     .lb-btn {
-      position: absolute;
-      top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: white;
-      width: 44px; height: 44px;
-      border-radius: 50%;
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      color: white; width: 44px; height: 44px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, opacity 0.2s;
-      padding: 0;
+      transition: background 0.2s, opacity 0.2s; padding: 0;
     }
-    .lb-btn:hover { background: rgba(255,255,255,0.18); }
+    .lb-btn:hover { background: rgba(255,255,255,0.16); }
     .lb-btn:disabled { opacity: 0.2; pointer-events: none; }
     .lb-btn svg { width: 18px; height: 18px; }
-    .lb-prev { left:  -3.5rem; }
-    .lb-next { right: -3.5rem; }
+    .lb-prev { left: -3.5rem; } .lb-next { right: -3.5rem; }
 
-    #lb-img {
-      max-height: 76vh;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 6px;
+    #lb-img { max-height: 76vh; max-width: 100%; object-fit: contain; }
+    #lb-ph  {
+      width: min(600px, 78vw); height: min(400px, 52vh);
+      display: flex; align-items: center; justify-content: center; font-size: 5rem;
     }
-    #lb-ph {
-      width: min(600px, 80vw);
-      height: min(400px, 52vh);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5rem;
-    }
-    .lb-caption {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      min-height: 1.3em;
-    }
+    .lb-caption { font-size: 0.875rem; color: rgba(255,255,255,0.45); text-align: center; min-height: 1.2em; }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        DETAIL VIEW
-    ══════════════════════════════ */
+    ══════════════════════════════════════ */
     #detail-view { min-height: 100vh; padding-top: var(--nav-h); }
 
     .detail-hero {
-      width: 100%; height: 420px;
+      width: 100%; height: 400px;
       position: relative; overflow: hidden;
     }
     .detail-hero img { width: 100%; height: 100%; object-fit: cover; }
     .detail-hero-ph {
       width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5.5rem;
+      display: flex; align-items: center; justify-content: center; font-size: 5rem;
     }
-    .ph-awards { background: linear-gradient(135deg, #14336A 0%, #0C4355 100%); }
-    .ph-exp    { background: linear-gradient(135deg, #2A1660 0%, #14336A 100%); }
-    .ph-extra  { background: linear-gradient(135deg, #0C4440 0%, #14336A 100%); }
-    /* gradient fade at bottom of hero */
+    .ph-intl   { background: linear-gradient(135deg, #112E62 0%, #0B3D55 100%); }
+    .ph-school { background: linear-gradient(135deg, #0E3A55 0%, #112E62 100%); }
+    .ph-exp    { background: linear-gradient(135deg, #26125C 0%, #112E62 100%); }
+    .ph-extra  { background: linear-gradient(135deg, #0C3D3A 0%, #112E62 100%); }
     .detail-hero::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 180px;
-      background: linear-gradient(to bottom, transparent, var(--bg));
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 200px; background: linear-gradient(to bottom, transparent, var(--bg));
       pointer-events: none;
     }
 
-    .detail-content {
-      max-width: 740px;
-      margin: 0 auto;
-      padding: 0 clamp(1.5rem, 5vw, 2rem) 6rem;
-    }
+    .detail-content { max-width: 740px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 2rem) 6rem; }
+
     .detail-back {
       display: inline-flex; align-items: center; gap: 0.5rem;
       font-size: 0.875rem; font-weight: 600; color: var(--muted);
-      cursor: pointer; padding: 1.75rem 0 2rem;
-      transition: color 0.2s;
+      cursor: pointer; padding: 1.75rem 0 2rem; transition: color 0.2s;
     }
-    .detail-back:hover { color: var(--blue); }
+    .detail-back:hover { color: var(--teal); }
     .detail-back svg { width: 16px; height: 16px; }
 
     .detail-cat {
       display: inline-block;
-      font-size: 0.68rem; font-weight: 600; font-family: var(--mono);
+      font-family: var(--f-mono); font-size: 0.65rem; font-weight: 500;
       letter-spacing: 0.1em; color: var(--teal);
-      background: rgba(61,214,176,0.1);
-      border: 1px solid rgba(61,214,176,0.2);
-      padding: 0.25rem 0.7rem; border-radius: 4px;
-      margin-bottom: 1.1rem;
+      background: rgba(45,212,191,0.09); border: 1px solid rgba(45,212,191,0.2);
+      padding: 0.22rem 0.7rem; margin-bottom: 0.75rem;
     }
+
+    /* optional org logo in detail */
+    .detail-org-logo {
+      height: 30px; width: auto;
+      filter: brightness(0) invert(0.7);
+      margin-bottom: 1rem; margin-top: 0.25rem;
+    }
+
     .detail-title {
+      font-family: var(--f-head);
       font-size: clamp(1.8rem, 4.5vw, 2.75rem);
       font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+    .detail-level {
+      font-family: var(--f-body);
+      font-size: 1rem; font-weight: 600; color: var(--teal);
       margin-bottom: 1.5rem;
     }
+
     .detail-meta {
       display: flex; flex-wrap: wrap; gap: 2rem;
-      padding: 1.1rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
       margin-bottom: 2.25rem;
     }
     .meta-label {
-      font-size: 0.62rem; font-family: var(--mono);
-      color: var(--dim); letter-spacing: 0.1em;
-      text-transform: uppercase; margin-bottom: 0.2rem;
+      font-family: var(--f-mono); font-size: 0.6rem;
+      color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem;
     }
-    .meta-value { font-size: 0.9rem; font-weight: 600; }
+    .meta-value { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 
-    .detail-body { font-size: 1.025rem; color: #9EBADA; line-height: 1.88; }
+    .detail-body { font-size: 1.0rem; color: #8BAED0; line-height: 1.88; }
     .detail-body p { margin-bottom: 1.3rem; }
     .detail-body p:last-child { margin-bottom: 0; }
 
     .detail-tags {
       display: flex; flex-wrap: wrap; gap: 0.5rem;
-      margin-top: 2.5rem; padding-top: 2rem;
-      border-top: 1px solid var(--border);
+      margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
     }
     .detail-tag {
-      font-size: 0.72rem; font-family: var(--mono);
-      padding: 0.35rem 0.85rem; border-radius: 100px;
-      background: rgba(255,255,255,0.05);
-      color: var(--muted); border: 1px solid var(--border-hi);
+      font-family: var(--f-mono); font-size: 0.68rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border-hi);
     }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        FOOTER
-    ══════════════════════════════ */
+    ══════════════════════════════════════ */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem clamp(1.5rem, 5vw, 4rem);
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+      max-width: 1200px; margin: 0 auto;
     }
-    .footer-copy { font-size: 0.78rem; color: var(--dim); }
-    .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a {
-      font-size: 0.82rem; font-weight: 500;
-      color: var(--muted); transition: color 0.2s;
-    }
+    .footer-copy { font-family: var(--f-mono); font-size: 0.65rem; color: var(--dim); }
+    .footer-links { display: flex; gap: 1.75rem; }
+    .footer-links a { font-size: 0.82rem; font-weight: 500; color: var(--muted); transition: color 0.2s; }
     .footer-links a:hover { color: var(--teal); }
 
 
-    /* ══════════════════════════════
+    /* ══════════════════════════════════════
        RESPONSIVE
-    ══════════════════════════════ */
-    @media (max-width: 820px) {
+    ══════════════════════════════════════ */
+    @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; padding-top: calc(var(--nav-h) + 3.5rem); }
       .hero-visual { display: none; }
       .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
       .detail-hero { height: 260px; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 620px) {
-      .lb-prev { left:  0.4rem; }
-      .lb-next { right: 0.4rem; }
-      .lb-btn  { width: 36px; height: 36px; background: rgba(0,0,0,0.55); }
+      .lb-prev { left: 0.4rem; } .lb-next { right: 0.4rem; }
+      .lb-btn { width: 38px; height: 38px; background: rgba(0,0,0,0.6); }
+      .sec-wl { display: none; }
     }
     @media (max-width: 480px) {
-      .nav-links a { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
+      .nav-links a { font-size: 0.85rem; padding: 0.4rem 0.75rem; }
       footer { flex-direction: column; text-align: center; }
     }
   </style>
@@ -649,9 +708,11 @@
 
 <body>
 
-<!-- NAV -->
+<!-- ── NAV ── -->
 <nav>
-  <span class="nav-logo" onclick="goHome()">MaiAnh<em>.</em>PORTFOLIO</span>
+  <span class="nav-logo" onclick="goHome()">
+    Nguyễn Lê<span class="dot"> · </span><span class="last">Mai Anh</span>
+  </span>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#awards">Awards</a></li>
@@ -662,92 +723,132 @@
 <div id="progress-bar"></div>
 
 
-<!-- ════════════════════════════════════════════
+<!-- ════════════════════════════════════
      MAIN VIEW
-════════════════════════════════════════════ -->
+════════════════════════════════════ -->
 <div id="main-view">
 
   <!-- HERO -->
   <section id="home">
     <div class="hero">
       <div>
-        <span class="hero-pill">Chemistry &amp; Engineering</span>
-        <h1 class="hero-name">Nguyễn Lê Mai Anh</h1>
-        <p class="hero-sub">Aspiring <strong>Chemist</strong> &amp; <strong>Engineer</strong></p>
+        <p class="hero-eyebrow">Chemistry &amp; Engineering</p>
+        <h1 class="hero-name">
+          <span class="name-top">Nguyễn Lê</span>
+          <span class="name-bot">Mai <span class="hl">Anh</span></span>
+        </h1>
+        <p class="hero-sub">
+          Aspiring <strong>Chemist</strong> &amp; <strong>Engineer</strong> · Lawrence S. Ting School, Ho Chi Minh City
+        </p>
         <p class="hero-bio">
-          Passionate about the intersection of molecular chemistry and
-          engineering design. I explore how matter behaves at the atomic level
-          and apply those principles to real-world problems.
-          Currently seeking undergraduate programs in [your country / region].
+          Passionate about the intersection of molecular chemistry and engineering design.
+          Competing at national and international levels, I explore how matter behaves
+          at the atomic level and apply those principles to real-world problems.
+          Currently seeking undergraduate programmes in Chemistry and Engineering.
         </p>
         <div class="cta-row">
           <a class="btn btn-solid" href="#awards">Explore My Work</a>
           <a class="btn btn-ghost" href="mailto:your@email.com">Get in Touch</a>
         </div>
       </div>
+
+      <!-- Photo + Atom hybrid -->
       <div class="hero-visual">
-        <div class="atom">
-          <div class="nucleus"></div>
-          <div class="orbit o1"><div class="e"></div></div>
+        <div class="atom-portrait">
+          <div class="nucleus-glow"></div>
+          <div class="nucleus-photo">
+            <!--
+              ── ADD YOUR PHOTO ───────────────────────────────
+              1. Create an "images/" folder next to index.html
+              2. Add your photo as images/profile.jpg
+              3. Replace the <div class="photo-ph"> block below
+                 with: <img src="./images/profile.jpg" alt="Nguyễn Lê Mai Anh">
+              ─────────────────────────────────────────────── -->
+            <div class="photo-ph">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <circle cx="24" cy="18" r="9"/>
+                <path d="M6 43c0-9.941 8.059-18 18-18s18 8.059 18 18"/>
+              </svg>
+              <span>Your Photo</span>
+            </div>
+          </div>
           <div class="orbit o2"><div class="e"></div></div>
           <div class="orbit o3"><div class="e"></div></div>
+          <div class="orbit o4"></div>
         </div>
       </div>
     </div>
   </section>
 
+
   <!-- AWARDS -->
   <hr class="divider" />
   <div class="sec-wrap" id="awards">
     <div class="sec-head">
-      <span class="sec-badge">01 / AWARDS</span>
-      <h2 class="sec-title">Awards &amp; Honors</h2>
-      <div class="sec-line"></div>
+      <div class="el-box">
+        <span class="an">79</span>
+        <span class="sym">Au</span>
+        <span class="nm">Gold</span>
+      </div>
+      <h2 class="sec-title">Awards &amp; Honours</h2>
+      <div class="sec-rule"></div>
+      <span class="sec-wl">λ 589.3 nm</span>
     </div>
-    <div class="card-grid" id="awards-grid"></div>
+    <div id="awards-grid"></div>
   </div>
 
-  <!-- EXPERIENCE -->
+
+  <!-- EXPERIENCE (placeholder — content coming soon) -->
   <hr class="divider" />
   <div class="sec-wrap" id="experience">
     <div class="sec-head">
-      <span class="sec-badge">02 / EXPERIENCE</span>
+      <div class="el-box">
+        <span class="an">26</span>
+        <span class="sym">Fe</span>
+        <span class="nm">Iron</span>
+      </div>
       <h2 class="sec-title">Pre-professional Experience</h2>
-      <div class="sec-line"></div>
+      <div class="sec-rule"></div>
+      <span class="sec-wl">λ 656.3 nm</span>
     </div>
     <div class="exp-list" id="exp-list"></div>
   </div>
 
-  <!-- EXTRACURRICULAR -->
+
+  <!-- EXTRACURRICULAR (placeholder — content coming soon) -->
   <hr class="divider" />
   <div class="sec-wrap" id="extra">
     <div class="sec-head">
-      <span class="sec-badge">03 / ACTIVITIES</span>
+      <div class="el-box">
+        <span class="an">14</span>
+        <span class="sym">Si</span>
+        <span class="nm">Silicon</span>
+      </div>
       <h2 class="sec-title">Extracurricular Activities</h2>
-      <div class="sec-line"></div>
+      <div class="sec-rule"></div>
+      <span class="sec-wl">λ 486.1 nm</span>
     </div>
     <div class="card-grid" id="extra-grid"></div>
   </div>
 
+
   <!-- FOOTER -->
   <footer>
-    <span class="footer-copy">© 2026 Nguyễn Lê Mai Anh — Chemistry &amp; Engineering Portfolio</span>
+    <span class="footer-copy">© 2025 Nguyễn Lê Mai Anh — Chemistry &amp; Engineering Portfolio</span>
     <div class="footer-links">
-      <a href="mailto:nguyenleemaianh@gmail.com">Email: nguyenleemaianh@gmail.com </a>
-      <a href="https://www.linkedin.com/in/anhnglee/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:your@email.com">Email</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
     </div>
   </footer>
 </div><!-- #main-view -->
 
 
-<!-- ════════════════════════════════════════════
-     DETAIL VIEW  (article / news page)
-════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════
+     DETAIL VIEW
+════════════════════════════════════ -->
 <div id="detail-view" class="hidden">
-
   <div class="detail-hero" id="detail-hero"></div>
-
   <div class="detail-content">
     <div class="detail-back" id="back-btn">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
@@ -755,350 +856,330 @@
       </svg>
       Back
     </div>
-
     <span class="detail-cat"   id="detail-cat"></span>
-    <h1   class="detail-title" id="detail-title"></h1>
-    <div  class="detail-meta"  id="detail-meta"></div>
-    <div  class="detail-body"  id="detail-body"></div>
-    <div  class="detail-tags"  id="detail-tags"></div>
+    <div                       id="detail-logo"></div>
+    <h1  class="detail-title"  id="detail-title"></h1>
+    <div class="detail-level"  id="detail-level"></div>
+    <div class="detail-meta"   id="detail-meta"></div>
+    <div class="detail-body"   id="detail-body"></div>
+    <div class="detail-tags"   id="detail-tags"></div>
     <div                       id="detail-gallery"></div>
   </div>
+</div>
 
-</div><!-- #detail-view -->
 
-
-<!-- ════════════════════════════════════════════
+<!-- ════════════════════════════════════
      LIGHTBOX
-════════════════════════════════════════════ -->
+════════════════════════════════════ -->
 <div id="lightbox">
   <div class="lb-inner">
     <div class="lb-top">
       <span id="lb-counter"></span>
-      <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+      <button class="lb-close" id="lb-close">✕</button>
     </div>
-
-    <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">
+    <button class="lb-btn lb-prev" id="lb-prev">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
-    <button class="lb-btn lb-next" id="lb-next" aria-label="Next">
+    <button class="lb-btn lb-next" id="lb-next">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
-
-    <img id="lb-img"  alt="" />
+    <img id="lb-img" alt="" />
     <div id="lb-ph"></div>
     <p   id="lb-caption" class="lb-caption"></p>
   </div>
 </div>
 
 
-<!-- ════════════════════════════════════════════
-     SCRIPT
-════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════
+     DATA + CODE
+════════════════════════════════════ -->
 <script>
-/* ─────────────────────────────────────────────────────────────
-   YOUR PORTFOLIO DATA
-   ─────────────────────────────────────────────────────────────
+/* ──────────────────────────────────────────────────────────
+   PORTFOLIO DATA
+   ──────────────────────────────────────────────────────────
+   HOW TO ADD PHOTOS:
+   • Create an "images/" folder next to index.html
+   • Set  image: "./images/filename.jpg"  for the hero image
+   • Set  src: "./images/filename.jpg"  for gallery photos
+   • Leave as ""  to keep the gradient placeholder
 
-   HOW TO ADD YOUR OWN PHOTOS
-   ─────────────────────────────────────────────────────────────
-   1. Create an "images/" folder next to this index.html file
-   2. Drop your photo files in there  (jpg, png, webp all work)
-   3. In the gallery array below, set:
-        { src: "./images/your-photo.jpg", caption: "Optional caption" }
-   4. Leave  src: ""  to keep the coloured gradient placeholder
+   HOW TO SET LOGO:
+   • Set  logo: "./images/raci-logo.png"  (will appear in detail page)
 
-   HOW TO CONTROL PHOTOS PER ROW
-   ─────────────────────────────────────────────────────────────
-   Each item has a  cols  property (3 or 4).
-   Set  cols: 3  for 3 photos per row, cols: 4 for 4 per row.
-
-   HOW TO ADD MORE ITEMS
-   ─────────────────────────────────────────────────────────────
-   Copy any object in the array below, paste it, and fill in your info.
-   Add as many gallery images and body paragraphs as you like.
-───────────────────────────────────────────────────────────── */
-
+   COLS: set cols: 3 or cols: 4 to control photos per row
+────────────────────────────────────────────────────────── */
 const portfolio = {
 
+  /* ─────────────────── AWARDS ─────────────────── */
   awards: [
+
+    /* ── INTERNATIONAL & NATIONAL ── */
     {
-      id:           "award-1",
-      title:        "Award Name",
-      organization: "Competition / Organization",
-      year:         "2024",
-      icon:         "🥇",
-      image:        "",           // hero image: "./images/award1-hero.jpg"
-      summary:      "One-sentence summary shown on the card — what you won and where.",
+      id:    "icq",
+      cat:   "intl",
+      title: "International Chemistry Quiz",
+      level: "High Distinction — Top 10% in Asia",
+      organization: "Royal Australian Chemical Institute (RACI)",
+      year:  "August 2026",
+      icon:  "🌏",
+      image: "",
+      logo:  "",         // "./images/raci-logo.png" when available
+      logo_name: "Royal Australian Chemical Institute",
+      summary: "Earned High Distinction (Top 10% across Asia) among 1.5M+ participants from 38+ countries.",
       body: [
-        "This is the first paragraph of your award story. What was the competition and what did it mean to be selected or to win? Give context so the reader understands the scale and prestige.",
-        "Second paragraph — how did you prepare? Describe the process, the challenges you faced, and how you overcame them. Specific details here make the story memorable.",
-        "Third paragraph — what did this achievement mean to you? What did you learn and how did it shape your direction in chemistry or engineering?"
+        "The International Chemistry Quiz (ICQ) is administered by the Royal Australian Chemical Institute (RACI) and has historically attracted over 1.5 million participants across 38+ countries, making it one of the largest chemistry competitions in the world. Achieving High Distinction — recognising the top 10% of all participants across Asia — places me among the very best chemistry students on the continent.",
+        "The ICQ assesses knowledge across all major areas of chemistry, including organic chemistry, inorganic chemistry, physical chemistry, and analytical methods. Each question demands not just factual recall but the ability to reason through multi-step problems and apply chemical principles to unfamiliar contexts.",
+        "This achievement marks a meaningful international benchmark in my chemistry journey — performing at the highest tier in a competition of this scale motivates me to pursue chemistry at university with even greater commitment and depth."
       ],
-      tags: ["Chemistry", "International", "2024"],
-      cols: 3,       // photos per row: 3 or 4
-      gallery: [
-        { src: "", caption: "Preparation in the lab" },
-        { src: "", caption: "Competition day" },
-        { src: "", caption: "Award ceremony" },
-        { src: "", caption: "Team photo" },
-        { src: "", caption: "Celebration dinner" },
-        { src: "", caption: "Certificate presentation" }
-      ]
-    },
-    {
-      id:           "award-2",
-      title:        "Award Name",
-      organization: "Competition / Organization",
-      year:         "2024",
-      icon:         "🏆",
-      image:        "",
-      summary:      "One-sentence summary shown on the card.",
-      body: [
-        "Give context for this award. How competitive was it? How many participants from how many schools or countries?",
-        "Describe your project or submission in detail. What problem did you solve? What methods or tools did you use?",
-        "What was the outcome, and what has this opened up for you?"
-      ],
-      tags: ["Engineering", "National", "2024"],
+      tags: ["International", "Chemistry", "RACI", "2026"],
       cols: 3,
       gallery: [
-        { src: "", caption: "Project setup" },
-        { src: "", caption: "Testing phase" },
-        { src: "", caption: "Presentation" },
-        { src: "", caption: "Award announcement" },
-        { src: "", caption: "Winners group photo" },
-        { src: "", caption: "Certificate" }
+        { src: "", caption: "Certificate of High Distinction" },
+        { src: "", caption: "RACI official letterhead" },
+        { src: "", caption: "Results notification" }
       ]
     },
+
     {
-      id:           "award-3",
-      title:        "Award Name",
-      organization: "Competition / Organization",
-      year:         "2023",
-      icon:         "🎖️",
-      image:        "",
-      summary:      "One-sentence summary shown on the card.",
+      id:    "hanue",
+      cat:   "intl",
+      title: "HaNUE Olympic STEM",
+      level: "First Prize — 1st out of 191 National Teams",
+      organization: "Hanoi National University of Education",
+      year:  "December 2025",
+      icon:  "🥇",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Ranked 1st among 191 high school teams (510 students) in Vietnam's flagship national STEM olympiad.",
       body: [
-        "Tell the full story of this award. Context, preparation, and performance.",
-        "What was unique or particularly challenging about this experience?",
-        "How did it reinforce — or change — your academic interests?"
+        "The Hanoi National University of Education (HaNUE) Olympic STEM is one of Vietnam's most prestigious nationwide STEM competitions, attracting approximately 1,500 teams and 4,500 students in total — including 191 high school teams representing 510 students from across all provinces and cities.",
+        "The competition ran across three demanding rounds: a theoretical assessment testing foundational STEM knowledge; a real-world STEM product development challenge where teams designed and built practical solutions under time constraints; and a rapid prototyping round in which teams faced an unannounced challenge and had to ideate, build, and present a working prototype within hours — with no prior preparation possible.",
+        "Achieving First Prize and ranking 1st out of 191 competing high school teams is a recognition our team is deeply proud of. The rapid prototyping round in particular demanded creative problem-solving under pressure, clear team communication, and decisive engineering judgment — qualities that define how I want to approach challenges in university and beyond."
       ],
-      tags: ["Research", "Regional", "2023"],
+      tags: ["National", "STEM", "First Prize", "2025"],
+      cols: 3,
+      gallery: [
+        { src: "", caption: "Competition day — theoretical round" },
+        { src: "", caption: "Product development session" },
+        { src: "", caption: "Rapid prototyping challenge" },
+        { src: "", caption: "Our team's final prototype" },
+        { src: "", caption: "Awards ceremony" },
+        { src: "", caption: "First Prize certificate" }
+      ]
+    },
+
+    {
+      id:    "wycto",
+      cat:   "intl",
+      title: "World Youth Chemistry Talent Olympiad",
+      level: "Bronze Medal — National Round",
+      organization: "Institute for Applied STEM Research & VNU University of Science",
+      year:  "August 2026",
+      icon:  "🥉",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Bronze Medal in the National Round among 1,531 students competing across three divisions nationwide.",
+      body: [
+        "The World Youth Chemistry Talent Olympiad (WYCTO) is an international chemistry olympiad organized by the Institute for Applied STEM Research and Human Resources Development in collaboration with Edufly Education Technology. Academic content was developed by the Faculty of Chemistry, VNU University of Science — one of Vietnam's most rigorous chemistry departments.",
+        "The National Round attracted 1,531 students from across Vietnam, competing across three divisions: Junior, Intermediate, and Senior. The competition emphasises advanced theoretical chemistry, systematic problem-solving, and the precision of analytical reasoning expected at university entrance level.",
+        "Earning the Bronze Medal in this field of over 1,500 competitors reflects strong foundational chemistry and the ability to perform consistently under examination pressure. This competition deepened my appreciation for rigorous chemical reasoning and reinforced my commitment to chemistry as a future field of study."
+      ],
+      tags: ["National", "Chemistry", "Bronze Medal", "2026"],
+      cols: 3,
+      gallery: [
+        { src: "", caption: "Bronze Medal" },
+        { src: "", caption: "Certificate of achievement" },
+        { src: "", caption: "Award ceremony" }
+      ]
+    },
+
+    {
+      id:    "hcmut",
+      cat:   "intl",
+      title: "HCMUT Innovation Competition",
+      level: "Top 10 National Finalist",
+      organization: "Ho Chi Minh City University of Technology (VNU – HCM)",
+      year:  "September 2026",
+      icon:  "💡",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Selected as a Top 10 National Finalist among 189 projects — including 18 international teams — across 4 categories.",
+      body: [
+        "The Ho Chi Minh City University of Technology (VNU-HCM) Innovation Competition is a national competition that saw a record 189 projects in this edition, including 18 international teams and 50 finalist teams across four categories. The competition focuses on developing innovative solutions to real-world problems, spanning domains from environmental engineering to digital health and sustainable technology.",
+        "Being selected as a Top 10 National Finalist — from a pool of 189 projects including international submissions — places our project among the most outstanding innovative solutions presented. The selection process evaluated each project on originality, technical feasibility, real-world applicability, scalability, and presentation quality before a panel of academic and industry judges.",
+        "This experience taught me what it truly means to bring a chemistry-based idea all the way from concept to a fully defendable innovation. The process of presenting our work to university professors and industry experts sharpened my ability to communicate scientific ideas with clarity, confidence, and real-world grounding."
+      ],
+      tags: ["National", "Innovation", "Top 10", "2026"],
+      cols: 2,
+      gallery: [
+        { src: "", caption: "Our project display" },
+        { src: "", caption: "Panel presentation" },
+        { src: "", caption: "Finalist certificate" },
+        { src: "", caption: "Team photo at the event" }
+      ]
+    },
+
+    {
+      id:    "hcmc-olympiad",
+      cat:   "intl",
+      title: "Ho Chi Minh City Academic Olympiad",
+      level: "Third Prize in Chemistry — 2025 & 2026",
+      organization: "Ho Chi Minh City Department of Education and Training",
+      year:  "Apr 2025 · Apr 2026",
+      icon:  "🏆",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Twice awarded Third Prize in Chemistry at the city-level Academic Olympiad, representing ~3,000 students from ~150 schools.",
+      body: [
+        "The Ho Chi Minh City Academic Olympiad is organised by the HCMC Department of Education and Training and attracts approximately 3,000 students from Grades 10 and 11 across roughly 150 high schools in the city. The competition evaluates academic knowledge and problem-solving across 13 subjects including Chemistry, and is considered one of the most competitive academic benchmarks at the city level.",
+        "Earning Third Prize in Chemistry in both Grade 10 (April 2025) and Grade 11 (April 2026) demonstrates sustained academic performance across two consecutive years — an outcome that requires consistent preparation and not just a single strong performance on one occasion. The competition's chemistry questions probe deeply beyond the standard curriculum.",
+        "Competing in this olympiad annually has been a reliable measure of my chemistry progress and has motivated me to study well beyond what the classroom alone provides. Placing in the top tier twice in a row is a result I carry with pride as I pursue chemistry at university level."
+      ],
+      tags: ["City-level", "Chemistry", "Third Prize", "2025", "2026"],
+      cols: 3,
+      gallery: [
+        { src: "", caption: "Grade 10 certificate — April 2025" },
+        { src: "", caption: "Grade 11 certificate — April 2026" },
+        { src: "", caption: "Competition day" }
+      ]
+    },
+
+    /* ── SCHOOL ACHIEVEMENTS ── */
+    {
+      id:    "lsts-leadership",
+      cat:   "school",
+      title: "Outstanding Leader & Core Values",
+      level: "4× Outstanding Young Leader · 8 Semesters of Excellence (Gr 8–11)",
+      organization: "Lawrence S. Ting School (LSTS)",
+      year:  "2022 – 2026",
+      icon:  "⭐",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Consistently recognised for outstanding leadership and exemplifying the school's six core values across four academic years.",
+      body: [
+        "Across four years at Lawrence S. Ting School, I was consistently recognised for leadership and character: awarded Outstanding Young Leader four times (Semesters I and II of both Grade 10 and Grade 11); completed Leadership Camp Training twice (Grade 10 and Grade 11); and received Excellent in Demonstrating the School's Six Core Values across all semesters from Grade 8 through Grade 11 — eight consecutive semesters.",
+        "These recognitions reflect a sustained commitment to the school community's values — integrity, collaboration, creativity, responsibility, respect, and excellence — not as abstract ideals but as active daily practice. Receiving this recognition continuously across four year-levels demonstrates consistency rather than a single strong season.",
+        "Leadership at LSTS taught me that effective leadership is less about authority and more about showing up consistently, supporting your team, and setting a standard others want to follow. These lessons shape how I approach teamwork, competitions, and any community I am part of."
+      ],
+      tags: ["Leadership", "Core Values", "LSTS", "2022–2026"],
+      cols: 3,
+      gallery: [
+        { src: "", caption: "Outstanding Young Leader — Gr 10 Sem I" },
+        { src: "", caption: "Outstanding Young Leader — Gr 10 Sem II" },
+        { src: "", caption: "Outstanding Young Leader — Gr 11 Sem I" },
+        { src: "", caption: "Outstanding Young Leader — Gr 11 Sem II" },
+        { src: "", caption: "Leadership Camp Training certificate" },
+        { src: "", caption: "Core Values award — Grade 11" }
+      ]
+    },
+
+    {
+      id:    "lsts-stem",
+      cat:   "school",
+      title: "STEM Achievements at LSTS",
+      level: "1st Prize F.E.A.T. Week · 2nd Prize Water Rocket · 3rd Prize EDUtech",
+      organization: "Lawrence S. Ting School (LSTS)",
+      year:  "2023 – 2025",
+      icon:  "🔭",
+      image: "",
+      logo:  "",
+      logo_name: "",
+      summary: "Four school-wide STEM awards spanning scientific research, engineering design, environmental innovation, and rocket engineering.",
+      body: [
+        "Within Lawrence S. Ting School, I earned several competitive STEM recognitions: First Prize (Top 1 out of 45 teams) in LSTS F.E.A.T. Week (Semester II, Grade 11); completion of Schoolwide Scientific Research (Semester I, Grade 11); Third Prize in the EDUtech Planet Protectors Competition schoolwide (Semester II, Grade 10); and Second Prize in the LSTS Water Rocket Competition (Semester I, Grade 10).",
+        "These awards span the full range of STEM — from scientific research and presentation, to technology design for environmental problems, to precision engineering with water rockets. Each demanded a different mode of thinking: analytical rigour for research, creative design for the EDUtech challenge, and iterative engineering precision for rocket construction.",
+        "Winning First Prize in F.E.A.T. Week — the school's most rigorous STEM showcase — with a team of peers I helped lead was a defining moment in my STEM journey. Moving from Second Prize in Grade 10 water rockets to First Prize in Grade 11 research also shows a clear progression I am proud of."
+      ],
+      tags: ["STEM", "Research", "Engineering", "LSTS", "2023–2025"],
       cols: 4,
       gallery: [
-        { src: "", caption: "Research setup" },
-        { src: "", caption: "Data collection" },
-        { src: "", caption: "Analysis" },
-        { src: "", caption: "Results review" }
+        { src: "", caption: "F.E.A.T. Week — First Prize certificate" },
+        { src: "", caption: "Scientific Research completion certificate" },
+        { src: "", caption: "EDUtech Planet Protectors — Third Prize" },
+        { src: "", caption: "Water Rocket Competition — Second Prize" }
       ]
     }
   ],
 
+  /* ─────────────────── EXPERIENCE (to be filled in) ─────────────────── */
   experience: [
     {
-      id:           "exp-1",
-      title:        "Role / Position Title",
-      organization: "Organization Name",
-      period:       "Jun – Aug 2024",
-      icon:         "🔬",
-      image:        "",
-      summary:      "One-line summary of what you did in this role.",
-      body: [
-        "Describe what you actually did day-to-day. What lab techniques, software, or equipment did you use? Be specific — admissions teams appreciate technical depth.",
-        "Describe a meaningful project or finding. What problem were you investigating? What was your hypothesis and approach?",
-        "What were the results or takeaways? Did your work contribute to a broader project, publication, or real-world application?"
-      ],
-      tags: ["Lab Research", "Chemistry", "Python"],
-      cols: 3,
-      gallery: [
-        { src: "", caption: "Lab environment" },
-        { src: "", caption: "Experiment in progress" },
-        { src: "", caption: "Equipment used" },
-        { src: "", caption: "Data analysis" },
-        { src: "", caption: "Weekly team meeting" },
-        { src: "", caption: "Final presentation" }
-      ]
-    },
-    {
-      id:           "exp-2",
-      title:        "Role / Position Title",
-      organization: "Organization Name",
-      period:       "Sep – Dec 2023",
-      icon:         "⚗️",
-      image:        "",
-      summary:      "One-line summary of what you did in this role.",
-      body: [
-        "Describe the organisation and your role. Did you work alongside professors, graduate students, or industry professionals?",
-        "What was the most challenging part of this experience, and how did you handle it?",
-        "What lasting skills or insights did you gain? Is there a follow-up project or result from this work?"
-      ],
-      tags: ["Engineering", "Data Analysis", "CAD"],
-      cols: 3,
-      gallery: [
-        { src: "", caption: "Office and workspace" },
-        { src: "", caption: "Design session" },
-        { src: "", caption: "Prototype build" },
-        { src: "", caption: "Testing day" },
-        { src: "", caption: "Mentor session" },
-        { src: "", caption: "Team lunch" }
-      ]
-    },
-    {
-      id:           "exp-3",
-      title:        "Role / Position Title",
-      organization: "Organization Name",
-      period:       "Jan – May 2023",
-      icon:         "🧪",
-      image:        "",
-      summary:      "One-line summary of what you did in this role.",
-      body: [
-        "Give context — was this a formal internship, a self-initiated project, or a volunteer position?",
-        "What did you contribute, and how did your work connect to the larger mission of the organisation?",
-        "Reflect on what you learned and how it applies to your current interests in chemistry or engineering."
-      ],
-      tags: ["Materials Science", "Spectroscopy"],
-      cols: 4,
-      gallery: [
-        { src: "", caption: "Spectroscopy setup" },
-        { src: "", caption: "Sample preparation" },
-        { src: "", caption: "Instrument calibration" },
-        { src: "", caption: "Results review" }
-      ]
+      id:    "exp-placeholder",
+      title: "Pre-professional Experience",
+      organization: "Coming Soon",
+      period: "2024 – 2025",
+      icon:  "🔬",
+      image: "",
+      summary: "Detailed experience entries will be added here shortly.",
+      body:  ["Content coming soon."],
+      tags:  ["Research", "Chemistry"],
+      cols:  3,
+      gallery: []
     }
   ],
 
+  /* ─────────────────── EXTRA (to be filled in) ─────────────────── */
   extra: [
     {
-      id:           "extra-1",
-      title:        "Club / Activity Name",
-      organization: "School / Organization",
-      period:       "2022 – Present",
-      icon:         "🧬",
-      image:        "",
-      summary:      "One-line description of your involvement.",
-      body: [
-        "Describe what this club or activity does and what your specific role is. Are you a founder, officer, or core member?",
-        "What have you organised, built, or achieved through this activity? Be concrete — events run, competitions entered, members led.",
-        "Why does this matter to you personally? Connect it to your character or values."
-      ],
-      tags: ["Leadership", "Science"],
-      cols: 3,
-      gallery: [
-        { src: "", caption: "Club meeting" },
-        { src: "", caption: "Event we organised" },
-        { src: "", caption: "Competition day" },
-        { src: "", caption: "Workshop session" },
-        { src: "", caption: "Community outreach" },
-        { src: "", caption: "End-of-year photo" }
-      ]
-    },
-    {
-      id:           "extra-2",
-      title:        "Club / Activity Name",
-      organization: "School / Organization",
-      period:       "2023 – Present",
-      icon:         "📡",
-      image:        "",
-      summary:      "One-line description of your involvement.",
-      body: [
-        "Describe the activity and what drew you to it initially.",
-        "What have you done within this activity that you're most proud of?",
-        "How has your participation shaped your thinking or character?"
-      ],
-      tags: ["Community", "Engineering"],
-      cols: 3,
-      gallery: [
-        { src: "", caption: "First meeting" },
-        { src: "", caption: "Project work" },
-        { src: "", caption: "Presentation" },
-        { src: "", caption: "Field visit" },
-        { src: "", caption: "Award ceremony" },
-        { src: "", caption: "Celebration" }
-      ]
-    },
-    {
-      id:           "extra-3",
-      title:        "Club / Activity Name",
-      organization: "School / Organization",
-      period:       "2023 – 2024",
-      icon:         "🏅",
-      image:        "",
-      summary:      "One-line description of your involvement.",
-      body: [
-        "Describe the activity, its scope, and your level of involvement.",
-        "Highlight a specific moment, project, or achievement from your time here.",
-        "What did you take away from being part of this community?"
-      ],
-      tags: ["Competition", "Teamwork"],
-      cols: 4,
-      gallery: [
-        { src: "", caption: "Training session" },
-        { src: "", caption: "Competition day" },
-        { src: "", caption: "Team huddle" },
-        { src: "", caption: "Medals ceremony" }
-      ]
-    },
-    {
-      id:           "extra-4",
-      title:        "Club / Activity Name",
-      organization: "School / Organization",
-      period:       "2022 – 2023",
-      icon:         "🌐",
-      image:        "",
-      summary:      "One-line description of your involvement.",
-      body: [
-        "Give an overview of this activity and your role in it.",
-        "Describe the impact you had or the skills you developed.",
-        "How does this complement your academic focus in chemistry or engineering?"
-      ],
-      tags: ["Outreach", "Science"],
-      cols: 3,
-      gallery: [
-        { src: "", caption: "Kickoff meeting" },
-        { src: "", caption: "Event planning" },
-        { src: "", caption: "Day of the event" },
-        { src: "", caption: "Participant feedback" },
-        { src: "", caption: "Team debrief" },
-        { src: "", caption: "Final group photo" }
-      ]
+      id:    "extra-placeholder",
+      title: "Extracurricular Activities",
+      organization: "Coming Soon",
+      period: "2022 – Present",
+      icon:  "🧬",
+      image: "",
+      summary: "Activity details will be added here shortly.",
+      body:  ["Content coming soon."],
+      tags:  ["Leadership", "Science"],
+      cols:  3,
+      gallery: []
     }
   ]
 };
 
 
-/* ─────────────────────────────────────────────────────────────
-   COLOUR GRADIENTS for placeholder photos
-   (used when src is empty — varies by position in the grid)
-───────────────────────────────────────────────────────────── */
-const galGradients = [
-  ['#10325E', '#0C4455'],
-  ['#1A1258', '#103260'],
-  ['#0B3D36', '#103260'],
-  ['#2A1256', '#103260'],
-  ['#0B2E4A', '#1A3020'],
-  ['#163060', '#2A0E52'],
-  ['#0E3A26', '#103260'],
-  ['#3A1A20', '#103060']
+/* ──────────────────────────────────────────────────────────
+   GRADIENT PALETTE for placeholder photos
+────────────────────────────────────────────────────────── */
+const galGrads = [
+  ['#0F2E62', '#0B3C52'],
+  ['#1A1060', '#0F2E62'],
+  ['#0B3C3A', '#0F2E62'],
+  ['#28105C', '#0F2E62'],
+  ['#0B2C48', '#1A301E'],
+  ['#163060', '#280E52'],
+  ['#0C3A26', '#0F2E62'],
+  ['#381A1E', '#0F2E60']
 ];
-
-function galGrad(idx) {
-  const [a, b] = galGradients[idx % galGradients.length];
+function galGrad(i) {
+  const [a, b] = galGrads[i % galGrads.length];
   return `linear-gradient(135deg, ${a}, ${b})`;
 }
 
 
-/* ─────────────────────────────────────────────────────────────
-   RENDERING
-───────────────────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────
+   RENDER FUNCTIONS
+────────────────────────────────────────────────────────── */
 
-// Build a card element (awards + extracurricular)
+function makePlaceholderClass(type, cat) {
+  if (type === 'awards') return cat === 'school' ? 'pl-school' : 'pl-intl';
+  if (type === 'experience') return 'pl-exp';
+  return 'pl-extra';
+}
+
+// Build a card
 function makeCard(item, type) {
   const card = document.createElement('div');
   card.className = 'card';
   card.addEventListener('click', () => openDetail(type, item.id));
 
-  const phClass  = type === 'awards' ? 'pl-awards' : 'pl-extra';
+  const phClass      = makePlaceholderClass(type, item.cat);
   const yearOrPeriod = item.year || item.period || '';
-  const tagsHtml = item.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
+  const tagsHtml     = item.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
 
   const thumb = item.image
     ? `<img class="card-img" src="${item.image}" alt="${item.title}" loading="lazy">`
@@ -1112,6 +1193,7 @@ function makeCard(item, type) {
         <span class="card-year">${yearOrPeriod}</span>
       </div>
       <div class="card-title">${item.title}</div>
+      ${item.level ? `<div class="card-level">${item.level}</div>` : ''}
       <div class="card-summary">${item.summary}</div>
       <div class="card-footer">
         <div class="card-tags">${tagsHtml}</div>
@@ -1145,42 +1227,43 @@ function makeExpRow(item) {
   return row;
 }
 
-// Build the photo gallery section for the detail view
+// Sub-section header inside awards
+function makeSubHead(label) {
+  const el = document.createElement('div');
+  el.className = 'subsec-head';
+  el.innerHTML = `<span class="subsec-label">${label}</span><div class="subsec-rule"></div>`;
+  return el;
+}
+
+// Render the photo gallery inside the detail view
 function renderGallery(item) {
   const el = document.getElementById('detail-gallery');
   el.innerHTML = '';
   if (!item.gallery || item.gallery.length === 0) return;
 
-  const cols  = item.cols === 4 ? 'cols-4' : '';
   const count = item.gallery.length;
-
-  // Build the grid
-  const grid = document.createElement('div');
+  const cols  = item.cols === 4 ? 'cols-4' : '';
+  const grid  = document.createElement('div');
   grid.className = `gallery-grid ${cols}`;
 
   item.gallery.forEach((photo, i) => {
     const cell = document.createElement('div');
     cell.className = 'gal-item';
-
     const inner = photo.src
       ? `<img src="${photo.src}" alt="${photo.caption || ''}" loading="lazy">`
       : `<div class="gal-ph" style="background:${galGrad(i)}">${item.icon}</div>`;
-
     cell.innerHTML = `
       ${inner}
       <div class="gal-overlay">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <circle cx="11" cy="11" r="7"/>
           <line x1="21" y1="21" x2="16.5" y2="16.5"/>
-          <line x1="11" y1="8"  x2="11"   y2="14"/>
-          <line x1="8"  y1="11" x2="14"   y2="11"/>
+          <line x1="11" y1="8"  x2="11" y2="14"/>
+          <line x1="8"  y1="11" x2="14" y2="11"/>
         </svg>
       </div>`;
-
     cell.addEventListener('click', () => openLightbox(item.gallery, i, item.icon));
     grid.appendChild(cell);
-
-    // Optional caption below each cell
     if (photo.caption) {
       const cap = document.createElement('p');
       cap.className = 'gal-caption';
@@ -1191,26 +1274,40 @@ function renderGallery(item) {
 
   const section = document.createElement('div');
   section.className = 'gallery-section';
-  section.innerHTML = `
-    <div class="gallery-head">
-      <h3>Photos</h3>
-      <span class="gallery-count">${count} photo${count !== 1 ? 's' : ''}</span>
-    </div>`;
+  section.innerHTML = `<div class="gallery-head"><h3>Photos</h3><span class="gallery-count">${count} photo${count !== 1 ? 's' : ''}</span></div>`;
   section.appendChild(grid);
   el.appendChild(section);
 }
 
-// Render all three sections
+// Render everything on page load
 function renderAll() {
-  portfolio.awards.forEach(a => document.getElementById('awards-grid').appendChild(makeCard(a, 'awards')));
+  const awardsGrid = document.getElementById('awards-grid');
+
+  // International & National sub-section
+  awardsGrid.appendChild(makeSubHead('International &amp; National'));
+  const intlGrid = document.createElement('div');
+  intlGrid.className = 'card-grid';
+  portfolio.awards.filter(a => a.cat === 'intl').forEach(a => intlGrid.appendChild(makeCard(a, 'awards')));
+  awardsGrid.appendChild(intlGrid);
+
+  // School Achievements sub-section
+  awardsGrid.appendChild(makeSubHead('School Achievements · Lawrence S. Ting School'));
+  const schoolGrid = document.createElement('div');
+  schoolGrid.className = 'card-grid';
+  portfolio.awards.filter(a => a.cat === 'school').forEach(a => schoolGrid.appendChild(makeCard(a, 'awards')));
+  awardsGrid.appendChild(schoolGrid);
+
+  // Experience
   portfolio.experience.forEach(e => document.getElementById('exp-list').appendChild(makeExpRow(e)));
+
+  // Extra
   portfolio.extra.forEach(x => document.getElementById('extra-grid').appendChild(makeCard(x, 'extra')));
 }
 
 
-/* ─────────────────────────────────────────────────────────────
-   NAVIGATION  (main ↔ detail)
-───────────────────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────
+   NAVIGATION
+────────────────────────────────────────────────────────── */
 let lastScrollY = 0;
 
 function findItem(type, id) {
@@ -1222,42 +1319,51 @@ function openDetail(type, id) {
   if (!item) return;
   lastScrollY = window.scrollY;
 
-  // Hero image or gradient
-  const phClass = type === 'awards' ? 'ph-awards' : type === 'experience' ? 'ph-exp' : 'ph-extra';
+  // Hero image
+  const phClass = item.cat === 'school' ? 'ph-school' : type === 'experience' ? 'ph-exp' : type === 'extra' ? 'ph-extra' : 'ph-intl';
   document.getElementById('detail-hero').innerHTML = item.image
     ? `<img src="${item.image}" alt="${item.title}">`
     : `<div class="detail-hero-ph ${phClass}">${item.icon}</div>`;
 
   // Category badge
-  const labels = { awards: 'Award', experience: 'Experience', extra: 'Activity' };
-  document.getElementById('detail-cat').textContent = labels[type] || type;
+  const catLabels = { awards: 'Award', experience: 'Experience', extra: 'Activity' };
+  document.getElementById('detail-cat').textContent = catLabels[type] || type;
 
-  // Title
+  // Org logo (optional)
+  const logoEl = document.getElementById('detail-logo');
+  if (item.logo) {
+    logoEl.innerHTML = `<img class="detail-org-logo" src="${item.logo}" alt="${item.logo_name || ''}">`;
+  } else {
+    logoEl.innerHTML = '';
+  }
+
+  // Title + achievement level
   document.getElementById('detail-title').textContent = item.title;
+  document.getElementById('detail-level').textContent = item.level || '';
 
-  // Meta row
-  const yearLabel    = item.year ? 'Year' : 'Period';
+  // Meta
+  const yearLabel    = item.year ? 'Date' : 'Period';
   const yearOrPeriod = item.year || item.period || '';
   document.getElementById('detail-meta').innerHTML = `
-    <div class="meta-item">
+    <div>
       <div class="meta-label">Organization</div>
       <div class="meta-value">${item.organization}</div>
     </div>
-    <div class="meta-item">
+    <div>
       <div class="meta-label">${yearLabel}</div>
       <div class="meta-value">${yearOrPeriod}</div>
     </div>`;
 
-  // Body paragraphs
+  // Body
   document.getElementById('detail-body').innerHTML = item.body.map(p => `<p>${p}</p>`).join('');
 
   // Tags
   document.getElementById('detail-tags').innerHTML = item.tags.map(t => `<span class="detail-tag">${t}</span>`).join('');
 
-  // Photo gallery
+  // Gallery
   renderGallery(item);
 
-  // Fade out main → fade in detail
+  // Fade transition
   const main   = document.getElementById('main-view');
   const detail = document.getElementById('detail-view');
   main.style.opacity = '0';
@@ -1288,15 +1394,14 @@ function goBack() {
 }
 
 function goHome() {
-  const detail = document.getElementById('detail-view');
-  if (!detail.classList.contains('hidden')) {
+  if (!document.getElementById('detail-view').classList.contains('hidden')) {
     goBack();
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-// Nav links: if detail view is open, go back first then scroll to section
+// Nav links: if detail is open, go back then scroll
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', e => {
     if (!document.getElementById('detail-view').classList.contains('hidden')) {
@@ -1311,11 +1416,10 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 document.getElementById('back-btn').addEventListener('click', goBack);
 
 
-/* ─────────────────────────────────────────────────────────────
-   READING PROGRESS BAR
-───────────────────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────
+   PROGRESS BAR
+────────────────────────────────────────────────────────── */
 let scrollCb = null;
-
 function startProgressBar() {
   const bar = document.getElementById('progress-bar');
   if (scrollCb) window.removeEventListener('scroll', scrollCb);
@@ -1331,62 +1435,49 @@ function stopProgressBar() {
 }
 
 
-/* ─────────────────────────────────────────────────────────────
+/* ──────────────────────────────────────────────────────────
    LIGHTBOX
-───────────────────────────────────────────────────────────── */
-let lbItems = [];
-let lbIdx   = 0;
-let lbIcon  = '';
+────────────────────────────────────────────────────────── */
+let lbItems = [], lbIdx = 0, lbIcon = '';
+const lbEl  = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbPh  = document.getElementById('lb-ph');
+const lbCap = document.getElementById('lb-caption');
+const lbCnt = document.getElementById('lb-counter');
+const lbPrv = document.getElementById('lb-prev');
+const lbNxt = document.getElementById('lb-next');
 
-const lbEl      = document.getElementById('lightbox');
-const lbImg     = document.getElementById('lb-img');
-const lbPh      = document.getElementById('lb-ph');
-const lbCapEl   = document.getElementById('lb-caption');
-const lbCounter = document.getElementById('lb-counter');
-const lbPrev    = document.getElementById('lb-prev');
-const lbNext    = document.getElementById('lb-next');
-
-function openLightbox(items, startIdx, icon) {
-  lbItems = items;
-  lbIcon  = icon;
-  showSlide(startIdx);
+function openLightbox(items, idx, icon) {
+  lbItems = items; lbIcon = icon;
+  showSlide(idx);
   lbEl.classList.add('lb-open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLightbox() {
   lbEl.classList.remove('lb-open');
   document.body.style.overflow = '';
 }
-
 function showSlide(idx) {
   if (idx < 0 || idx >= lbItems.length) return;
   lbIdx = idx;
   const photo = lbItems[idx];
-
   if (photo.src) {
-    lbImg.src            = photo.src;
-    lbImg.style.display  = 'block';
-    lbPh.style.display   = 'none';
+    lbImg.src = photo.src; lbImg.style.display = 'block'; lbPh.style.display = 'none';
   } else {
-    lbPh.style.background  = galGrad(idx);
-    lbPh.textContent       = lbIcon;
-    lbPh.style.display     = 'flex';
-    lbImg.style.display    = 'none';
+    lbPh.style.background = galGrad(idx); lbPh.textContent = lbIcon;
+    lbPh.style.display = 'flex'; lbImg.style.display = 'none';
   }
-
-  lbCapEl.textContent   = photo.caption || '';
-  lbCounter.textContent = `${idx + 1} / ${lbItems.length}`;
-  lbPrev.disabled       = idx === 0;
-  lbNext.disabled       = idx === lbItems.length - 1;
+  lbCap.textContent = photo.caption || '';
+  lbCnt.textContent = `${idx + 1} / ${lbItems.length}`;
+  lbPrv.disabled = idx === 0;
+  lbNxt.disabled = idx === lbItems.length - 1;
 }
 
-lbPrev.addEventListener('click', e => { e.stopPropagation(); showSlide(lbIdx - 1); });
-lbNext.addEventListener('click', e => { e.stopPropagation(); showSlide(lbIdx + 1); });
+lbPrv.addEventListener('click', e => { e.stopPropagation(); showSlide(lbIdx - 1); });
+lbNxt.addEventListener('click', e => { e.stopPropagation(); showSlide(lbIdx + 1); });
 document.getElementById('lb-close').addEventListener('click', closeLightbox);
 lbEl.addEventListener('click', e => { if (e.target === lbEl) closeLightbox(); });
 
-// Keyboard navigation
 document.addEventListener('keydown', e => {
   if (!lbEl.classList.contains('lb-open')) return;
   if (e.key === 'Escape')     closeLightbox();
@@ -1394,36 +1485,30 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') showSlide(lbIdx + 1);
 });
 
-// Touch swipe on mobile
-let touchStartX = 0;
-lbEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+let touchX = 0;
+lbEl.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
 lbEl.addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 40) {
-    if (diff > 0) showSlide(lbIdx + 1);
-    else          showSlide(lbIdx - 1);
-  }
+  const d = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 40) { if (d > 0) showSlide(lbIdx + 1); else showSlide(lbIdx - 1); }
 });
 
 
-/* ─────────────────────────────────────────────────────────────
-   NAV active state
-───────────────────────────────────────────────────────────── */
-const navAnchors = document.querySelectorAll('.nav-links a');
+/* ──────────────────────────────────────────────────────────
+   NAV ACTIVE STATE
+────────────────────────────────────────────────────────── */
+const navAs = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
-  const y = window.scrollY + 100;
-  let current = '';
+  const y = window.scrollY + 90;
+  let cur = '';
   ['home','awards','experience','extra'].forEach(id => {
     const el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top + window.scrollY <= y) current = id;
+    if (el && el.getBoundingClientRect().top + window.scrollY <= y) cur = id;
   });
-  navAnchors.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
-  });
+  navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${cur}`));
 }, { passive: true });
 
 
-// Kick off
+// Go!
 renderAll();
 </script>
 </body>
