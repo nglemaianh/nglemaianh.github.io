@@ -156,7 +156,7 @@
     /* Left content panel */
     .aw-content {
       padding: 1.5rem 1.6rem; display: flex; flex-direction: column; gap: 0.55rem;
-      position: relative; overflow: hidden;
+      position: relative; overflow: hidden; container-type: inline-size;
     }
     /* Panel color classes */
     .p-violet  { background: linear-gradient(145deg, #5B21B6 0%, #2D0E6E 100%); }
@@ -187,6 +187,8 @@
     /* THE BIG ACHIEVEMENT TEXT */
     .aw-level {
       font-family: var(--fh); font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+      font-size: clamp(0.95rem, 7.4cqw, 1.55rem);   /* scales with the panel so long words (OUTSTANDING…) always fit */
+      overflow-wrap: break-word;
       font-weight: 800; color: #FFD166; line-height: 1.1; letter-spacing: -0.02em;
     }
     .aw-sublevel { font-family: var(--fb); font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.75); margin-top: 0.1rem; }
@@ -196,11 +198,13 @@
     .award-h:hover .aw-cta { color: rgba(255,255,255,0.9); }
 
     /* Right photo panel */
-    .aw-photos { background: var(--card); display: grid; overflow: hidden; }
+    .aw-photos { background: var(--card); display: grid; overflow: hidden; position: relative; }
     .aw-photos.grid-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
     .aw-photos.grid-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
     .aw-photos.grid-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-    .aw-photos.grid-3 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    .aw-photos.grid-3 { grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr 1fr; }
+    .aw-photos.grid-3 .gp:first-child { grid-row: 1 / span 2; }
+    .gp-pill { position: absolute; right: 0.6rem; bottom: 0.6rem; font-family: var(--fm); font-size: 0.62rem; letter-spacing: 0.04em; color: #fff; background: rgba(6,16,32,0.74); padding: 0.22rem 0.6rem; border-radius: 100px; pointer-events: none; }
     .gp {
       position: relative; overflow: hidden;
       background: var(--card2); min-height: 80px;
@@ -564,6 +568,13 @@ const gg = i => { const [a,b] = GG[i % GG.length]; return `linear-gradient(135de
 ═══════════════════════════════════════ */
 const D = {
 
+/* ── PHOTOS ON THE CARD vs. IN THE DETAIL PAGE ──────────────────
+   The small photo panel on each award card is separate from the full gallery:
+     cardPhotos: 1 | 2 | 3 | 4   → card shows only the first N photos (default: up to 4)
+     cardPick: [3, 5]            → card shows exactly these photos (numbers = file numbers, e.g. hanue-3, hanue-5)
+   The detail page always shows ALL photos. When some are hidden, the card shows "+N".
+   Example:  { id:'hanue', …, cardPhotos: 2, photos: 24, … }
+──────────────────────────────────────────────────────────────── */
 awards: [
   /* ── INTERNATIONAL & NATIONAL ── */
   { id:'icq', cat:'intl', panel:'p-blue', phCls:'ph-b', icon:'🌏', cardSize:'half',
@@ -916,17 +927,29 @@ function imgOk(img) {
 
 /* Award card photo panel */
 function buildAwardPhotoPanel(item) {
-  const photos = (item.gallery || []).slice(0, 4);
-  if (!photos.length) return `<div class="aw-photos grid-1"><div class="gp gp-ph ${item.phCls || 'ph-s'}" style="font-size:3rem">${item.icon}</div></div>`;
-  const count = item.gallery.length;
-  const extra = count - 4;
-  const gridCls = photos.length === 1 ? 'grid-1' : photos.length === 2 ? 'grid-2' : 'grid-4';
-  const cells = photos.map((p, i) => {
-    const isLast = i === photos.length - 1;
-    const more = (isLast && extra > 0 && photos.length === 4) ? `<div class="gp-more">+${extra}</div>` : '';
-    return `<div class="gp gp-ph" style="background:${gg(i)}">${smartImg(p.src, imgBase('awards', item.id, i + 1), p.caption)}${more}</div>`;
+  const all = item.gallery || [];
+  if (!all.length) return `<div class="aw-photos grid-1"><div class="gp gp-ph ${item.phCls || 'ph-s'}" style="font-size:3rem">${item.icon}</div></div>`;
+
+  /* which photos appear on the CARD:  cardPick:[3,5] (photo numbers)  or  cardPhotos:N (first N, max 4).
+     The detail page always shows ALL photos. */
+  let idxs;
+  if (Array.isArray(item.cardPick) && item.cardPick.length) {
+    idxs = item.cardPick.map(n => n - 1).filter(i => i >= 0 && i < all.length);
+  } else {
+    const want = Math.max(1, Math.min(4, item.cardPhotos || 4));
+    idxs = all.map((_, i) => i).slice(0, want);
+  }
+  idxs = idxs.slice(0, 4);
+  if (!idxs.length) idxs = [0];
+
+  const shown = idxs.length;
+  const extra = all.length - shown;                                   // photos not shown on the card
+  const cells = idxs.map((gi, k) => {
+    const more = (extra > 0 && shown >= 3 && k === shown - 1) ? `<div class="gp-more">+${extra}</div>` : '';
+    return `<div class="gp gp-ph" style="background:${gg(gi)}">${smartImg(all[gi].src, imgBase('awards', item.id, gi + 1), all[gi].caption)}${more}</div>`;
   }).join('');
-  return `<div class="aw-photos ${gridCls}">${cells}</div>`;
+  const pill = (extra > 0 && shown < 3) ? `<span class="gp-pill">+${extra} ${extra === 1 ? 'photo' : 'photos'}</span>` : '';
+  return `<div class="aw-photos grid-${shown}">${cells}${pill}</div>`;
 }
 
 /* Award card (horizontal) */
