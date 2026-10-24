@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nguyen Le Mai Anh — Portfolio</title>
+  <title>Nguyễn Lê Mai Anh — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -208,6 +208,9 @@
     .aw-photos.grid-3.stack { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
     .aw-photos.grid-3.stack .gp:first-child { grid-row: auto; }
     .award-h.tall { min-height: 270px; }
+    .gallery-section.vid-block { margin-bottom: 2.25rem; }
+    .vid-frame { border-radius: 10px; overflow: hidden; background: #000; border: 1px solid var(--bhi); box-shadow: 0 18px 50px rgba(0,0,0,0.5); }
+    .vid-frame video { display: block; width: 100%; max-height: 70vh; background: #000; }
     .gp-pill { position: absolute; right: 0.6rem; bottom: 0.6rem; font-family: var(--fm); font-size: 0.62rem; letter-spacing: 0.04em; color: #fff; background: rgba(6,16,32,0.74); padding: 0.22rem 0.6rem; border-radius: 100px; pointer-events: none; }
     .gp {
       position: relative; overflow: hidden;
@@ -439,7 +442,7 @@
 <body>
 
 <nav>
-  <span class="nav-logo" onclick="goHome()">Mai Anh<span class="dot"> · </span><span class="logo-2">PORTFOLIO</span></span>
+  <span class="nav-logo" onclick="goHome()">Nguyễn Lê<span class="dot"> · </span><span class="logo-2">Mai Anh</span></span>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#awards">Awards</a></li>
@@ -456,7 +459,7 @@
       <div>
         <p class="hero-eyebrow">Chemistry · Engineering · Leadership</p>
         <h1 class="hero-name">
-          <span class="name-top">Nguyen Le</span>
+          <span class="name-top">Nguyễn Lê</span>
           <span class="name-bot">Mai <span class="hl">Anh</span></span>
         </h1>
         <p class="hero-sub">Grade 12 · <strong>Lawrence S. Ting School</strong> · Ho Chi Minh City</p>
@@ -470,7 +473,7 @@
         <div class="atom-wrap">
           <div class="nucleus-glow"></div>
           <div class="nucleus-photo">
-            <!-- Replace with: <img src="./images/profile.jpg" alt="Nguyen Le Mai Anh"> -->
+            <!-- Replace with: <img src="./images/profile.jpg" alt="Nguyễn Lê Mai Anh"> -->
             <div class="photo-ph">
               <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="24" cy="18" r="9"/><path d="M6 43c0-9.941 8.059-18 18-18s18 8.059 18 18"/></svg>
               <span>Your Photo</span>
@@ -518,7 +521,7 @@
   </div>
 
   <footer>
-    <span class="footer-copy">© 2026 Nguyen Le Mai Anh — Chemistry &amp; Engineering Portfolio</span>
+    <span class="footer-copy">© 2026 Nguyễn Lê Mai Anh — Chemistry &amp; Engineering Portfolio</span>
     <div class="footer-links">
       <a href="mailto:your@email.com">Email</a>
       <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
@@ -579,6 +582,7 @@ const D = {
      cardPick: [3, 5]            → card shows exactly these photos (numbers = file numbers, e.g. hnue-3, hnue-5)
      cardLayout: 'stack'         → 2–3 card photos stacked top-to-bottom (best for landscape photos). Default: side by side
      image: false                → no cover image for this item (keeps the colour placeholder)
+     videos: [{src:'…mp4', caption:'…'}]  → shown large at the top of the photo column on the detail page
    The detail page always shows ALL photos. When some are hidden, the card shows "+N".
    Example:  { id:'hnue', …, cardPhotos: 2, photos: 24, … }
 ──────────────────────────────────────────────────────────────── */
@@ -666,7 +670,8 @@ awards: [
       {src:'./images/awards/hcmc-oly-2.png', caption:'Certificate — Grade 11 (April 2026)'},
       {src:'./images/awards/hcmc-oly-3.JPG'},
       {src:'./images/awards/hcmc-oly-4.JPG'},
-      {src:'./images/awards/hcmc-oly-5.JPG'}
+      {src:'./images/awards/hcmc-oly-5.JPG'},
+      {src:'./images/awards/hcmc-oly-6.jpg'}
     ]
   },
   /* ── LSTS SCHOOL ACHIEVEMENTS (separate cards) ── */
@@ -677,16 +682,26 @@ awards: [
     summary:'Recognized four consecutive semesters for outstanding leadership at school level.',
     body:['Awarded Outstanding Young Leader across all four semesters of Grade 10 and Grade 11, this recognition reflects a sustained standard of leadership in the school community — not just a single strong semester.','Receiving this award four consecutive times required consistent demonstration of initiative, team support, and the ability to bring people together toward shared goals.'],
     tags:['Leadership','School','4×','2023–2026'], cols:3,
-    gallery:[{src:'',caption:'Gr 10 Sem I'},{src:'',caption:'Gr 10 Sem II'},{src:'',caption:'Gr 11 Sem I'},{src:'',caption:'Gr 11 Sem II'},{src:'',caption:'Leadership activities'},{src:'',caption:'Award ceremony'}]
+    cardPick:[1,3], cardLayout:'stack',
+    gallery:[
+      {src:'./images/awards/lsts-oyl-1.jpeg', caption:'Grade 10 certificate'},
+      {src:'./images/awards/lsts-oyl-2.jpeg', caption:'Grade 10 certificate'},
+      {src:'./images/awards/lsts-oyl-3.jpeg', caption:'Grade 11 certificate'},
+      {src:'./images/awards/lsts-oyl-4.jpeg', caption:'Grade 11 certificate'}
+    ]
   },
-  { id:'lsts-lct', cat:'school', panel:'p-indigo', phCls:'ph-i', icon:'🎗️', cardSize:'half',
+  { id:'lsts-lsc', cat:'school', panel:'p-indigo', phCls:'ph-i', icon:'🎗️', cardSize:'half',
     catLabel:'SCHOOL AWARD', level:'LEADERSHIP CAMP', sublevel:'Completed Twice · Grade 10 &amp; 11',
     title:'Leadership Camp Training',
     organization:'Lawrence S. Ting School', year:'Grade 10 &amp; Grade 11',
     summary:'Completed intensive 3-day leadership training programme in two consecutive years.',
     body:['Completed Leadership Camp Training in both Grade 10 and Grade 11, engaging in roundtables and Q&A with institutional leaders, applying strategic planning and crisis communication in real-world leadership simulations.'],
     tags:['Leadership','Training','School'], cols:2,
-    gallery:[{src:'',caption:'Leadership Camp Gr 10 certificate'},{src:'',caption:'Leadership Camp Gr 11 certificate'}]
+    cardPick:[1,2], cardLayout:'stack',
+    gallery:[
+      {src:'./images/awards/lsts-lsc-1.jpeg', caption:'Grade 10 certificate'},
+      {src:'./images/awards/lsts-lsc-2.jpeg', caption:'Grade 11 certificate'}
+    ]
   },
   { id:'lsts-cv', cat:'school', panel:'p-indigo', phCls:'ph-i', icon:'🌟', cardSize:'half',
     catLabel:'SCHOOL AWARD', level:'CORE VALUES EXCELLENCE', sublevel:'8 Consecutive Semesters · Grade 8–11',
@@ -695,7 +710,14 @@ awards: [
     summary:'Recognised for exemplifying the school\'s six core values for 8 consecutive semesters.',
     body:['Awarded Excellent in Demonstrating the School\'s Six Core Values across all semesters from Grade 8 through Grade 11 — eight consecutive semesters of recognition for embodying integrity, collaboration, creativity, responsibility, respect, and excellence as daily practice rather than abstract ideals.'],
     tags:['Core Values','School','8 Semesters'], cols:2,
-    gallery:[{src:'',caption:'Grade 8 award'},{src:'',caption:'Grade 9 award'},{src:'',caption:'Grade 10 award'},{src:'',caption:'Grade 11 award'}]
+    cardPick:[3,5], cardLayout:'stack',
+    gallery:[
+      {src:'./images/awards/lsts-cv-1.JPG'},
+      {src:'./images/awards/lsts-cv-2.JPG'},
+      {src:'./images/awards/lsts-cv-3.jpeg'},
+      {src:'./images/awards/lsts-cv-4.jpeg'},
+      {src:'./images/awards/lsts-cv-5.jpeg'}
+    ]
   },
   { id:'lsts-feat', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔭', cardSize:'half',
     catLabel:'SCHOOL · FIRST PRIZE', level:'FIRST PRIZE', sublevel:'Top 1 out of 45 Teams — F.E.A.T. Week',
@@ -704,7 +726,18 @@ awards: [
     summary:'Ranked 1st out of 45 competing teams in the school\'s flagship STEM showcase.',
     body:['LSTS F.E.A.T. Week is the school\'s most prestigious STEM competition. Leading a team to First Prize — Top 1 out of 45 teams — in the school\'s flagship innovation showcase is the highest STEM recognition available at school level. Our project FRIDGI (a smart food preservation container) was recognised for hardware design, innovation, and commerciability.'],
     tags:['STEM','First Prize','Innovation','School'], cols:2,
-    gallery:[{src:'',caption:'First Prize certificate'},{src:'',caption:'FRIDGI prototype'},{src:'',caption:'Presentation day'},{src:'',caption:'Team photo'}]
+    cardPhotos:1,
+    gallery:[
+      {src:'./images/awards/lsts-feat-1.jpeg', caption:'First Prize certificate'},
+      {src:'./images/awards/lsts-feat-2.jpg',  caption:'Hardware design drawing'},
+      {src:'./images/awards/lsts-feat-3.png'},
+      {src:'./images/awards/lsts-feat-4.png'},
+      {src:'./images/awards/lsts-feat-5.png',  caption:'FRIDGI project poster'},
+      {src:'./images/awards/lsts-feat-6.jpg',  caption:'LSTS Project Days'},
+      {src:'./images/awards/lsts-feat-7.jpg'},
+      {src:'./images/awards/lsts-feat-8.jpg'},
+      {src:'./images/awards/lsts-feat-9.jpg'}
+    ]
   },
   { id:'lsts-ssr', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔬', cardSize:'half',
     catLabel:'SCHOOL AWARD', level:'COMPLETED', sublevel:'Schoolwide Scientific Research',
@@ -713,7 +746,12 @@ awards: [
     summary:'Completed school-wide Scientific Research programme in Grade 11 Semester I.',
     body:['Completed the Schoolwide Scientific Research Programme during Semester I of Grade 11. This programme required designing, executing, and presenting an independent research project to a panel of school faculty — a direct precursor to the Oil Spill Remediation research project.'],
     tags:['Research','Science','School'], cols:2,
-    gallery:[{src:'',caption:'Scientific Research certificate'},{src:'',caption:'Research presentation'}]
+    cardPick:[1,2], cardLayout:'stack',
+    gallery:[
+      {src:'./images/awards/lsts-ssr-1.jpeg', caption:'Completion certificate'},
+      {src:'./images/awards/lsts-ssr-2.png',  caption:'Research poster'},
+      {src:'./images/awards/lsts-ssr-3.jpg'}
+    ]
   },
   { id:'lsts-edu', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🌱', cardSize:'half',
     catLabel:'SCHOOL · THIRD PRIZE', level:'THIRD PRIZE', sublevel:'EDUtech Planet Protectors — Schoolwide',
@@ -722,16 +760,23 @@ awards: [
     summary:'Third Prize in the schoolwide EDUtech Planet Protectors environmental technology competition.',
     body:['Earned Third Prize in the schoolwide EDUtech Planet Protectors Competition during Semester II of Grade 10. This competition challenged students to design technology-driven solutions to environmental problems — combining sustainability awareness with engineering design thinking.'],
     tags:['Environment','Tech','Third Prize','School'], cols:2,
-    gallery:[{src:'',caption:'Third Prize certificate'},{src:'',caption:'Project display'}]
+    cardPhotos:1,
+    gallery:[
+      {src:'./images/awards/lsts-edu-1.jpeg', caption:'Third Prize certificate'}
+    ]
   },
-  { id:'lsts-rocket', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🚀', cardSize:'half',
+  { id:'lsts-wr', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🚀', cardSize:'half',
     catLabel:'SCHOOL · SECOND PRIZE', level:'SECOND PRIZE', sublevel:'Water Rocket Competition — Schoolwide',
     title:'LSTS Water Rocket Competition',
     organization:'Lawrence S. Ting School', year:'Sem I, Grade 10',
     summary:'Second Prize in the schoolwide Water Rocket Engineering Competition in Grade 10.',
     body:['Placed Second in the LSTS Water Rocket Competition during Semester I of Grade 10. This engineering challenge required designing and launching a water-propelled rocket for accuracy and altitude — my first major school-level STEM engineering competition, setting the stage for future innovation work.'],
     tags:['Engineering','Rocket','Second Prize','School'], cols:2,
-    gallery:[{src:'',caption:'Second Prize certificate'},{src:'',caption:'Water rocket build'},{src:'',caption:'Launch day'}]
+    cardPhotos:1,
+    videos:[ {src:'./images/awards/lsts-wr-1.mp4', caption:'Water rocket launch'} ],
+    gallery:[
+      {src:'./images/awards/lsts-wr-1.jpeg', caption:'Second Prize certificate'}
+    ]
   }
 ],
 
@@ -976,6 +1021,13 @@ function imgOk(img) {
   }
 }
 
+/* Video file lookup: the name written in the data first, then <id>-1 / -2 / -video with common extensions */
+function videoCandidates(first, type, id) {
+  const list = [first];
+  ['1', '2', 'video'].forEach(n => ['mp4', 'MP4', 'mov', 'MOV', 'webm'].forEach(e => list.push(`./images/${type}/${id}-${n}.${e}`)));
+  return [...new Set(list)];
+}
+
 /* Award card photo panel */
 function buildAwardPhotoPanel(item) {
   const all = item.gallery || [];
@@ -999,7 +1051,10 @@ function buildAwardPhotoPanel(item) {
     const more = (extra > 0 && shown >= 3 && k === shown - 1) ? `<div class="gp-more">+${extra}</div>` : '';
     return `<div class="gp gp-ph" style="background:${gg(gi)}">${smartImg(all[gi].src, imgBase('awards', item.id, gi + 1), all[gi].caption)}${more}</div>`;
   }).join('');
-  const pill = (extra > 0 && shown < 3) ? `<span class="gp-pill">+${extra} ${extra === 1 ? 'photo' : 'photos'}</span>` : '';
+  const bits = [];
+  if (extra > 0 && shown < 3) bits.push(`+${extra} ${extra === 1 ? 'photo' : 'photos'}`);
+  if ((item.videos || []).length) bits.push('▶ video');
+  const pill = bits.length ? `<span class="gp-pill">${bits.join(' · ')}</span>` : '';
   const stack = (item.cardLayout === 'stack' && (shown === 2 || shown === 3)) ? ' stack' : '';
   return `<div class="aw-photos grid-${shown}${stack}">${cells}${pill}</div>`;
 }
@@ -1081,8 +1136,27 @@ function renderGallery(type, item, containerId) {
   const el     = document.getElementById(containerId);
   const layout = document.getElementById('detail-layout');
   const photos = item.gallery || [];
+  const vids   = item.videos  || [];
   el.innerHTML = '';
-  layout.classList.toggle('no-side', !photos.length);
+  layout.classList.toggle('no-side', !photos.length && !vids.length);
+  if (!photos.length && !vids.length) return;
+
+  /* videos come first — shown large so they stand out */
+  vids.forEach(v => {
+    const sec = document.createElement('div');
+    sec.className = 'gallery-section vid-block';
+    sec.innerHTML = '<div class="gallery-head"><h3>Video</h3></div><div class="vid-frame"><video controls playsinline preload="metadata"></video></div>';
+    const vid   = sec.querySelector('video');
+    const tries = videoCandidates(v.src, type, item.id);
+    let ti = 0;
+    vid.addEventListener('error', () => {                     // can't load → try the next likely name; none left → hide the block (no broken player)
+      ti++;
+      if (ti < tries.length) vid.src = tries[ti] + '#t=0.1'; else sec.style.display = 'none';
+    });
+    vid.src = tries[0] + '#t=0.1';                            // #t=0.1 → shows a first frame instead of a black box
+    if (v.caption) { const c = document.createElement('p'); c.className = 'gal-cap'; c.textContent = v.caption; sec.appendChild(c); }
+    el.appendChild(sec);
+  });
   if (!photos.length) return;
 
   const n      = photos.length;
@@ -1254,6 +1328,7 @@ function openDetail(type, id) {
 }
 
 function goBack() {
+  document.querySelectorAll('#detail-gallery video').forEach(v => v.pause());   // stop sound when leaving the page
   const main = document.getElementById('main-view');
   const det  = document.getElementById('detail-view');
   det.style.opacity = '0';
