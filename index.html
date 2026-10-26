@@ -320,6 +320,68 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .guild:hover .g-cta{background:var(--b);color:#16052e}
 .g-cta .tri{animation:blink 1s linear infinite}
 
+/* ═════════════ COMPACT TROPHY CARDS ═════════════ */
+.tcard.compact{box-shadow:6px 6px 0 var(--a)}
+.tcard.compact.rank-s{box-shadow:6px 6px 0 var(--yellow)}
+.tcard.compact:hover{box-shadow:9px 9px 0 var(--b)}
+.tcard.compact.rank-s:hover{box-shadow:9px 9px 0 var(--pink)}
+.tcard.compact .tc-head{padding:.5rem .65rem;gap:.55rem}
+.tcard.compact .tc-icon{font-size:1.25rem}
+.tcard.compact .tc-name{font-size:.76rem}
+.tcard.compact .tc-rank{width:1.9rem;height:1.9rem;font-size:.7rem}
+.tcard.compact .tc-art{aspect-ratio:1/.82}
+.tcard.compact .tc-cat{left:6px;top:6px;font-size:.4rem;padding:.35rem .45rem}
+.tcard.compact .tc-body{gap:.4rem;padding:.8rem .8rem .9rem}
+.tcard.compact .tc-level{font-size:1.2rem;font-size:clamp(.95rem,7.6cqw,1.6rem)}
+.tcard.compact .tc-sub{font-size:.8rem;line-height:1.35}
+.tcard.compact .tc-org{font-size:.7rem}
+.tcard.compact .tc-date{font-size:.64rem}
+.tcard.compact .tc-cta{padding-top:.35rem}
+.tcard.compact .tc-cta span{font-size:.46rem;padding:.6rem .75rem}
+.tcard.no-org .tc-org{display:none}
+.cards.cols4{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.9rem 1.5rem}
+
+/* ═════════════ CAROUSEL · International & National ═════════════ */
+.carousel{--cw:clamp(250px,24vw,330px);position:relative;left:50%;width:100vw;margin-left:-50vw;overflow:hidden;outline:none}
+.car-track{display:grid;align-items:stretch;justify-items:center;padding:1.2rem 0 2rem}
+.car-slot{grid-area:1/1;width:var(--cw);will-change:transform,filter;
+  transition:transform .6s cubic-bezier(.22,.8,.22,1),filter .45s ease,opacity .45s ease}
+.carousel:not(.ready) .car-slot{transition:none}
+.car-slot>.tcard{height:100%}
+.car-slot[data-o="0"]{z-index:5}
+.car-slot[data-o="1"],.car-slot[data-o="-1"]{z-index:4;filter:blur(2.4px) brightness(.58) saturate(.8);cursor:pointer}
+.car-slot[data-o="2"],.car-slot[data-o="-2"]{z-index:3;filter:blur(4px) brightness(.42) saturate(.7);cursor:pointer}
+.car-slot[data-o="3"],.car-slot[data-o="-3"]{z-index:1;opacity:0;pointer-events:none}
+.car-slot[data-o="1"]{transform:translateX(calc(var(--cw)*.9 + 26px)) scale(.8)}
+.car-slot[data-o="-1"]{transform:translateX(calc(var(--cw)*-.9 - 26px)) scale(.8)}
+.car-slot[data-o="2"]{transform:translateX(calc(var(--cw)*1.62 + 52px)) scale(.62)}
+.car-slot[data-o="-2"]{transform:translateX(calc(var(--cw)*-1.62 - 52px)) scale(.62)}
+.car-slot[data-o="3"]{transform:translateX(calc(var(--cw)*2.2 + 70px)) scale(.5)}
+.car-slot[data-o="-3"]{transform:translateX(calc(var(--cw)*-2.2 - 70px)) scale(.5)}
+/* only the focused card reacts to the mouse */
+.car-slot:not([data-o="0"]) .tcard:hover{transform:none;box-shadow:6px 6px 0 var(--a)}
+.car-slot:not([data-o="0"]) .tcard.rank-s:hover{box-shadow:6px 6px 0 var(--yellow)}
+.car-slot:not([data-o="0"]) .tcard.rank-s::before{display:none}
+.car-slot:not([data-o="0"]) .tc-cta .tri{animation:none}
+.car-ctrl{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-top:.2rem}
+.car-btn{width:50px;height:50px;display:grid;place-items:center;flex:0 0 auto;background:var(--yellow);color:#16052e;border:3px solid #000;
+  box-shadow:0 5px 0 #b89a00,0 5px 0 3px #000;margin-bottom:5px;transition:transform .08s,box-shadow .08s,filter .15s}
+.car-btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.car-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b89a00,0 1px 0 3px #000}
+.car-btn .tri{font-size:1.1rem}
+.car-mid{display:flex;flex-direction:column;align-items:center;gap:.8rem;min-width:0}
+.car-dots{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.car-dot{width:14px;height:14px;padding:0;background:transparent;border:3px solid var(--ink3);transition:background .15s,border-color .15s,box-shadow .15s}
+.car-dot:hover{border-color:var(--cyan)}
+.car-dot.on{background:var(--pink);border-color:#000;box-shadow:0 0 0 3px var(--pink),0 0 14px var(--pink)}
+.car-count{font-family:var(--f-pixel);font-size:.58rem;letter-spacing:.1em;color:var(--cyan)}
+.car-hint{margin-top:1rem;text-align:center;font-family:var(--f-pixel);font-size:.46rem;line-height:1.8;letter-spacing:.08em;color:var(--ink3)}
+/* school cards: a touch shorter again */
+.tcard.no-org .tc-art{aspect-ratio:1/.74}
+.tcard.no-org .tc-body{gap:.35rem;padding:.7rem .75rem .8rem}
+.tcard.no-org .tc-level{font-size:1.15rem;font-size:clamp(.9rem,7.2cqw,1.5rem)}
+.tcard.no-org .tc-cta span{padding:.5rem .65rem}
+
 /* ═════════════ DETAIL VIEW ═════════════ */
 #detail-view{min-height:100vh;padding-top:calc(var(--nav-h) + 8px)}
 .detail-hero{position:relative;width:100%;height:clamp(240px,34vw,400px);overflow:hidden;background:#05010f;border-bottom:4px solid #000}
@@ -430,7 +492,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 
 /* ═════════════ RESPONSIVE ═════════════ */
 @media (max-width:1280px){.hud{display:none}}
-@media (max-width:1100px){.guilds{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1100px){.guilds,.cards.cols4{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:1020px){
   :root{--nav-h:118px}
   #nav{flex-direction:column;justify-content:center;gap:.7rem;padding:.6rem var(--pad)}
@@ -438,7 +500,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
   .nav-links{width:100%;justify-content:center;gap:.6rem}
   .nav-links li{flex:1 1 auto;max-width:200px}
   .nav-links a{justify-content:center;padding:.75rem .5rem;font-size:.54rem}
-  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards,.cards.cols4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .detail-layout,.detail-layout.no-side{grid-template-columns:minmax(0,1fr);gap:0}
   .detail-side{padding-top:2.8rem;margin-top:2.8rem;border-top:4px dashed rgba(255,255,255,.2)}
   .gal-row.solo{max-width:80%}
@@ -459,7 +521,9 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
   .sign-sprites{display:none}
 }
 @media (max-width:640px){
-  .cards{grid-template-columns:minmax(0,1fr)}
+  .carousel{--cw:min(74vw,290px)}
+  .car-hint{display:none}
+  .cards,.cards.cols4{grid-template-columns:minmax(0,1fr)}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .nav-links a .k{display:none}
   .nav-links a{font-family:var(--f-body);font-weight:800;font-size:.68rem;letter-spacing:.02em;padding:.7rem .4rem}
@@ -493,7 +557,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 <nav id="nav">
   <a class="logo" onclick="goHome()" onkeydown="if(event.key==='Enter')goHome()" role="link" tabindex="0" aria-label="Back to top">
     <span class="logo-mark"><i class="sp" data-spr="ghost" data-px="2"></i></span>
-    <span class="logo-txt">Mai Anh<i>&middot;</i>PORTFOLIO</span>
+    <span class="logo-txt">Nguyen Le<i>&middot;</i>Mai Anh</span>
   </a>
   <ul class="nav-links">
     <li><a href="#home"><i class="k">1</i>Home</a></li>
@@ -743,7 +807,7 @@ awards: [
     cardPhotos:1,
     gallery:[
       {src:'./images/awards/wycto-1.png', caption:'Certificate of Achievement — Bronze Medal'},
-      {src:'./images/awards/wycto-2.png',     caption:'Exam result sheet'}      /* saved without an extension? rename it to wycto-2.png */
+      {src:'./images/awards/wycto-2',     caption:'Exam result sheet'}      /* saved without an extension? rename it to wycto-2.png */
     ]
   },
   { id:'hcmut', cat:'intl', panel:'p-cyan', phCls:'ph-c', icon:'💡', cardSize:'half',
@@ -1216,10 +1280,10 @@ function buildAwardPhotoPanel(item) {
   return `<div class="aw-photos grid-${shown}${stack}${fit}">${cells}${pill}</div>`;
 }
 
-function makeAwardCard(item) {
+function makeAwardCard(item, opts = {}) {
   const rank = String(item.rank || 'A').toUpperCase();
   const el = document.createElement('article');
-  el.className = `tcard ${themeOf('awards', item)} rank-${rank.toLowerCase()}`;
+  el.className = `tcard ${themeOf('awards', item)} rank-${rank.toLowerCase()}${opts.compact ? ' compact' : ''}${opts.hideOrg ? ' no-org' : ''}`;
   makeOpenable(el, 'awards', item.id, `${item.title} — ${item.level}`);
   el.innerHTML = `
     <div class="tc-head"><span class="tc-icon">${item.icon}</span><h3 class="tc-name">${item.title}</h3><span class="tc-rank" title="Rank ${rank}">${rank}</span></div>
@@ -1227,7 +1291,7 @@ function makeAwardCard(item) {
     <div class="tc-body">
       <div class="tc-level">${item.level}</div>
       <div class="tc-sub">${item.sublevel}</div>
-      <div class="tc-meta"><span class="tc-org">${item.organization}</span><span class="tc-date">${item.year}</span></div>
+      <div class="tc-meta">${opts.hideOrg ? '' : `<span class="tc-org">${item.organization}</span>`}<span class="tc-date">${item.year}</span></div>
       <div class="tc-cta"><span><i class="tri"></i> READ FULL STORY</span></div>
     </div>`;
   return el;
@@ -1287,16 +1351,73 @@ function subsec(label, title, color) {
   return d;
 }
 
+/* International & National → coverflow carousel: the focused card is big and sharp, its neighbours are smaller and blurred */
+function buildCarousel(items) {
+  const n = items.length, half = Math.floor(n / 2);
+  const wrap = document.createElement('div');
+  wrap.className = 'carousel';
+  wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-roledescription', 'carousel'); wrap.setAttribute('aria-label', 'International and national awards');
+  const track = document.createElement('div'); track.className = 'car-track';
+  const slots = items.map(a => {
+    const s = document.createElement('div'); s.className = 'car-slot';
+    s.appendChild(makeAwardCard(a, { compact: true })); track.appendChild(s); return s;
+  });
+  const ctrl = document.createElement('div'); ctrl.className = 'car-ctrl';
+  ctrl.innerHTML = '<button class="car-btn" aria-label="Previous award"><i class="tri l"></i></button><div class="car-mid"><div class="car-dots"></div><span class="car-count"></span></div><button class="car-btn" aria-label="Next award"><i class="tri"></i></button>';
+  const hint = document.createElement('p'); hint.className = 'car-hint'; hint.textContent = 'CLICK A SIDE CARD · ARROW KEYS · SWIPE';
+  wrap.append(track, ctrl, hint);
+  const count = ctrl.querySelector('.car-count'), dots = ctrl.querySelector('.car-dots');
+  const dotEls = items.map((a, i) => {
+    const d = document.createElement('button'); d.className = 'car-dot'; d.setAttribute('aria-label', 'Show ' + a.title);
+    d.addEventListener('click', () => go(i)); dots.appendChild(d); return d;
+  });
+  let cur = 0, blockClick = false;
+  function go(i, focus) {
+    cur = ((i % n) + n) % n;
+    slots.forEach((s, k) => {
+      const o = Math.max(-3, Math.min(3, ((((k - cur + half) % n) + n) % n) - half));
+      const card = s.firstElementChild, on = o === 0;
+      s.dataset.o = o; s.setAttribute('aria-hidden', on ? 'false' : 'true');
+      card.tabIndex = on ? 0 : -1;
+      if (!on) card.style.transform = '';          // clear any mouse-tilt left on the card that just lost focus
+    });
+    dotEls.forEach((d, k) => d.classList.toggle('on', k === cur));
+    count.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+    if (focus) slots[cur].firstElementChild.focus({ preventScroll: true });
+  }
+  /* a click on a blurred card brings it to the front; only the focused card opens its page */
+  slots.forEach((s, k) => s.addEventListener('click', e => {
+    if (blockClick || s.dataset.o !== '0') { e.stopPropagation(); e.preventDefault(); if (!blockClick) go(k); }
+  }, true));
+  const [prev, next] = ctrl.querySelectorAll('.car-btn');
+  prev.addEventListener('click', () => go(cur - 1)); next.addEventListener('click', () => go(cur + 1));
+  wrap.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); go(cur - 1, true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1, true); }
+  });
+  let sx = null;
+  track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    if (sx == null) return;
+    const dx = e.changedTouches[0].clientX - sx; sx = null;
+    if (Math.abs(dx) > 45) { go(cur + (dx < 0 ? 1 : -1)); blockClick = true; setTimeout(() => { blockClick = false; }, 350); }
+  }, { passive: true });
+  go(0);
+  requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('ready')));   // no slide-in on first paint
+  return wrap;
+}
+
 function renderAll() {
   const aw = document.getElementById('awards-container');
-  [['intl', 'WORLD TOUR', 'International &amp; National', 'var(--pink)'],
-   ['school', 'HOME SCHOOL', 'Lawrence S. Ting School Achievements', 'var(--cyan)']].forEach(([cat, label, title, color]) => {
-    aw.appendChild(subsec(label, title, color));
-    const grid = document.createElement('div');
-    grid.className = 'cards fill-grid';
-    D.awards.filter(a => a.cat === cat).forEach(a => grid.appendChild(makeAwardCard(a)));
-    aw.appendChild(grid);
-  });
+  aw.appendChild(subsec('WORLD TOUR', 'International &amp; National', 'var(--pink)'));
+  aw.appendChild(buildCarousel(D.awards.filter(a => a.cat === 'intl')));
+
+  aw.appendChild(subsec('HOME SCHOOL', 'Lawrence S. Ting School Achievements', 'var(--cyan)'));
+  const grid = document.createElement('div');
+  grid.className = 'cards cols4 fill-grid';
+  D.awards.filter(a => a.cat === 'school').forEach(a => grid.appendChild(makeAwardCard(a, { compact: true, hideOrg: true })));
+  aw.appendChild(grid);
+
   D.experience.forEach((e, i) => document.getElementById('exp-list').appendChild(makeQuest(e, i)));
   D.activities.forEach(a => document.getElementById('act-grid').appendChild(makeGuild(a)));
   document.getElementById('act-grid').classList.add('fill-grid');
@@ -1618,6 +1739,7 @@ function initTilt() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(hover: none)').matches) return;
   document.querySelectorAll('.tcard,.guild').forEach(el => {
     el.addEventListener('pointermove', e => {
+      const sl = el.closest('.car-slot'); if (sl && sl.dataset.o !== '0') return;
       const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
       el.style.transform = `perspective(900px) rotateX(${((.5 - py) * 8).toFixed(2)}deg) rotateY(${((px - .5) * 10).toFixed(2)}deg) translateY(-4px)`;
     });
