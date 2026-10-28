@@ -18,6 +18,7 @@
   --ink:#fff6e6; --ink2:#d9ccff; --ink3:#a08fe0; --dim:#6f5db0;
   --pink:#ff2e97; --cyan:#00f0ff; --lime:#b8ff1a; --yellow:#ffe14a; --orange:#ff8a1f;
   --violet:#9b5cff; --blue:#3a78ff; --green:#2dff9a; --red:#ff4056;
+  --art-ratio:297 / 210;   /* shape of the photo window on every award card: A4 landscape. Use 210 / 297 for A4 portrait */
   --nav-h:78px; --pad:clamp(1.1rem,4.5vw,3.5rem);
   --f-pixel:'Press Start 2P',ui-monospace,'Courier New',monospace;
   --f-disp:'Bungee','Be Vietnam Pro',system-ui,sans-serif;
@@ -137,15 +138,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tag-row{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1.5rem}
 .hero-name{font-family:var(--f-disp);line-height:.95;text-transform:uppercase;margin-bottom:1.1rem}
 .name-1{display:block;font-size:2.2rem;font-size:clamp(1.4rem,9cqw,2.9rem);color:transparent;-webkit-text-stroke:2px var(--cyan);text-shadow:3px 3px 0 #000;margin-bottom:.18em;overflow-wrap:anywhere}
-.name-2{display:block;font-size:3.6rem;font-size:clamp(2.3rem,15cqw,6rem);color:var(--yellow);overflow-wrap:anywhere;
+.name-2{display:block;font-size:3.6rem;font-size:clamp(2.3rem,15cqw,6rem);color:#fff;overflow-wrap:anywhere;
   text-shadow:4px 4px 0 var(--pink),8px 8px 0 var(--violet),12px 12px 0 #000}
 .name-2 .hl{color:#fff}
 .hero-class{font-family:var(--f-pixel);font-size:.75rem;font-size:clamp(.62rem,3cqw,.85rem);line-height:1.8;letter-spacing:.05em;color:var(--ink);margin-bottom:.9rem}
 .hero-class b{font-weight:400;color:var(--lime)}
 .hero-class b:last-of-type{color:var(--pink)}
 .hero-class::after{content:'';display:inline-block;width:.7em;height:1em;margin-left:.5em;background:var(--cyan);vertical-align:-.15em;animation:blink 1s linear infinite}
-.hero-sub{font-size:1rem;color:var(--ink2);margin-bottom:1.3rem}
-.hero-sub strong{color:var(--yellow)}
+.hero-sub{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:1.3rem}
+.hero-sub strong{color:#fff;font-weight:800}
 .dialog{position:relative;max-width:580px;padding:1.15rem 1.35rem 1.5rem;background:#0d0425;border:4px solid var(--cyan);box-shadow:inset 0 0 0 3px #000,8px 8px 0 #000;
   color:var(--ink);font-size:.98rem;line-height:1.75}
 .dialog::after{content:'';position:absolute;right:14px;bottom:9px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--yellow);animation:blink 1s linear infinite}
@@ -185,7 +186,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .ticker:hover .ticker-track{animation-play-state:paused}
 .ticker-item{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.5rem;white-space:nowrap;font-family:var(--f-pixel);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase}
 .ticker-item b{font-weight:400}
-.ticker-item em{font-style:normal;opacity:.7}
+.ticker-item em{font-style:normal;opacity:.9}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .checker{height:30px;border-block:4px solid #000;background:repeating-conic-gradient(#000 0 25%,var(--yellow) 0 50%) 0 0/30px 30px}
 .level{position:relative;padding:6rem var(--pad) 5.5rem;overflow:hidden}
@@ -230,9 +231,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tcard:focus-visible{outline-offset:8px}
 .tc-head{display:flex;align-items:center;gap:.7rem;padding:.7rem .85rem;background:linear-gradient(90deg,var(--a),var(--b));border-bottom:4px solid #000;color:#16052e}
 .tc-icon{flex:0 0 auto;font-size:1.5rem;line-height:1}
-.tc-name{flex:1;min-width:0;font-family:var(--f-body);font-weight:800;font-size:.9rem;line-height:1.2;text-transform:uppercase;overflow-wrap:anywhere}
+.tc-name{flex:1;min-width:0;font-family:var(--f-body);font-weight:800;font-size:1.02rem;line-height:1.2;letter-spacing:.01em;text-transform:uppercase;overflow-wrap:anywhere;color:#fff;text-shadow:-1px -1px 0 #16052e,1px -1px 0 #16052e,-1px 1px 0 #16052e,1px 1px 0 #16052e,0 -1px 0 #16052e,0 1px 0 #16052e,-1px 0 0 #16052e,1px 0 0 #16052e,2px 2px 0 #16052e}
 .tc-rank{flex:0 0 auto;width:2.3rem;height:2.3rem;display:grid;place-items:center;background:#16052e;color:var(--yellow);font-family:var(--f-pixel);font-size:.85rem;border:3px solid #000;box-shadow:0 0 0 2px var(--yellow)}
-.tc-art{position:relative;aspect-ratio:1/1;background:#05010f;border-bottom:4px solid #000;overflow:hidden}
+.tc-art{position:relative;aspect-ratio:var(--art-ratio);background:#05010f;border-bottom:4px solid #000;overflow:hidden}
 .tc-art .aw-photos{position:absolute;inset:0}
 .tc-art::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px),linear-gradient(135deg,rgba(255,255,255,.12),transparent 42%)}
@@ -244,7 +245,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   color:var(--yellow);text-shadow:2px 2px 0 #000,4px 4px 0 var(--a)}
 .tc-sub{text-align:center;font-weight:600;font-size:.88rem;line-height:1.4;color:var(--ink)}
 .tc-meta{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;align-items:center;margin-top:.2rem}
-.tc-org{font-size:.76rem;line-height:1.4;color:var(--ink3);text-align:center}
+.tc-org{font-size:.82rem;font-weight:700;line-height:1.4;color:#efe8ff;text-align:center}
 .tc-date{font-weight:800;font-size:.7rem;line-height:1.2;padding:.35rem .55rem;background:var(--b);color:#16052e;border:2px solid #000;text-align:center}
 .tc-cta{margin-top:auto;padding-top:.8rem;display:flex;justify-content:center}
 .tc-cta span{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--f-pixel);font-size:.52rem;letter-spacing:.06em;padding:.75rem .9rem;border:3px solid var(--b);background:#0b0420;color:var(--ink);transition:background .1s,color .1s}
@@ -276,8 +277,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .gp-pill{position:absolute;right:8px;bottom:8px;z-index:3;pointer-events:none;font-family:var(--f-pixel);font-size:.44rem;line-height:1.5;letter-spacing:.05em;padding:.45rem .55rem;background:#16052e;color:var(--cyan);border:2px solid var(--cyan)}
 
 /* ═════════════ EXPERIENCE · QUEST CARDS ═════════════ */
-.quests{display:flex;flex-direction:column;gap:2.1rem}
-.quest{position:relative;display:grid;grid-template-columns:210px minmax(0,1fr);background:#14073a;border:4px solid #000;box-shadow:8px 8px 0 var(--a);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.quests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.2rem 1.9rem}
+.quest{position:relative;display:grid;grid-template-columns:172px minmax(0,1fr);background:#14073a;border:4px solid #000;box-shadow:8px 8px 0 var(--a);cursor:pointer;transition:transform .12s,box-shadow .12s}
 .quest:hover{transform:translate(-3px,-3px);box-shadow:12px 12px 0 var(--b)}
 .q-side{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;padding:1.5rem 1rem;text-align:center;color:#16052e;
   background:linear-gradient(180deg,var(--a),var(--b));border-right:4px solid #000}
@@ -287,15 +288,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .q-num{font-family:var(--f-pixel);font-size:.56rem;letter-spacing:.08em}
 .q-period{font-weight:800;font-size:.72rem;line-height:1.4;padding:.5rem .65rem;background:#16052e;color:var(--yellow);border:2px solid #000}
 .q-stamp{font-family:var(--f-pixel);font-size:.5rem;letter-spacing:.1em;color:#16052e;border:3px dashed #16052e;padding:.4rem .6rem;transform:rotate(-5deg);background:rgba(255,255,255,.35)}
-.q-main{min-width:0;display:flex;flex-direction:column;gap:.6rem;padding:1.4rem 1.7rem 1.5rem}
+.q-main{min-width:0;display:flex;flex-direction:column;gap:.6rem;padding:1.25rem 1.3rem 1.35rem}
 .q-org{font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan)}
-.q-title{font-family:var(--f-disp);font-weight:400;font-size:clamp(1.15rem,2.4vw,1.65rem);line-height:1.15;text-transform:uppercase;overflow-wrap:anywhere}
+.q-title{font-family:var(--f-disp);font-weight:400;font-size:clamp(1rem,1.65vw,1.3rem);line-height:1.15;text-transform:uppercase;overflow-wrap:anywhere}
 .q-role{font-weight:700;font-size:.92rem;line-height:1.45;color:var(--lime)}
 .q-sum{font-size:.96rem;line-height:1.7;color:var(--ink2)}
 .q-links{display:flex;gap:.6rem;flex-wrap:wrap}
 .q-link{font-family:var(--f-pixel);font-size:.5rem;line-height:1.4;padding:.6rem .75rem;background:#0b0420;color:var(--cyan);border:2px solid var(--cyan);transition:background .1s,color .1s}
 .q-link:hover{background:var(--cyan);color:#16052e}
-.q-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.5rem;padding-top:.9rem;border-top:3px dashed rgba(255,255,255,.2)}
+.q-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:auto;padding-top:.9rem;border-top:3px dashed rgba(255,255,255,.2)}
 .q-tags,.g-tags,.detail-tags{display:flex;gap:.5rem;flex-wrap:wrap}
 .tagchip{font-family:var(--f-mono);font-size:1.12rem;line-height:1;padding:.28rem .6rem;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.24);color:var(--ink2)}
 .q-cta{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--f-pixel);font-size:.54rem;letter-spacing:.05em;padding:.8rem 1rem;background:var(--b);color:#16052e;border:3px solid #000;box-shadow:3px 3px 0 #000}
@@ -327,14 +328,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tcard.compact.rank-s:hover{box-shadow:9px 9px 0 var(--pink)}
 .tcard.compact .tc-head{padding:.5rem .65rem;gap:.55rem}
 .tcard.compact .tc-icon{font-size:1.25rem}
-.tcard.compact .tc-name{font-size:.76rem}
+.tcard.compact .tc-name{font-size:.84rem}
 .tcard.compact .tc-rank{width:1.9rem;height:1.9rem;font-size:.7rem}
-.tcard.compact .tc-art{aspect-ratio:1/.82}
+.tcard.compact .tc-art{aspect-ratio:var(--art-ratio)}
 .tcard.compact .tc-cat{left:6px;top:6px;font-size:.4rem;padding:.35rem .45rem}
 .tcard.compact .tc-body{gap:.4rem;padding:.8rem .8rem .9rem}
 .tcard.compact .tc-level{font-size:1.2rem;font-size:clamp(.95rem,7.6cqw,1.6rem)}
 .tcard.compact .tc-sub{font-size:.8rem;line-height:1.35}
-.tcard.compact .tc-org{font-size:.7rem}
+.tcard.compact .tc-org{font-size:.8rem}
 .tcard.compact .tc-date{font-size:.64rem}
 .tcard.compact .tc-cta{padding-top:.35rem}
 .tcard.compact .tc-cta span{font-size:.46rem;padding:.6rem .75rem}
@@ -342,7 +343,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .cards.cols4{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.9rem 1.5rem}
 
 /* ═════════════ CAROUSEL · International & National ═════════════ */
-.carousel{--cw:clamp(250px,24vw,330px);position:relative;left:50%;width:100vw;margin-left:-50vw;overflow:hidden;outline:none}
+.carousel{--cw:clamp(250px,21vw,290px);position:relative;left:50%;width:100vw;margin-left:-50vw;overflow:hidden;outline:none}
 .car-track{display:grid;align-items:stretch;justify-items:center;padding:1.2rem 0 2rem}
 .car-slot{grid-area:1/1;width:var(--cw);will-change:transform,filter;
   transition:transform .6s cubic-bezier(.22,.8,.22,1),filter .45s ease,opacity .45s ease}
@@ -377,7 +378,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .car-count{font-family:var(--f-pixel);font-size:.58rem;letter-spacing:.1em;color:var(--cyan)}
 .car-hint{margin-top:1rem;text-align:center;font-family:var(--f-pixel);font-size:.46rem;line-height:1.8;letter-spacing:.08em;color:var(--ink3)}
 /* school cards: a touch shorter again */
-.tcard.no-org .tc-art{aspect-ratio:1/.74}
 .tcard.no-org .tc-body{gap:.35rem;padding:.7rem .75rem .8rem}
 .tcard.no-org .tc-level{font-size:1.15rem;font-size:clamp(.9rem,7.2cqw,1.5rem)}
 .tcard.no-org .tc-cta span{padding:.5rem .65rem}
@@ -492,7 +492,11 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 
 /* ═════════════ RESPONSIVE ═════════════ */
 @media (max-width:1280px){.hud{display:none}}
-@media (max-width:1100px){.guilds,.cards.cols4{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1100px){
+  .guilds,.cards.cols4{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .quests{grid-template-columns:minmax(0,1fr)}
+  .quest{grid-template-columns:210px minmax(0,1fr)}
+}
 @media (max-width:1020px){
   :root{--nav-h:118px}
   #nav{flex-direction:column;justify-content:center;gap:.7rem;padding:.6rem var(--pad)}
@@ -521,7 +525,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
   .sign-sprites{display:none}
 }
 @media (max-width:640px){
-  .carousel{--cw:min(74vw,290px)}
+  .carousel{--cw:min(70vw,270px)}
   .car-hint{display:none}
   .cards,.cards.cols4{grid-template-columns:minmax(0,1fr)}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -597,7 +601,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
           <span class="chip" style="--c:var(--lime)">Lv.12</span>
         </div>
         <h1 class="hero-name"><span class="name-1">Nguyen Le</span><span class="name-2">Mai <span class="hl">Anh</span></span></h1>
-        <p class="hero-class">CLASS: <b>CHEMIST</b> &times; <b>ENGINEER</b></p>
+        <p class="hero-class">INTENDED MAJOR: <b>CHEMISTRY</b> &times; <b>CHEMICAL ENGINEERING</b></p>
         <p class="hero-sub">Grade 12 &middot; <strong>Lawrence S. Ting School</strong> &middot; Ho Chi Minh City</p>
         <div class="dialog">International chemistry competitor, STEM innovator, and community builder. Passionate about molecular design, sustainable engineering, and using science to solve real-world problems. Applying to undergraduate programmes in Chemistry and Engineering.</div>
         <div class="stats" id="hero-stats"></div>
@@ -780,7 +784,7 @@ awards: [
     body:['The Hanoi National University of Education (HNUE) Olympic STEM attracted approximately 1,500 teams and 4,500 students total, with 191 high school teams (510 students) from every province competing at the national level.','Three rounds defined the competition: a theoretical assessment, a real-world STEM product development challenge, and a rapid prototyping round with an unannounced brief — teams had to ideate, build, and present in hours with no prior preparation possible.','Ranking 1st out of 191 teams is the result I am most proud of. The rapid prototyping round pushed our team\'s engineering instincts, communication, and decisiveness to the limit.'],
     tags:['National','First Prize','STEM','2025'], cols:3,
     image:'./images/awards/hnue-cover.jpg', logo:'./images/awards/hnue-logo.png',
-    cardPick:[1,3], cardLayout:'stack',
+    cardPick:[1],
     gallery:[
       {src:'./images/awards/hnue-1.JPG',  caption:'First Prize certificate'},
       {src:'./images/awards/hnue-2.jpg'},
@@ -811,11 +815,11 @@ awards: [
     ]
   },
   { id:'hcmut', cat:'intl', panel:'p-cyan', phCls:'ph-c', icon:'💡', cardSize:'half',
-    catLabel:'NATIONAL · TOP 10', level:'TOP 10 FINALIST', sublevel:'out of 189 projects, 18 intl teams',
-    title:'HCMUT Innovation Competition',
+    catLabel:'NATIONAL · TOP 10', level:'TOP 10 FINALIST', sublevel:'out of 189 projects, 18 international teams',
+    title:'Ho Chi Minh City University of Technology Innovation',
     organization:'Ho Chi Minh City University of Technology (VNU-HCM)', year:'Sep 2026',
     summary:'Selected as a Top 10 National Finalist from 189 projects including 18 international teams.',
-    body:['The HCMUT Innovation Competition is a national competition that saw a record 189 projects in this edition, including 18 international teams and 50 finalists across four innovation categories.','Being chosen as a Top 10 National Finalist means our project was evaluated — on originality, technical feasibility, scalability, and presentation — to be among the best in the country. The panel included VNU-HCM faculty and industry judges.','This experience taught me to defend a chemistry-based idea against rigorous expert scrutiny and communicate innovation clearly and persuasively.'],
+    body:['The Ho Chi Minh City University of Technology Innovation is a national competition that saw a record 189 projects in this edition, including 18 international teams and 50 finalists across four innovation categories.','Being chosen as a Top 10 National Finalist means our project was evaluated — on originality, technical feasibility, scalability, and presentation — to be among the best in the country. The panel included VNU-HCM faculty and industry judges.','This experience taught me to defend a chemistry-based idea against rigorous expert scrutiny and communicate innovation clearly and persuasively.'],
     tags:['National','Innovation','Top 10','2026'], cols:2,
     image:'./images/awards/hcmut-cover.jpg', logo:false,
     cardPick:[1,2], cardLayout:'stack',
@@ -829,10 +833,10 @@ awards: [
   },
   { id:'hcmc-oly', cat:'intl', panel:'p-emerald', phCls:'ph-e', icon:'🏆', cardSize:'half',
     catLabel:'CITY-LEVEL · TWICE', level:'THIRD PRIZE', sublevel:'Chemistry Olympiad — 2025 & 2026',
-    title:'HCM City Academic Olympiad',
-    organization:'HCM City Dept. of Education &amp; Training', year:'Apr 2025 &amp; Apr 2026',
+    title:'Ho Chi Minh City Academic Olympiad',
+    organization:'Ho Chi Minh City Department of Education and Training', year:'Apr 2025 &amp; Apr 2026',
     summary:'Awarded Third Prize in Chemistry two consecutive years among ~3,000 students from ~150 schools.',
-    body:['The HCM City Academic Olympiad is one of the city\'s most competitive academic events, attracting ~3,000 Grades 10–11 students from ~150 high schools across 13 subjects including Chemistry. Earning Third Prize twice — Grade 10 (2025) and Grade 11 (2026) — demonstrates consistent performance that goes well beyond the standard curriculum.','Two consecutive city-level prizes reflect sustained depth of chemistry knowledge and the ability to perform under examination pressure year after year.'],
+    body:['The Ho Chi Minh City Academic Olympiad is one of the city\'s most competitive academic events, attracting ~3,000 Grades 10–11 students from ~150 high schools across 13 subjects including Chemistry. Earning Third Prize twice — Grade 10 (2025) and Grade 11 (2026) — demonstrates consistent performance that goes well beyond the standard curriculum.','Two consecutive city-level prizes reflect sustained depth of chemistry knowledge and the ability to perform under examination pressure year after year.'],
     tags:['City-level','Chemistry','Third Prize','2025','2026'], cols:3,
     image:false, logo:false,          /* no cover image / logo — keeps the colour placeholder */
     cardPick:[1,2], cardLayout:'stack',
@@ -995,7 +999,7 @@ experience: [
     cols:3, gallery:[{},{},{},{},{},{}]
   },
   { id:'choz', phCls:'ph-b', icon:'🍱',
-    title:'HCMUT Innovation — CHŌZ Platform',
+    title:'Ho Chi Minh City University of Technology Innovation — CHŌZ Platform',
     role:'Web Developer | Innovation & R&D Project',
     organization:'Ho Chi Minh City University of Technology (VNU-HCM)', period:'May – Aug 2025',
     summary:'Built CHŌZ — a full-stack personalized nutrition platform for 100–300 user MVP launch.',
@@ -1439,6 +1443,33 @@ function fillAll() {
       grid.appendChild(f); hydrateSprites(f);
     }
   });
+  fitNames();
+  alignHeads();
+}
+
+/* Award names: shrink the type just enough to stay on 2 lines (long names like the full university title need it) */
+function fitNames() {
+  document.querySelectorAll('.tc-name').forEach(el => {
+    el.style.fontSize = '';
+    let fs = parseFloat(getComputedStyle(el).fontSize), guard = 0;
+    const lh = parseFloat(getComputedStyle(el).lineHeight) || fs * 1.2;
+    while (el.offsetHeight > lh * 2.2 && fs > 10.5 && guard++ < 20) { fs -= 0.5; el.style.fontSize = fs + 'px'; }
+  });
+}
+
+/* Cards in the same row get the same title-bar height, so every photo window and body starts at the same line
+   (a 3-line title next to 1-line titles used to push its photo down) */
+function alignHeads() {
+  const grid = document.querySelector('.cards.cols4');
+  if (!grid || document.getElementById('main-view').classList.contains('hidden')) return;
+  const cards = [...grid.querySelectorAll('.tcard')], heads = cards.map(c => c.querySelector('.tc-head'));
+  heads.forEach(h => { h.style.minHeight = ''; });
+  const rows = {};
+  cards.forEach((c, i) => { const t = Math.round(c.getBoundingClientRect().top); (rows[t] = rows[t] || []).push(i); });
+  Object.values(rows).forEach(idx => {
+    const h = Math.max(...idx.map(i => heads[i].getBoundingClientRect().height));
+    idx.forEach(i => { heads[i].style.minHeight = h + 'px'; });
+  });
 }
 
 /* Hero stats (counted from the data below) + scrolling high-score ticker */
@@ -1446,7 +1477,7 @@ function buildStats() {
   const el = document.getElementById('hero-stats');
   const rows = [
     [D.awards.length, 'AWARDS', 'var(--yellow)'],
-    [D.awards.filter(a => a.cat === 'intl').length, 'NATIONAL / INTL', 'var(--cyan)'],
+    [D.awards.filter(a => a.cat === 'intl').length, 'INTERNATIONAL / NATIONAL', 'var(--cyan)'],
     [D.experience.length, 'EXPERIENCES', 'var(--pink)'],
     [D.activities.length, 'ACTIVITIES', 'var(--lime)']
   ];
@@ -1776,10 +1807,14 @@ Object.keys(D).forEach(t => D[t].forEach(it => {
     while (it.gallery.length < it.photos) it.gallery.push({});
   }
 }));
+/* order of the activity cards (edit this list to re-order them): row 1 · row 2 */
+const ACT_ORDER = ['chemyth', 'house', 'react', 'frc', 'gains', 'slsc', 'basketball', 'event-club'];
+D.activities.sort((a, b) => { const i = ACT_ORDER.indexOf(a.id), j = ACT_ORDER.indexOf(b.id); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
 renderAll(); buildStats(); buildTicker();
 /* your portrait: images/profile.jpg (or .png / .jpeg / .webp) */
 document.querySelector('.portrait-ph').insertAdjacentHTML('afterend', smartImg(undefined, './images/profile', 'Nguyen Le Mai Anh', true));
 hydrateSprites(); initTilt(); fillAll(); updateNavActive();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fillAll);
 let _rz; window.addEventListener('resize', () => { clearTimeout(_rz); _rz = setTimeout(fillAll, 150); });
 
 </script>
