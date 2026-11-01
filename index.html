@@ -551,6 +551,74 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 .pxc{position:fixed;top:-24px;z-index:1200;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(112vh) rotate(540deg)}}
 
+/* ═════════════ FLIPBOOK ═════════════ */
+.gallery-section.fb-block{margin-bottom:2.4rem}
+.fb-card{display:grid;grid-template-columns:minmax(120px,36%) minmax(0,1fr);gap:1.5rem;align-items:center;padding:1.15rem;background:var(--panel2);border:4px solid #000;box-shadow:8px 8px 0 var(--a,var(--cyan))}
+.fb-block.land .fb-card{grid-template-columns:minmax(0,1fr)}
+.fb-cover{position:relative;display:block;width:100%;aspect-ratio:var(--r,.707);padding:0;overflow:hidden;cursor:pointer;background:#fff;border:3px solid #000;
+  box-shadow:6px 6px 0 #000,0 0 0 3px var(--b,var(--pink));transition:transform .12s}
+.fb-cover:hover{transform:translate(-2px,-2px) rotate(-1deg)}
+.fb-cover::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.38),rgba(0,0,0,0) 11%)}
+.fb-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.fb-cover-ph{position:absolute;inset:0;display:grid;place-items:center;font-size:2.4rem;background:repeating-conic-gradient(#e9e4f7 0 25%,#fff 0 50%) 0 0/20px 20px}
+.fb-name{font-family:var(--f-disp);font-size:1.05rem;line-height:1.15;text-transform:uppercase;overflow-wrap:anywhere;margin-bottom:.6rem}
+.fb-meta{font-family:var(--f-pixel);font-size:.5rem;line-height:1.9;letter-spacing:.05em;color:var(--cyan);margin-bottom:1rem}
+.fb-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+.q-link{cursor:pointer}
+/* reader */
+.fb{position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;background:radial-gradient(ellipse at 50% 25%,#1d0b4d,#07011a 72%)}
+.fb.open{display:flex}
+.fb-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 1rem .8rem;background:#12062e;border-bottom:4px solid #000;box-shadow:0 4px 0 var(--pink)}
+.fb-title{min-width:0;font-family:var(--f-disp);font-size:clamp(.78rem,1.5vw,1.05rem);line-height:1.15;text-transform:uppercase;overflow-wrap:anywhere}
+.fb-tools{display:flex;gap:.6rem;flex:0 0 auto}
+.fb-tbtn{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:4px;padding:.7rem .8rem;cursor:pointer;text-transform:uppercase;white-space:nowrap;
+  font-family:var(--f-pixel);font-size:.54rem;letter-spacing:.05em;line-height:1.2;background:var(--cyan);color:#16052e;border:3px solid #000;box-shadow:0 4px 0 #009aa6,0 4px 0 3px #000}
+.fb-tbtn:hover{filter:brightness(1.1)}
+.fb-tbtn:active{transform:translateY(3px);box-shadow:0 1px 0 #009aa6,0 1px 0 3px #000}
+.fb-tbtn.close{background:var(--pink);color:#fff;box-shadow:0 4px 0 #b30062,0 4px 0 3px #000}
+.fb-stage{position:relative;flex:1;min-height:0;display:flex;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.fb-stage.zoomed{overflow:auto;touch-action:auto}
+.fb-book{position:relative;flex:0 0 auto;margin:auto;width:var(--bw,0px);height:var(--ph,0px)}
+.fb-book::before{content:'';position:absolute;left:3%;right:3%;bottom:-18px;height:26px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.65),transparent 70%);filter:blur(4px)}
+.fb-shift{position:absolute;inset:0;perspective:calc(var(--pw,600px)*3.4);transform:translateX(var(--sx,0px));transition:transform .85s cubic-bezier(.45,.05,.25,1)}
+.fb-leaf{position:absolute;top:0;left:var(--pw);width:var(--pw);height:100%;cursor:pointer;transform-origin:left center;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.45,.05,.25,1)}
+.fb-book.single .fb-leaf{left:0}
+.fb-leaf.flipped{transform:rotateY(-180deg)}
+.fb-book.noanim .fb-shift,.fb-book.noanim .fb-leaf{transition:none}
+.fb-face{position:absolute;inset:0;overflow:hidden;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fb-face.back{transform:rotateY(180deg)}
+.fb-face.blank{background:#ece7f8}
+.fb-face::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 8%,rgba(0,0,0,0) 93%,rgba(0,0,0,.07))}
+.fb-face.back::after{background:linear-gradient(270deg,rgba(0,0,0,.34),rgba(0,0,0,0) 8%,rgba(0,0,0,0) 93%,rgba(0,0,0,.07))}
+.fb-leaf.turning .fb-face::before{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:#000;opacity:0;animation:fbshade .85s ease both}
+@keyframes fbshade{0%,100%{opacity:0}50%{opacity:.32}}
+.fb-load{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-pixel);font-size:.55rem;letter-spacing:.1em;color:#9a8fc4;animation:blink 1s linear infinite}
+.fb-face.done .fb-load{display:none}
+.fb-face.err .fb-load{animation:none;color:#c33}
+.fb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .3s;pointer-events:none}
+.fb-img.ok{opacity:1}
+.fb-msg{position:absolute;inset:0;display:grid;place-content:center;gap:1rem;padding:1.5rem;text-align:center;pointer-events:none;font-family:var(--f-pixel);font-size:.62rem;line-height:2;letter-spacing:.06em;color:var(--yellow)}
+.fb-msg:empty{display:none}
+.fb-msg a{pointer-events:auto;color:var(--cyan);text-decoration:underline}
+.fb-bar{display:flex;align-items:center;gap:1rem;padding:.7rem 1.1rem .9rem;background:#12062e;border-top:4px solid #000}
+.fb-nav{flex:0 0 auto;width:46px;height:46px;display:grid;place-items:center;margin-bottom:4px;cursor:pointer;background:var(--yellow);color:#16052e;border:3px solid #000;box-shadow:0 4px 0 #b89a00,0 4px 0 3px #000}
+.fb-nav:disabled{opacity:.3;pointer-events:none}
+.fb-nav:active{transform:translateY(3px)}
+.fb-nav .tri{font-size:1rem}
+.fb-count{flex:0 0 auto;min-width:9.5em;text-align:right;font-family:var(--f-pixel);font-size:.58rem;letter-spacing:.06em;color:var(--cyan)}
+#fb-range{flex:1;min-width:0;height:24px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+#fb-range::-webkit-slider-runnable-track{height:12px;background:repeating-linear-gradient(90deg,var(--pink) 0 10px,#5a1456 10px 14px);border:3px solid #000}
+#fb-range::-moz-range-track{height:12px;background:repeating-linear-gradient(90deg,var(--pink) 0 10px,#5a1456 10px 14px);border:3px solid #000}
+#fb-range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:30px;margin-top:-12px;background:var(--yellow);border:3px solid #000;box-shadow:2px 2px 0 #000}
+#fb-range::-moz-range-thumb{width:16px;height:24px;background:var(--yellow);border:3px solid #000;border-radius:0;box-shadow:2px 2px 0 #000}
+@media (max-width:640px){
+  .fb-tbtn{padding:.65rem .6rem;font-size:.48rem}
+  .fb-tbtn .lbl{display:none}
+  .fb-count{min-width:0;font-size:.5rem}
+  .fb-bar{gap:.6rem;padding:.6rem .7rem .8rem}
+  .fb-card{grid-template-columns:minmax(0,1fr)}
+}
+
 </style>
 </head>
 <body>
@@ -561,7 +629,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 <nav id="nav">
   <a class="logo" onclick="goHome()" onkeydown="if(event.key==='Enter')goHome()" role="link" tabindex="0" aria-label="Back to top">
     <span class="logo-mark"><i class="sp" data-spr="ghost" data-px="2"></i></span>
-    <span class="logo-txt">MAIANH<i>&middot;</i>PORTFOLIO</span>
+    <span class="logo-txt">Nguyen Le<i>&middot;</i>Mai Anh</span>
   </a>
   <ul class="nav-links">
     <li><a href="#home"><i class="k">1</i>Home</a></li>
@@ -601,7 +669,7 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
           <span class="chip" style="--c:var(--lime)">Lv.12</span>
         </div>
         <h1 class="hero-name"><span class="name-1">Nguyen Le</span><span class="name-2">Mai <span class="hl">Anh</span></span></h1>
-        <p class="hero-class">INTENDED MAJOR: <b>CHEMICAL ENGINEERING</b> &times; <b>CHEMISTRY</b></p>
+        <p class="hero-class">INTENDED MAJOR: <b>CHEMISTRY</b> &times; <b>CHEMICAL ENGINEERING</b></p>
         <p class="hero-sub">Grade 12 &middot; <strong>Lawrence S. Ting School</strong> &middot; Ho Chi Minh City</p>
         <div class="dialog">International chemistry competitor, STEM innovator, and community builder. Passionate about molecular design, sustainable engineering, and using science to solve real-world problems. Applying to undergraduate programmes in Chemistry and Engineering.</div>
         <div class="stats" id="hero-stats"></div>
@@ -736,6 +804,29 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
   </div>
 </div>
 
+<!-- ═════ FLIPBOOK READER ═════ -->
+<div id="fb" class="fb" role="dialog" aria-modal="true" aria-label="Flipbook reader">
+  <div class="fb-top">
+    <div class="fb-title" id="fb-title"></div>
+    <div class="fb-tools">
+      <button class="fb-tbtn" id="fb-zoom" type="button" aria-label="Zoom">ZOOM 1x</button>
+      <button class="fb-tbtn" id="fb-full" type="button" aria-label="Full screen">FULL</button>
+      <a class="fb-tbtn" id="fb-pdf" target="_blank" rel="noopener" download>PDF</a>
+      <button class="fb-tbtn close" id="fb-close" type="button" aria-label="Close">&#10005;</button>
+    </div>
+  </div>
+  <div class="fb-stage" id="fb-stage">
+    <div class="fb-book" id="fb-book"><div class="fb-shift" id="fb-shift"></div></div>
+    <div class="fb-msg" id="fb-msg"></div>
+  </div>
+  <div class="fb-bar">
+    <button class="fb-nav" id="fb-prev" type="button" aria-label="Previous page"><i class="tri l"></i></button>
+    <input type="range" id="fb-range" min="1" max="1" value="1" aria-label="Go to page"/>
+    <button class="fb-nav" id="fb-next" type="button" aria-label="Next page"><i class="tri"></i></button>
+    <span class="fb-count" id="fb-count"></span>
+  </div>
+</div>
+
 <script>
 /* ═════════════════════════════════════════════════════════════
    NGUYEN LE MAI ANH — ARCADE PORTFOLIO
@@ -745,6 +836,19 @@ footer{position:relative;overflow:hidden;text-align:center;padding:5.5rem var(--
 ═════════════════════════════════════════════════════════════ */
 const GG = [['#3a1a8a','#c21b7a'],['#0a4fb3','#00c2d6'],['#6a1fb5','#2a6bff'],['#b34a00','#ff2e97'],['#007a6a','#3a78ff'],['#8a1fa0','#ff8a1f'],['#1a5fb4','#9b5cff'],['#a01a5a','#ff8a1f']];
 const gg = i => { const [a,b] = GG[i % GG.length]; return `linear-gradient(135deg,${a},${b})`; };
+
+/* ── FLIPBOOKS (PDF → page-turning book) ─────────────────────────
+   Put each PDF in the  docs/  folder, then edit its file name / title here.
+   orient: 'portrait' = A4 vertical · 'landscape' = A4 horizontal
+   Use it on any item with   flipbooks:[FLIPBOOKS.research]
+──────────────────────────────────────────────────────────────── */
+const FLIPBOOKS = {
+  research: { src:'./docs/oilspill-research.pdf',  title:'Research paper — oil spill removal with chicken-feather adsorbents', orient:'portrait'  },
+  hnue:     { src:'./docs/hnue-stem.pdf',          title:'HNUE Olympic STEM — Smart Flood-Rescue Raft',                        orient:'portrait'  },
+  feat:     { src:'./docs/feat-week.pdf',          title:'LSTS F.E.A.T. Week — FRIDGI',                                        orient:'landscape' },
+  biology:  { src:'./docs/biology-camp.pdf',       title:'Molecular Biology Summer Camp',                                      orient:'landscape' },
+  hcmut:    { src:'./docs/hcmut-innovation.pdf',   title:'Ho Chi Minh City University of Technology Innovation — CHŌZ',        orient:'landscape' }
+};
 
 const D = {
 
@@ -776,7 +880,7 @@ awards: [
       {src:'./images/awards/icq-1.jpg', caption:'Certificate of High Distinction'}
     ]
   },
-  { id:'hnue', rank:'S', cat:'intl', panel:'p-violet', phCls:'ph-v', icon:'🥇', cardSize:'half',
+  { id:'hnue', flipbooks:[FLIPBOOKS.hnue], rank:'S', cat:'intl', panel:'p-violet', phCls:'ph-v', icon:'🥇', cardSize:'half',
     catLabel:'NATIONAL · FIRST PRIZE', level:'1ST PLACE', sublevel:'out of 191 National Teams (510 students)',
     title:'HNUE Olympic STEM',
     organization:'Hanoi National University of Education', year:'Dec 2025',
@@ -787,17 +891,17 @@ awards: [
     cardPick:[1,3], cardLayout:'stack',
     gallery:[
       {src:'./images/awards/hnue-1.JPG',  caption:'First Prize certificate'},
-      {src:'./images/awards/hnue-2.jpg', caption: 'First Prize board'},
+      {src:'./images/awards/hnue-2.jpg'},
       {src:'./images/awards/hnue-3.jpg',  caption:'First Prize ceremony'},
-      {src:'./images/awards/hnue-4.png', caption:'Building circuits and programming Arduino'},
-      {src:'./images/awards/hnue-5.png', caption:'Building Prototype'},
-      {src:'./images/awards/hnue-6.png', caption:'Testing Prototype'},
-      {src:'./images/awards/hnue-7.jpg', caption:'Semi-final presentation'},
-      {src:'./images/awards/hnue-8.jpg', caption:'Final round: Suprised Challenge'},
-      {src:'./images/awards/hnue-9.JPG', caption:'Final round: Designing Prototype'},
-      {src:'./images/awards/hnue-10.JPG', caption:'Final round: Presenting'},
-      {src:'./images/awards/hnue-11.JPG', caption:'Final: Testing time'},
-      {src:'./images/awards/hnue-12.jpg', caption:'Hanoi food tour'}
+      {src:'./images/awards/hnue-4.png'},
+      {src:'./images/awards/hnue-5.png'},
+      {src:'./images/awards/hnue-6.png'},
+      {src:'./images/awards/hnue-7.jpg'},
+      {src:'./images/awards/hnue-8.jpg'},
+      {src:'./images/awards/hnue-9.JPG'},
+      {src:'./images/awards/hnue-10.JPG'},
+      {src:'./images/awards/hnue-11.JPG'},
+      {src:'./images/awards/hnue-12.jpg'}
     ]
   },
   { id:'wycto', cat:'intl', panel:'p-amber', phCls:'ph-a', icon:'🥉', cardSize:'half',
@@ -811,10 +915,10 @@ awards: [
     cardPhotos:1,
     gallery:[
       {src:'./images/awards/wycto-1.png', caption:'Certificate of Achievement — Bronze Medal'},
-      {src:'./images/awards/wycto-2.png',     caption:'Exam result sheet'}      /* saved without an extension? rename it to wycto-2.png */
+      {src:'./images/awards/wycto-2',     caption:'Exam result sheet'}      /* saved without an extension? rename it to wycto-2.png */
     ]
   },
-  { id:'hcmut', cat:'intl', panel:'p-cyan', phCls:'ph-c', icon:'💡', cardSize:'half',
+  { id:'hcmut', flipbooks:[FLIPBOOKS.hcmut], cat:'intl', panel:'p-cyan', phCls:'ph-c', icon:'💡', cardSize:'half',
     catLabel:'NATIONAL · TOP 10', level:'TOP 10 FINALIST', sublevel:'out of 189 projects, 18 international teams',
     title:'Ho Chi Minh City University of Technology Innovation',
     organization:'Ho Chi Minh City University of Technology (VNU-HCM)', year:'Sep 2026',
@@ -853,9 +957,9 @@ awards: [
   { id:'lsts-oyl', cat:'school', panel:'p-indigo', phCls:'ph-i', icon:'⭐', cardSize:'half',
     catLabel:'SCHOOL AWARD', level:'OUTSTANDING YOUNG LEADER', sublevel:'Awarded 4 times · Grade 10 &amp; 11',
     title:'Outstanding Young Leader',
-    organization:'Lawrence S. Ting School', year:'Grade 10 Semester I &amp; II · Grade 11 Semester I &amp; II',
-    summary:'Recognized four consecutive Semesters for outstanding leadership at school level.',
-    body:['Awarded Outstanding Young Leader across all four Semesters of Grade 10 and Grade 11, this recognition reflects a sustained standard of leadership in the school community — not just a single strong Semester.','Receiving this award four consecutive times required consistent demonstration of initiative, team support, and the ability to bring people together toward shared goals.'],
+    organization:'Lawrence S. Ting School', year:'Gr 10 Sem I &amp; II · Gr 11 Sem I &amp; II',
+    summary:'Recognized four consecutive semesters for outstanding leadership at school level.',
+    body:['Awarded Outstanding Young Leader across all four semesters of Grade 10 and Grade 11, this recognition reflects a sustained standard of leadership in the school community — not just a single strong semester.','Receiving this award four consecutive times required consistent demonstration of initiative, team support, and the ability to bring people together toward shared goals.'],
     tags:['Leadership','School','4×','2023–2026'], cols:3,
     cardPick:[1,3], cardLayout:'stack',
     gallery:[
@@ -879,11 +983,11 @@ awards: [
     ]
   },
   { id:'lsts-cv', cat:'school', panel:'p-indigo', phCls:'ph-i', icon:'🌟', cardSize:'half',
-    catLabel:'SCHOOL AWARD', level:'CORE VALUES EXCELLENCE', sublevel:'5 Consecutive Semesters · Grade 8–11',
+    catLabel:'SCHOOL AWARD', level:'CORE VALUES EXCELLENCE', sublevel:'8 Consecutive Semesters · Grade 8–11',
     title:'Excellent in School\'s Six Core Values',
-    organization:'Lawrence S. Ting School', year:'Grade 8 Semester I – Grade 11 Semester II',
-    summary:'Recognised for exemplifying the school\'s six core values for 8 consecutive Semesters.',
-    body:['Awarded Excellent in Demonstrating the School\'s Six Core Values across all Semesters from Grade 8 through Grade 11 — eight consecutive Semesters of recognition for embodying integrity, collaboration, creativity, responsibility, respect, and excellence as daily practice rather than abstract ideals.'],
+    organization:'Lawrence S. Ting School', year:'Grade 8 Sem I – Grade 11 Sem II',
+    summary:'Recognised for exemplifying the school\'s six core values for 8 consecutive semesters.',
+    body:['Awarded Excellent in Demonstrating the School\'s Six Core Values across all semesters from Grade 8 through Grade 11 — eight consecutive semesters of recognition for embodying integrity, collaboration, creativity, responsibility, respect, and excellence as daily practice rather than abstract ideals.'],
     tags:['Core Values','School','8 Semesters'], cols:2,
     cardPick:[3,5], cardLayout:'stack',
     gallery:[
@@ -894,10 +998,10 @@ awards: [
       {src:'./images/awards/lsts-cv-5.jpeg'}
     ]
   },
-  { id:'lsts-feat', rank:'S', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔭', cardSize:'half',
+  { id:'lsts-feat', flipbooks:[FLIPBOOKS.feat], rank:'S', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔭', cardSize:'half',
     catLabel:'SCHOOL · FIRST PRIZE', level:'FIRST PRIZE', sublevel:'Top 1 out of 45 Teams — F.E.A.T. Week',
     title:'LSTS F.E.A.T. Week',
-    organization:'Lawrence S. Ting School', year:'Semester II, Grade 11',
+    organization:'Lawrence S. Ting School', year:'Sem II, Grade 11',
     summary:'Ranked 1st out of 45 competing teams in the school\'s flagship STEM showcase.',
     body:['LSTS F.E.A.T. Week is the school\'s most prestigious STEM competition. Leading a team to First Prize — Top 1 out of 45 teams — in the school\'s flagship innovation showcase is the highest STEM recognition available at school level. Our project FRIDGI (a smart food preservation container) was recognised for hardware design, innovation, and commerciability.'],
     tags:['STEM','First Prize','Innovation','School'], cols:2,
@@ -914,10 +1018,10 @@ awards: [
       {src:'./images/awards/lsts-feat-9.jpg'}
     ]
   },
-  { id:'lsts-ssr', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔬', cardSize:'half',
+  { id:'lsts-ssr', flipbooks:[FLIPBOOKS.research], cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🔬', cardSize:'half',
     catLabel:'SCHOOL AWARD', level:'COMPLETED', sublevel:'Schoolwide Scientific Research',
     title:'Schoolwide Scientific Research',
-    organization:'Lawrence S. Ting School', year:'Semester I, Grade 11',
+    organization:'Lawrence S. Ting School', year:'Sem I, Grade 11',
     summary:'Completed school-wide Scientific Research programme in Grade 11 Semester I.',
     body:['Completed the Schoolwide Scientific Research Programme during Semester I of Grade 11. This programme required designing, executing, and presenting an independent research project to a panel of school faculty — a direct precursor to the Oil Spill Remediation research project.'],
     tags:['Research','Science','School'], cols:2,
@@ -931,7 +1035,7 @@ awards: [
   { id:'lsts-edu', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🌱', cardSize:'half',
     catLabel:'SCHOOL · THIRD PRIZE', level:'THIRD PRIZE', sublevel:'EDUtech Planet Protectors — Schoolwide',
     title:'EDUtech Planet Protectors',
-    organization:'Lawrence S. Ting School', year:'Semester II, Grade 10',
+    organization:'Lawrence S. Ting School', year:'Sem II, Grade 10',
     summary:'Third Prize in the schoolwide EDUtech Planet Protectors environmental technology competition.',
     body:['Earned Third Prize in the schoolwide EDUtech Planet Protectors Competition during Semester II of Grade 10. This competition challenged students to design technology-driven solutions to environmental problems — combining sustainability awareness with engineering design thinking.'],
     tags:['Environment','Tech','Third Prize','School'], cols:2,
@@ -943,7 +1047,7 @@ awards: [
   { id:'lsts-wr', cat:'school', panel:'p-teal', phCls:'ph-t', icon:'🚀', cardSize:'half',
     catLabel:'SCHOOL · SECOND PRIZE', level:'SECOND PRIZE', sublevel:'Water Rocket Competition — Schoolwide',
     title:'LSTS Water Rocket Competition',
-    organization:'Lawrence S. Ting School', year:'Semester I, Grade 10',
+    organization:'Lawrence S. Ting School', year:'Sem I, Grade 10',
     summary:'Second Prize in the schoolwide Water Rocket Engineering Competition in Grade 10.',
     body:['Placed Second in the LSTS Water Rocket Competition during Semester I of Grade 10. This engineering challenge required designing and launching a water-propelled rocket for accuracy and altitude — my first major school-level STEM engineering competition, setting the stage for future innovation work.'],
     tags:['Engineering','Rocket','Second Prize','School'], cols:2,
@@ -957,8 +1061,8 @@ awards: [
 
 experience: [
   { id:'ai-training', phCls:'ph-s', icon:'🤖',
-    title:'Basic Training Program in Artificial Intelligence',
-    role:'Student Attendee | Machine Learning Classes & Individual Mini Project',
+    title:'Basic Training in Artificial Intelligence',
+    role:'Student Attendee | ML Classes & Individual Mini Project',
     organization:'Vietnam National University Faculty', period:'Dec 2021',
     summary:'Engineered a Python CV model classifying skin diseases across 2,000 medical images.',
     pdfLink:'', links:[],
@@ -969,9 +1073,9 @@ experience: [
     tags:['AI','Machine Learning','Python','Computer Vision'],
     cols:3, gallery:[{src:'',caption:'Programme completion certificate'}]
   },
-  { id:'molbio', phCls:'ph-e', icon:'🧫',
-    title:'Biology Summer Camp',
-    role:'Camp Attendee | Molecular Biology Lab Classes & Team Research Project',
+  { id:'molbio', flipbooks:[FLIPBOOKS.biology], phCls:'ph-e', icon:'🧫',
+    title:'Molecular Biology Summer Camp',
+    role:'Camp Attendee | Lab Classes & Team Research Project',
     organization:'Molecular Biology Summer Camp', period:'Jun 2024',
     summary:'Isolated 5 soil bacterial strains, executed Gram staining, and plotted OD growth curves.',
     pdfLink:'', links:[],
@@ -983,25 +1087,25 @@ experience: [
     tags:['Molecular Biology','Microbiology','Lab Skills','Gram Staining'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
-  { id:'oilspill', phCls:'ph-t', icon:'🌊',
+  { id:'oilspill', flipbooks:[FLIPBOOKS.research], phCls:'ph-t', icon:'🌊',
     title:'Oil Spill Removal Research',
-    role:'Researcher | Scientific Research Competition',
-    organization:'Lawrence S. Ting School', period:'<p> Oct 2024 <br>– Sep 2025</p>',
+    role:'Researcher | School-wide Scientific Research Competition',
+    organization:'Lawrence S. Ting School', period:'Oct 2024 – Sep 2025',
     summary:'Synthesized keratin bio-composite adsorbents achieving 828 mg diesel oil absorption in 60 min.',
     pdfLink:'',
     links:[{label:'View Research Paper (PDF)',url:''}],
     bullets:[
       'Synthesized novel keratin-based bio-composite adsorbents for marine oil spill remediation by upcycling poultry feather waste with a natural kapok tree (Ceiba pentandra) matrix via multi-step thermochemical pretreatment.',
       'Optimized composite formulations across 5 mass ratio variations, demonstrating a direct positive correlation between feather content and sorption efficiency — achieving a maximum Diesel Oil (DO 0.0015% S) absorption capacity of 828 mg within a 60-minute equilibrium threshold.',
-      'Validated long-term structural integrity with zero mechanical degradation over 168 hours (7 days) of continuous oil immersion, while formulating characterization frameworks incorporating Semester surface morphology, BET surface area analysis, and simulated seawater recovery kinetics.'
+      'Validated long-term structural integrity with zero mechanical degradation over 168 hours (7 days) of continuous oil immersion, while formulating characterization frameworks incorporating SEM surface morphology, BET surface area analysis, and simulated seawater recovery kinetics.'
     ],
     tags:['Research','Chemistry','Materials Science','Environmental','Sustainability'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
-  { id:'choz', phCls:'ph-b', icon:'🍱',
-    title:'<p> VNU - HCMUT Innovation<br>- CHŌZ Platform</p>',
+  { id:'choz', flipbooks:[FLIPBOOKS.hcmut], phCls:'ph-b', icon:'🍱',
+    title:'Ho Chi Minh City University of Technology Innovation — CHŌZ Platform',
     role:'Web Developer | Innovation & R&D Project',
-    organization:'Ho Chi Minh City University of Technology (Vietnam National University)', period:'May – Aug 2025',
+    organization:'Ho Chi Minh City University of Technology (VNU-HCM)', period:'May – Aug 2025',
     summary:'Built CHŌZ — a full-stack personalized nutrition platform for 100–300 user MVP launch.',
     pdfLink:'',
     links:[{label:'Project Folder',url:'https://dinhthienly.sharepoint.com/:f:/s/repository/IgBu-JVuK4IpTYs5SSIY1SgEAexufcDnrZxGzzeRqDiEFOU?e=squ9K1'}],
@@ -1012,7 +1116,7 @@ experience: [
     tags:['Web Development','Full-Stack','UI/UX','Cloud','Innovation'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
-  { id:'flood-raft', phCls:'ph-c', icon:'🌊',
+  { id:'flood-raft', flipbooks:[FLIPBOOKS.hnue], phCls:'ph-c', icon:'🌊',
     title:'HNUE Olympic STEM — Smart Flood-Rescue Raft',
     role:'Leader & R&D Engineer | Innovative STEM Product',
     organization:'Hanoi National University of Education', period:'Nov – Dec 2025',
@@ -1026,7 +1130,7 @@ experience: [
     tags:['Arduino','Systems Engineering','Prototyping','R&D','First Prize'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
-  { id:'fridgi', phCls:'ph-v', icon:'❄️',
+  { id:'fridgi', flipbooks:[FLIPBOOKS.feat], phCls:'ph-v', icon:'❄️',
     title:'LSTS F.E.A.T. Week — FRIDGI',
     role:'Leader & R&D Engineer | Entrepreneurship & Innovation Project',
     organization:'Lawrence S. Ting School', period:'Apr – May 2026',
@@ -1034,7 +1138,7 @@ experience: [
     pdfLink:'',
     links:[{label:'Project Documentation',url:'https://dinhthienly.sharepoint.com/:f:/s/repository/IgBM6WSBnlxCRIqtw55XNwm3AYY-BW6H6x19oLndsAAMpog?e=PIXAzp'}],
     bullets:[
-      'Spearheaded hardware R&D and Design for Manufacturing (DFM), selecting high-humidity physical gas sensors and optimizing structural asSemesterbly to achieve a $4 USD BOM cost with a 50–60% hardware profit margin across $16–$22 USD product tiers.',
+      'Spearheaded hardware R&D and Design for Manufacturing (DFM), selecting high-humidity physical gas sensors and optimizing structural assembly to achieve a $4 USD BOM cost with a 50–60% hardware profit margin across $16–$22 USD product tiers.',
       'Led a 5-member team to engineer FRIDGI — an active smart food preservation container targeting 30% household fruit waste reduction — by designing the physical hardware architecture and integrating a replaceable active chemical filtration module (Tyvek encapsulation, 90-day degradation cycle).'
     ],
     tags:['Hardware R&D','DFM','Product Design','Sustainability','First Prize'],
@@ -1088,7 +1192,7 @@ activities: [
     summary:'Founded a 13-member sustainability initiative upcycling 1,000+ plastic bottles across a 2,000-student body.',
     links:[{label:'Photos',url:'https://dinhthienly.sharepoint.com/:f:/s/repository/IgC5cAgGkJ6fSqvPO391EtUsATEkPAJMyL4NLIYzbSGpMvk?e=Nqk1ex'}],
     hasTimeline: false,
-    body:['Founded and led a 13-member sustainability initiative to address local gaps in daily waste segregation, cultivating circular reuse habits and environmental stewardship across a 2,000+ student body.','Spearheaded school-wide advocacy campaigns, delivering speeches during weekly flag asSemesterblies and designing custom educational signage for waste stations at Sports Days and Spring Fairs.','Engineered zero-waste initiatives by collecting and upcycling 1,000+ plastic bottles into interactive campus materials, while directing a year-end donation drive for unused textbooks and stationery.'],
+    body:['Founded and led a 13-member sustainability initiative to address local gaps in daily waste segregation, cultivating circular reuse habits and environmental stewardship across a 2,000+ student body.','Spearheaded school-wide advocacy campaigns, delivering speeches during weekly flag assemblies and designing custom educational signage for waste stations at Sports Days and Spring Fairs.','Engineered zero-waste initiatives by collecting and upcycling 1,000+ plastic bottles into interactive campus materials, while directing a year-end donation drive for unused textbooks and stationery.'],
     tags:['Sustainability','Leadership','Environment','Founder'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
@@ -1132,7 +1236,7 @@ activities: [
     summary:'Core operations unit managing all school events for a 2,000+ student body across two campuses.',
     links:[{label:'Instagram',url:'https://www.instagram.com/opceee.lsts/'},{label:'Photos',url:'https://dinhthienly.sharepoint.com/:f:/s/repository/IgD5AVk1hHJDQ5V5i1AUTtR5AbZolY23fPspMOBHEYDnuFE?e=Z3y9y0'}],
     hasTimeline: false,
-    body:['Served as the core operations unit responsible for full-lifecycle management of all school events: planning, equipment staging, and site setup across both physical campuses.','Managed logistics for weekly flag asSemesterblies and large-scale graduation and commencement programmes.','Coordinated cross-functional volunteer teams during multi-campus festivals, directing activities, spatial allocation, and safety management for 2,000+ attendees.'],
+    body:['Served as the core operations unit responsible for full-lifecycle management of all school events: planning, equipment staging, and site setup across both physical campuses.','Managed logistics for weekly flag assemblies and large-scale graduation and commencement programmes.','Coordinated cross-functional volunteer teams during multi-campus festivals, directing activities, spatial allocation, and safety management for 2,000+ attendees.'],
     tags:['Events','Logistics','Operations','School'],
     cols:3, gallery:[{},{},{},{},{},{}]
   },
@@ -1278,6 +1382,7 @@ function buildAwardPhotoPanel(item) {
   const bits = [];
   if (extra > 0 && shown < 3) bits.push(`+${extra} ${extra === 1 ? 'photo' : 'photos'}`);
   if ((item.videos || []).length) bits.push('&#9654; video');
+  if ((item.flipbooks || []).length) bits.push('flipbook');
   const pill = bits.length ? `<span class="gp-pill">${bits.join(' &middot; ')}</span>` : '';
   const stack = (item.cardLayout === 'stack' && (shown === 2 || shown === 3)) ? ' stack' : '';
   const fit = item.cardFit === 'contain' ? ' fit-contain' : '';
@@ -1306,7 +1411,8 @@ function makeQuest(item, idx) {
   el.className = `quest ${themeOf('experience', item)}`;
   makeOpenable(el, 'experience', item.id, item.title);
   const tags  = (item.tags || []).map(t => `<span class="tagchip">${t}</span>`).join('');
-  const links = (item.links || []).filter(l => l.url).map(l => `<a class="q-link" href="${l.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${l.label}</a>`).join('');
+  const fbChips = (item.flipbooks || []).map((d, i) => `<button class="q-link" type="button" data-fb="${i}">READ FLIPBOOK</button>`).join('');
+  const links = fbChips + (item.links || []).filter(l => l.url).map(l => `<a class="q-link" href="${l.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${l.label}</a>`).join('');
   el.innerHTML = `
     <div class="q-side">
       <div class="q-icon">${item.icon}</div>
@@ -1322,6 +1428,7 @@ function makeQuest(item, idx) {
       ${links ? `<div class="q-links">${links}</div>` : ''}
       <div class="q-foot"><div class="q-tags">${tags}</div><span class="q-cta"><i class="tri"></i> START QUEST</span></div>
     </div>`;
+  el.querySelectorAll('[data-fb]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openFlipbook(item.flipbooks[+b.dataset.fb], item); }));
   return el;
 }
 
@@ -1647,6 +1754,7 @@ function openDetail(type, id) {
   /* Tags + photos / video */
   document.getElementById('detail-tags').innerHTML = (item.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('');
   renderGallery(type, item, 'detail-gallery');
+  renderFlipbooks(type, item);
   addScore(type + ':' + item.id, ({ awards: 'TROPHY', experience: 'QUEST', activities: 'GUILD' }[type] || 'LEVEL') + ' UNLOCKED');
 
   /* Fade main → detail */
@@ -1747,6 +1855,298 @@ let tx=0;
 lbEl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 lbEl.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>40){if(d>0)showSlide(lbIdx+1);else showSlide(lbIdx-1);}});
 
+
+
+/* ═════════════════════════════════════════════════════════════
+   FLIPBOOK — turn the pages of a PDF like a real book (A4 portrait or landscape)
+   1. put the PDF in the  docs/  folder      2. list it in FLIPBOOKS (top of the data)
+   3. add  flipbooks:[FLIPBOOKS.yourKey]  to any award / experience / activity
+   The PDF is drawn page by page in the browser with PDF.js — no conversion needed.
+═════════════════════════════════════════════════════════════ */
+const PDFJS_SOURCES = [
+  { lib: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/legacy/build/pdf.min.mjs', worker: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/legacy/build/pdf.worker.min.mjs' },
+  { lib: 'https://unpkg.com/pdfjs-dist@5.6.205/legacy/build/pdf.min.mjs',            worker: 'https://unpkg.com/pdfjs-dist@5.6.205/legacy/build/pdf.worker.min.mjs' }
+];
+let _pdfjsP = null;
+function ensurePdfJs() {
+  if (window.pdfjsLib && window.pdfjsLib.getDocument) return Promise.resolve(window.pdfjsLib);
+  if (!_pdfjsP) _pdfjsP = (async () => {
+    let err;
+    for (const s of (window.PDFJS_SOURCES_OVERRIDE || PDFJS_SOURCES)) {
+      try { const lib = await import(s.lib); lib.GlobalWorkerOptions.workerSrc = s.worker; window.pdfjsLib = lib; return lib; }
+      catch (e) { err = e; }
+    }
+    _pdfjsP = null; throw err || new Error('PDF.js could not be loaded');
+  })();
+  return _pdfjsP;
+}
+const _fbDocs = new Map();
+function fbLoad(src) {                         // → Promise<{pdf, n, ratio}>   (cached per file)
+  if (!_fbDocs.has(src)) {
+    const p = ensurePdfJs().then(lib => lib.getDocument({ url: src }).promise).then(async pdf => {
+      const first = await pdf.getPage(1), v = first.getViewport({ scale: 1 });
+      return { pdf, n: pdf.numPages, ratio: v.width / v.height };
+    });
+    p.catch(() => _fbDocs.delete(src));
+    _fbDocs.set(src, p);
+  }
+  return _fbDocs.get(src);
+}
+async function fbRender(info, i, targetW) {    // page i (0-based) → blob URL of a JPEG
+  const page = await info.pdf.getPage(i + 1);
+  const v1 = page.getViewport({ scale: 1 }), vp = page.getViewport({ scale: targetW / v1.width });
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+  const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+  await page.render({ canvasContext: ctx, viewport: vp, background: '#fff' }).promise;
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.88));
+  page.cleanup(); cv.width = cv.height = 0;
+  return URL.createObjectURL(blob);
+}
+
+/* ── the block inside a detail page: book cover + "read as flipbook" ── */
+function renderFlipbooks(type, item) {
+  const docs = item.flipbooks || [];
+  if (!docs.length) return;
+  const el = document.getElementById('detail-gallery');
+  document.getElementById('detail-layout').classList.remove('no-side');
+  const frag = document.createDocumentFragment();
+  docs.forEach(d => {
+    const land = d.orient === 'landscape', title = d.title || item.title;
+    const sec = document.createElement('div');
+    sec.className = 'gallery-section fb-block' + (land ? ' land' : '');
+    sec.style.setProperty('--r', land ? '1.4142' : '0.7071');
+    sec.innerHTML = `
+      <div class="gallery-head"><h3>Document</h3><span class="gallery-count"></span></div>
+      <div class="fb-card">
+        <button class="fb-cover" type="button"><span class="fb-cover-ph">&#128214;</span></button>
+        <div class="fb-info">
+          <div class="fb-name"></div>
+          <div class="fb-meta">PDF &middot; A4 ${land ? 'LANDSCAPE' : 'PORTRAIT'}</div>
+          <div class="fb-actions"><button class="btn sm fb-open" type="button"><i class="tri"></i> Read as flipbook</button><a class="btn sm cyan" target="_blank" rel="noopener">Open PDF</a></div>
+        </div>
+      </div>`;
+    sec.querySelector('.fb-name').textContent = title;
+    sec.querySelector('.fb-actions a').href = d.src;
+    const open = () => openFlipbook(d, item);
+    sec.querySelector('.fb-cover').addEventListener('click', open);
+    sec.querySelector('.fb-open').addEventListener('click', open);
+    fbLoad(d.src).then(async info => {
+      sec.querySelector('.gallery-count').textContent = info.n + (info.n === 1 ? ' page' : ' pages');
+      sec.style.setProperty('--r', info.ratio.toFixed(4));
+      const url = await fbRender(info, 0, 560), img = new Image();
+      img.alt = ''; img.onload = () => { const ph = sec.querySelector('.fb-cover-ph'); if (ph) ph.remove(); };
+      img.src = url; sec.querySelector('.fb-cover').appendChild(img);
+    }).catch(() => { sec.querySelector('.fb-meta').textContent = 'PREVIEW UNAVAILABLE - USE "OPEN PDF"'; });
+    frag.appendChild(sec);
+  });
+  el.prepend(frag);
+}
+
+/* ── the reader ── */
+const FB = { open: false, doc: null, info: null, n: 0, ratio: .7071, mode: null, s: 0, maxS: 0, zoom: 1, leaves: [], imgs: [], urls: new Map(), busy: false, opener: null, swiped: false };
+const $fb = id => document.getElementById(id);
+const FB_ZOOMS = [1, 1.6, 2.4];
+
+async function openFlipbook(doc, item) {
+  if (FB.open) return;
+  FB.open = true; FB.doc = doc; FB.info = null; FB.mode = null; FB.s = 0; FB.zoom = 1; FB.opener = document.activeElement;
+  $fb('fb-title').textContent = doc.title || (item && item.title) || 'Document';
+  $fb('fb-pdf').href = doc.src;
+  $fb('fb-zoom').textContent = 'ZOOM 1x';
+  $fb('fb-shift').innerHTML = '';
+  $fb('fb-count').textContent = '';
+  $fb('fb-msg').innerHTML = 'LOADING DOCUMENT...';
+  $fb('fb').classList.add('open'); document.body.style.overflow = 'hidden';
+  $fb('fb-close').focus();
+  try {
+    const info = await fbLoad(doc.src);
+    if (!FB.open || FB.doc !== doc) return;
+    FB.info = info; FB.n = info.n; FB.ratio = info.ratio;
+    $fb('fb-msg').innerHTML = '';
+    fbLayout(true);
+  } catch (e) {
+    if (FB.open && FB.doc === doc) $fb('fb-msg').innerHTML = `COULD NOT LOAD THIS PDF.<br>Check that the file is in the docs folder,<br>or <a href="${doc.src}" target="_blank" rel="noopener">open it directly</a>.`;
+  }
+}
+function fbClose() {
+  if (!FB.open) return;
+  FB.open = false; clearTimeout(FB._t);
+  if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+  $fb('fb').classList.remove('open'); document.body.style.overflow = '';
+  FB.urls.forEach(u => u && URL.revokeObjectURL(u)); FB.urls.clear();
+  $fb('fb-shift').innerHTML = ''; FB.leaves = []; FB.imgs = []; FB.info = null; FB.mode = null;
+  if (FB.opener && FB.opener.focus) FB.opener.focus();
+}
+
+function fbPages() {                           // pages (0-based) on screen right now
+  if (FB.mode === 'single') return [FB.s];
+  const l = FB.s > 0 ? 2 * FB.s - 1 : -1, r = 2 * FB.s < FB.n ? 2 * FB.s : -1;
+  return [l, r].filter(x => x >= 0);
+}
+function fbSpreadOf(page) { return FB.mode === 'single' ? Math.min(page, FB.n - 1) : Math.min(FB.maxS, Math.floor((page + 1) / 2)); }
+
+function fbLayout(forceBuild) {
+  if (!FB.info) return;
+  const st = $fb('fb-stage'), book = $fb('fb-book');
+  const aw = Math.max(200, st.clientWidth - 28), ah = Math.max(200, st.clientHeight - 28), r = FB.ratio;
+  const mode = aw >= 760 ? 'spread' : 'single';
+  let pw = mode === 'spread' ? Math.min(aw / 2, ah * r) : Math.min(aw, ah * r);
+  pw = Math.floor(pw * FB.zoom);
+  book.style.setProperty('--pw', pw + 'px');
+  book.style.setProperty('--ph', Math.floor(pw / r) + 'px');
+  book.style.setProperty('--bw', (mode === 'spread' ? pw * 2 : pw) + 'px');
+  st.classList.toggle('zoomed', FB.zoom > 1);
+  if (mode !== FB.mode || forceBuild) {
+    const page = FB.mode ? fbPages()[0] : 0;
+    FB.mode = mode; fbBuild(); FB.s = fbSpreadOf(page || 0);
+  }
+  fbApply(false); fbUi(); fbPump();
+}
+function fbFace(page, side) {
+  const f = document.createElement('div');
+  f.className = 'fb-face ' + side;
+  if (page >= 0 && page < FB.n) {
+    f.innerHTML = '<span class="fb-load">LOADING</span>';
+    const img = document.createElement('img');
+    img.className = 'fb-img'; img.alt = 'Page ' + (page + 1); img.draggable = false;
+    f.appendChild(img); FB.imgs[page] = img;
+    const u = FB.urls.get(page); if (u) fbSetImg(page, u);
+  } else f.classList.add('blank');
+  return f;
+}
+function fbBuild() {
+  const shift = $fb('fb-shift'); shift.innerHTML = '';
+  const spread = FB.mode === 'spread', n = FB.n, L = spread ? Math.ceil(n / 2) : n;
+  FB.leaves = []; FB.imgs = new Array(n).fill(null);
+  $fb('fb-book').classList.toggle('single', !spread);
+  for (let j = 0; j < L; j++) {
+    const leaf = document.createElement('div');
+    leaf.className = 'fb-leaf'; leaf.dataset.j = j;
+    leaf.appendChild(fbFace(spread ? 2 * j : j, 'front'));
+    if (spread) leaf.appendChild(fbFace(2 * j + 1 < n ? 2 * j + 1 : -1, 'back'));
+    shift.appendChild(leaf); FB.leaves.push(leaf);
+  }
+  FB.maxS = spread ? Math.floor(n / 2) : n - 1;
+  $fb('fb-range').max = n;
+}
+function fbSetImg(page, url) {
+  const img = FB.imgs[page]; if (!img) return;
+  img.onload = () => { img.classList.add('ok'); img.parentElement.classList.add('done'); };
+  img.src = url;
+}
+function fbApply(animate) {
+  const book = $fb('fb-book'), L = FB.leaves.length, spread = FB.mode === 'spread';
+  book.classList.toggle('noanim', !animate);
+  FB.leaves.forEach((leaf, j) => {
+    const flipped = j < FB.s, was = leaf.classList.contains('flipped');
+    leaf.classList.toggle('flipped', flipped);
+    if (animate && was !== flipped) {
+      leaf.classList.add('turning'); leaf.style.zIndex = L + 10;
+      clearTimeout(leaf._t);
+      leaf._t = setTimeout(() => { leaf.classList.remove('turning'); leaf.style.zIndex = flipped ? j + 1 : L - j; }, 950);
+    } else if (!leaf.classList.contains('turning')) leaf.style.zIndex = flipped ? j + 1 : L - j;
+  });
+  let sx = 0; const pw = parseFloat(book.style.getPropertyValue('--pw')) || 0;   // a lone cover / back cover sits in the middle
+  if (spread) { if (FB.s === 0) sx = -pw / 2; else if (FB.n % 2 === 0 && FB.s === FB.maxS) sx = pw / 2; }
+  $fb('fb-shift').style.setProperty('--sx', sx + 'px');
+}
+function fbUi() {
+  const pg = fbPages(); if (!pg.length) return;
+  const a = pg[0] + 1, b = pg[pg.length - 1] + 1;
+  $fb('fb-count').textContent = 'PAGE ' + (a === b ? a : a + '-' + b) + ' / ' + FB.n;
+  $fb('fb-range').value = a;
+  $fb('fb-prev').disabled = FB.s <= 0; $fb('fb-next').disabled = FB.s >= FB.maxS;
+}
+function fbGo(target) {
+  if (!FB.info) return;
+  target = Math.max(0, Math.min(FB.maxS, target));
+  clearTimeout(FB._t);
+  const steps = Math.abs(target - FB.s); if (!steps) return;
+  if (steps > 6) { FB.s = target; fbApply(false); fbUi(); fbPump(); return; }      // far jump: no animation
+  const dir = target > FB.s ? 1 : -1; let k = 0;
+  const step = () => { FB.s += dir; fbApply(true); fbUi(); fbPump(); if (++k < steps) FB._t = setTimeout(step, 120); };
+  step();
+}
+function fbGoPage(page) { fbGo(fbSpreadOf(page)); }
+
+/* render the pages that are (or will soon be) on screen, one at a time */
+function fbWanted() {
+  const vis = fbPages(), lo = Math.min(...vis), hi = Math.max(...vis), out = [...vis];
+  for (let d = 1; d <= 4; d++) { out.push(hi + d, lo - d); }
+  return out.filter((p, i) => p >= 0 && p < FB.n && out.indexOf(p) === i);
+}
+async function fbPump() {
+  if (FB.busy || !FB.open || !FB.info) return;
+  const next = fbWanted().find(p => !FB.urls.has(p));
+  if (next === undefined) return;
+  FB.busy = true; const info = FB.info;
+  try {
+    const url = await fbRender(info, next, FB.ratio >= 1 ? 1700 : 1400);
+    if (!FB.open || FB.info !== info) URL.revokeObjectURL(url);
+    else { FB.urls.set(next, url); fbSetImg(next, url); }
+  } catch (e) {
+    FB.urls.set(next, '');
+    if (FB.imgs[next]) FB.imgs[next].parentElement.classList.add('err');
+  }
+  FB.busy = false; fbPump();
+}
+
+function fbCycleZoom(dir) {
+  const i = FB_ZOOMS.indexOf(FB.zoom), j = dir < 0 ? Math.max(0, i - 1) : (i + 1) % FB_ZOOMS.length;
+  FB.zoom = FB_ZOOMS[j]; $fb('fb-zoom').textContent = 'ZOOM ' + FB.zoom + 'x';
+  fbLayout();
+  const st = $fb('fb-stage'); st.scrollLeft = (st.scrollWidth - st.clientWidth) / 2; st.scrollTop = (st.scrollHeight - st.clientHeight) / 2;
+}
+function fbToggleFull() {
+  const el = $fb('fb');
+  if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+}
+(function fbBind() {
+  if (!document.documentElement.requestFullscreen) $fb('fb-full').style.display = 'none';
+  $fb('fb-close').addEventListener('click', fbClose);
+  $fb('fb-prev').addEventListener('click', () => fbGo(FB.s - 1));
+  $fb('fb-next').addEventListener('click', () => fbGo(FB.s + 1));
+  $fb('fb-range').addEventListener('input', e => fbGoPage(+e.target.value - 1));
+  $fb('fb-zoom').addEventListener('click', () => fbCycleZoom(1));
+  $fb('fb-full').addEventListener('click', fbToggleFull);
+  /* click a page to turn it */
+  $fb('fb-shift').addEventListener('click', e => {
+    if (FB.swiped) { FB.swiped = false; return; }
+    if (FB.zoom > 1) return;
+    const leaf = e.target.closest('.fb-leaf'); if (!leaf) return;
+    if (FB.mode === 'single') { const r = leaf.getBoundingClientRect(); fbGo(e.clientX - r.left < r.width * .35 ? FB.s - 1 : FB.s + 1); return; }
+    fbGo(leaf.classList.contains('flipped') ? FB.s - 1 : FB.s + 1);
+  });
+  /* swipe */
+  let sw = null; const st = $fb('fb-stage');
+  st.addEventListener('pointerdown', e => { sw = (FB.zoom > 1 || e.target.closest('button,a,input')) ? null : { x: e.clientX, y: e.clientY }; });
+  st.addEventListener('pointerup', e => {
+    if (!sw) return; const dx = e.clientX - sw.x, dy = e.clientY - sw.y; sw = null;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) { FB.swiped = true; setTimeout(() => { FB.swiped = false; }, 80); fbGo(dx < 0 ? FB.s + 1 : FB.s - 1); }
+  });
+  /* keyboard */
+  document.addEventListener('keydown', e => {
+    if (!FB.open) return;
+    const k = e.key;
+    if (k === 'Escape') { if (!document.fullscreenElement) fbClose(); }
+    else if (k === 'ArrowRight' || k === 'PageDown') { e.preventDefault(); fbGo(FB.s + 1); }
+    else if (k === 'ArrowLeft'  || k === 'PageUp')   { e.preventDefault(); fbGo(FB.s - 1); }
+    else if (k === 'Home') { e.preventDefault(); fbGo(0); }
+    else if (k === 'End')  { e.preventDefault(); fbGo(FB.maxS); }
+    else if (k === '+' || k === '=') fbCycleZoom(1);
+    else if (k === '-') fbCycleZoom(-1);
+    else if (k === 'Tab') {                              // keep focus inside the reader
+      const f = [...$fb('fb').querySelectorAll('button:not([disabled]),a[href],input')].filter(x => x.offsetParent !== null);
+      if (!f.length) return; const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  let rz; const relayout = () => { clearTimeout(rz); rz = setTimeout(() => { if (FB.open) fbLayout(); }, 120); };
+  window.addEventListener('resize', relayout);
+  document.addEventListener('fullscreenchange', relayout);
+})();
 
 
 /* ═════════════════════════════════════════════════════════════
