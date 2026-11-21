@@ -13,7 +13,7 @@ Scroll through three "levels" — **Awards**, **Experience**, and **Leadership &
 ![Build step](https://img.shields.io/badge/build%20step-none-2DFF9A)
 ![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-181717?logo=github)
 
-[**▶ Play the live site**](https://nglemaianh.github.io/REPO-NAME/) · [LinkedIn](https://www.linkedin.com/in/nguyenlemaianh/) · [Email](mailto:nguyenleemaianh@gmail.com)
+[**▶ Play the live site**](https://nglemaianh.github.io) · [LinkedIn](https://www.linkedin.com/in/nguyenlemaianh/) · [Email](mailto:nguyenleemaianh@gmail.com)
 
 </div>
 
