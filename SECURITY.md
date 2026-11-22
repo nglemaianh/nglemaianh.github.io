@@ -32,7 +32,7 @@ There are no versioned releases. Only the latest state of the `main` branch — 
 
 **Please do not open a public issue, pull request, or discussion for security problems.**
 
-1. **Preferred — GitHub private reporting:** open the repository's **Security** tab → **Advisories** → **Report a vulnerability** (or go directly to <https://github.com/nglemaianh/REPO-NAME/security/advisories/new>).
+1. **Preferred — GitHub private reporting:** open the repository's **Security** tab → **Advisories** → **Report a vulnerability** (or go directly to <https://github.com/nglemaianh/nglemaianh.github.io/security/advisories/new>).
 2. **Alternative — e-mail:** [nguyenleemaianh@gmail.com](mailto:nguyenleemaianh@gmail.com) with the subject line `[SECURITY] nglemaianh.github.io — short summary`.
 
 A useful report includes:
